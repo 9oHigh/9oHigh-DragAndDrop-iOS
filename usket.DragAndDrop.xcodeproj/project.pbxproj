@@ -1,0 +1,629 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3B28181E2100BA53EB /* AppDelegate.swift */; };
+		4CD14B3E28181E2100BA53EB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3D28181E2100BA53EB /* SceneDelegate.swift */; };
+		4CD14B4028181E2100BA53EB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3F28181E2100BA53EB /* ViewController.swift */; };
+		4CD14B4328181E2100BA53EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CD14B4128181E2100BA53EB /* Main.storyboard */; };
+		4CD14B4528181E2400BA53EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CD14B4428181E2400BA53EB /* Assets.xcassets */; };
+		4CD14B4828181E2400BA53EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CD14B4628181E2400BA53EB /* LaunchScreen.storyboard */; };
+		4CD14B5328181E2400BA53EB /* usket_DragAndDropTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B5228181E2400BA53EB /* usket_DragAndDropTests.swift */; };
+		4CD14B5D28181E2500BA53EB /* usket_DragAndDropUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B5C28181E2500BA53EB /* usket_DragAndDropUITests.swift */; };
+		4CD14B5F28181E2500BA53EB /* usket_DragAndDropUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B5E28181E2500BA53EB /* usket_DragAndDropUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4CD14B4F28181E2400BA53EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CD14B3028181E2100BA53EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CD14B3728181E2100BA53EB;
+			remoteInfo = usket.DragAndDrop;
+		};
+		4CD14B5928181E2500BA53EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CD14B3028181E2100BA53EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CD14B3728181E2100BA53EB;
+			remoteInfo = usket.DragAndDrop;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4CD14B3828181E2100BA53EB /* usket.DragAndDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usket.DragAndDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CD14B3B28181E2100BA53EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4CD14B3D28181E2100BA53EB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		4CD14B3F28181E2100BA53EB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4CD14B4228181E2100BA53EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4CD14B4428181E2400BA53EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4CD14B4728181E2400BA53EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4CD14B4928181E2400BA53EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4CD14B4E28181E2400BA53EB /* usket.DragAndDropTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = usket.DragAndDropTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CD14B5228181E2400BA53EB /* usket_DragAndDropTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = usket_DragAndDropTests.swift; sourceTree = "<group>"; };
+		4CD14B5828181E2500BA53EB /* usket.DragAndDropUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = usket.DragAndDropUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CD14B5C28181E2500BA53EB /* usket_DragAndDropUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = usket_DragAndDropUITests.swift; sourceTree = "<group>"; };
+		4CD14B5E28181E2500BA53EB /* usket_DragAndDropUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = usket_DragAndDropUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4CD14B3528181E2100BA53EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CD14B4B28181E2400BA53EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CD14B5528181E2500BA53EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4CD14B2F28181E2100BA53EB = {
+			isa = PBXGroup;
+			children = (
+				4CD14B3A28181E2100BA53EB /* usket.DragAndDrop */,
+				4CD14B5128181E2400BA53EB /* usket.DragAndDropTests */,
+				4CD14B5B28181E2500BA53EB /* usket.DragAndDropUITests */,
+				4CD14B3928181E2100BA53EB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4CD14B3928181E2100BA53EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4CD14B3828181E2100BA53EB /* usket.DragAndDrop.app */,
+				4CD14B4E28181E2400BA53EB /* usket.DragAndDropTests.xctest */,
+				4CD14B5828181E2500BA53EB /* usket.DragAndDropUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4CD14B3A28181E2100BA53EB /* usket.DragAndDrop */ = {
+			isa = PBXGroup;
+			children = (
+				4CD14B3B28181E2100BA53EB /* AppDelegate.swift */,
+				4CD14B3D28181E2100BA53EB /* SceneDelegate.swift */,
+				4CD14B3F28181E2100BA53EB /* ViewController.swift */,
+				4CD14B4128181E2100BA53EB /* Main.storyboard */,
+				4CD14B4428181E2400BA53EB /* Assets.xcassets */,
+				4CD14B4628181E2400BA53EB /* LaunchScreen.storyboard */,
+				4CD14B4928181E2400BA53EB /* Info.plist */,
+			);
+			path = usket.DragAndDrop;
+			sourceTree = "<group>";
+		};
+		4CD14B5128181E2400BA53EB /* usket.DragAndDropTests */ = {
+			isa = PBXGroup;
+			children = (
+				4CD14B5228181E2400BA53EB /* usket_DragAndDropTests.swift */,
+			);
+			path = usket.DragAndDropTests;
+			sourceTree = "<group>";
+		};
+		4CD14B5B28181E2500BA53EB /* usket.DragAndDropUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4CD14B5C28181E2500BA53EB /* usket_DragAndDropUITests.swift */,
+				4CD14B5E28181E2500BA53EB /* usket_DragAndDropUITestsLaunchTests.swift */,
+			);
+			path = usket.DragAndDropUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4CD14B3728181E2100BA53EB /* usket.DragAndDrop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CD14B6228181E2500BA53EB /* Build configuration list for PBXNativeTarget "usket.DragAndDrop" */;
+			buildPhases = (
+				4CD14B3428181E2100BA53EB /* Sources */,
+				4CD14B3528181E2100BA53EB /* Frameworks */,
+				4CD14B3628181E2100BA53EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = usket.DragAndDrop;
+			productName = usket.DragAndDrop;
+			productReference = 4CD14B3828181E2100BA53EB /* usket.DragAndDrop.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4CD14B4D28181E2400BA53EB /* usket.DragAndDropTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CD14B6528181E2500BA53EB /* Build configuration list for PBXNativeTarget "usket.DragAndDropTests" */;
+			buildPhases = (
+				4CD14B4A28181E2400BA53EB /* Sources */,
+				4CD14B4B28181E2400BA53EB /* Frameworks */,
+				4CD14B4C28181E2400BA53EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4CD14B5028181E2400BA53EB /* PBXTargetDependency */,
+			);
+			name = usket.DragAndDropTests;
+			productName = usket.DragAndDropTests;
+			productReference = 4CD14B4E28181E2400BA53EB /* usket.DragAndDropTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4CD14B5728181E2500BA53EB /* usket.DragAndDropUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CD14B6828181E2500BA53EB /* Build configuration list for PBXNativeTarget "usket.DragAndDropUITests" */;
+			buildPhases = (
+				4CD14B5428181E2500BA53EB /* Sources */,
+				4CD14B5528181E2500BA53EB /* Frameworks */,
+				4CD14B5628181E2500BA53EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4CD14B5A28181E2500BA53EB /* PBXTargetDependency */,
+			);
+			name = usket.DragAndDropUITests;
+			productName = usket.DragAndDropUITests;
+			productReference = 4CD14B5828181E2500BA53EB /* usket.DragAndDropUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4CD14B3028181E2100BA53EB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1310;
+				LastUpgradeCheck = 1310;
+				TargetAttributes = {
+					4CD14B3728181E2100BA53EB = {
+						CreatedOnToolsVersion = 13.1;
+					};
+					4CD14B4D28181E2400BA53EB = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 4CD14B3728181E2100BA53EB;
+					};
+					4CD14B5728181E2500BA53EB = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 4CD14B3728181E2100BA53EB;
+					};
+				};
+			};
+			buildConfigurationList = 4CD14B3328181E2100BA53EB /* Build configuration list for PBXProject "usket.DragAndDrop" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4CD14B2F28181E2100BA53EB;
+			productRefGroup = 4CD14B3928181E2100BA53EB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4CD14B3728181E2100BA53EB /* usket.DragAndDrop */,
+				4CD14B4D28181E2400BA53EB /* usket.DragAndDropTests */,
+				4CD14B5728181E2500BA53EB /* usket.DragAndDropUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4CD14B3628181E2100BA53EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CD14B4828181E2400BA53EB /* LaunchScreen.storyboard in Resources */,
+				4CD14B4528181E2400BA53EB /* Assets.xcassets in Resources */,
+				4CD14B4328181E2100BA53EB /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CD14B4C28181E2400BA53EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CD14B5628181E2500BA53EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4CD14B3428181E2100BA53EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CD14B4028181E2100BA53EB /* ViewController.swift in Sources */,
+				4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */,
+				4CD14B3E28181E2100BA53EB /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CD14B4A28181E2400BA53EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CD14B5328181E2400BA53EB /* usket_DragAndDropTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CD14B5428181E2500BA53EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CD14B5F28181E2500BA53EB /* usket_DragAndDropUITestsLaunchTests.swift in Sources */,
+				4CD14B5D28181E2500BA53EB /* usket_DragAndDropUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4CD14B5028181E2400BA53EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CD14B3728181E2100BA53EB /* usket.DragAndDrop */;
+			targetProxy = 4CD14B4F28181E2400BA53EB /* PBXContainerItemProxy */;
+		};
+		4CD14B5A28181E2500BA53EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CD14B3728181E2100BA53EB /* usket.DragAndDrop */;
+			targetProxy = 4CD14B5928181E2500BA53EB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4CD14B4128181E2100BA53EB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CD14B4228181E2100BA53EB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		4CD14B4628181E2400BA53EB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CD14B4728181E2400BA53EB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4CD14B6028181E2500BA53EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4CD14B6128181E2500BA53EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4CD14B6328181E2500BA53EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 46QF7GBZH7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = usket.DragAndDrop/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "usKet.usket-DragAndDrop";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4CD14B6428181E2500BA53EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 46QF7GBZH7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = usket.DragAndDrop/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "usKet.usket-DragAndDrop";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4CD14B6628181E2500BA53EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 46QF7GBZH7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "usKet.usket-DragAndDropTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/usket.DragAndDrop.app/usket.DragAndDrop";
+			};
+			name = Debug;
+		};
+		4CD14B6728181E2500BA53EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 46QF7GBZH7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "usKet.usket-DragAndDropTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/usket.DragAndDrop.app/usket.DragAndDrop";
+			};
+			name = Release;
+		};
+		4CD14B6928181E2500BA53EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 46QF7GBZH7;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "usKet.usket-DragAndDropUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = usket.DragAndDrop;
+			};
+			name = Debug;
+		};
+		4CD14B6A28181E2500BA53EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 46QF7GBZH7;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "usKet.usket-DragAndDropUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = usket.DragAndDrop;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4CD14B3328181E2100BA53EB /* Build configuration list for PBXProject "usket.DragAndDrop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CD14B6028181E2500BA53EB /* Debug */,
+				4CD14B6128181E2500BA53EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CD14B6228181E2500BA53EB /* Build configuration list for PBXNativeTarget "usket.DragAndDrop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CD14B6328181E2500BA53EB /* Debug */,
+				4CD14B6428181E2500BA53EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CD14B6528181E2500BA53EB /* Build configuration list for PBXNativeTarget "usket.DragAndDropTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CD14B6628181E2500BA53EB /* Debug */,
+				4CD14B6728181E2500BA53EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CD14B6828181E2500BA53EB /* Build configuration list for PBXNativeTarget "usket.DragAndDropUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CD14B6928181E2500BA53EB /* Debug */,
+				4CD14B6A28181E2500BA53EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4CD14B3028181E2100BA53EB /* Project object */;
+}
