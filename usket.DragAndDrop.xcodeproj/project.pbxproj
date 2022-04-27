@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C6114612818F67100EB5E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C6114602818F67100EB5E01 /* Main.storyboard */; };
+		3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C61146228190C3D00EB5E01 /* SideMenu.swift */; };
+		3C61146728190D3000EB5E01 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3C61146628190D3000EB5E01 /* SnapKit */; };
 		4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3B28181E2100BA53EB /* AppDelegate.swift */; };
 		4CD14B3E28181E2100BA53EB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3D28181E2100BA53EB /* SceneDelegate.swift */; };
-		4CD14B4028181E2100BA53EB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3F28181E2100BA53EB /* ViewController.swift */; };
-		4CD14B4328181E2100BA53EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CD14B4128181E2100BA53EB /* Main.storyboard */; };
+		4CD14B4028181E2100BA53EB /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3F28181E2100BA53EB /* CanvasViewController.swift */; };
 		4CD14B4528181E2400BA53EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CD14B4428181E2400BA53EB /* Assets.xcassets */; };
 		4CD14B4828181E2400BA53EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CD14B4628181E2400BA53EB /* LaunchScreen.storyboard */; };
 		4CD14B5328181E2400BA53EB /* usket_DragAndDropTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B5228181E2400BA53EB /* usket_DragAndDropTests.swift */; };
@@ -36,11 +38,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C6114602818F67100EB5E01 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../../Downloads/Main.storyboard; sourceTree = "<group>"; };
+		3C61146228190C3D00EB5E01 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		4CD14B3828181E2100BA53EB /* usket.DragAndDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usket.DragAndDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD14B3B28181E2100BA53EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CD14B3D28181E2100BA53EB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4CD14B3F28181E2100BA53EB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		4CD14B4228181E2100BA53EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4CD14B3F28181E2100BA53EB /* CanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		4CD14B4428181E2400BA53EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4CD14B4728181E2400BA53EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4CD14B4928181E2400BA53EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C61146728190D3000EB5E01 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +80,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C2AE3E52818DF9A00F25815 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				4CD14B3B28181E2100BA53EB /* AppDelegate.swift */,
+				4CD14B3D28181E2100BA53EB /* SceneDelegate.swift */,
+				4CD14B4428181E2400BA53EB /* Assets.xcassets */,
+				3C6114602818F67100EB5E01 /* Main.storyboard */,
+				4CD14B4628181E2400BA53EB /* LaunchScreen.storyboard */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		3C2AE3EA2818E72400F25815 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				4CD14B3F28181E2100BA53EB /* CanvasViewController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		3C61146428190C4300EB5E01 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3C61146228190C3D00EB5E01 /* SideMenu.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		4CD14B2F28181E2100BA53EB = {
 			isa = PBXGroup;
 			children = (
@@ -99,13 +131,10 @@
 		4CD14B3A28181E2100BA53EB /* usket.DragAndDrop */ = {
 			isa = PBXGroup;
 			children = (
-				4CD14B3B28181E2100BA53EB /* AppDelegate.swift */,
-				4CD14B3D28181E2100BA53EB /* SceneDelegate.swift */,
-				4CD14B3F28181E2100BA53EB /* ViewController.swift */,
-				4CD14B4128181E2100BA53EB /* Main.storyboard */,
-				4CD14B4428181E2400BA53EB /* Assets.xcassets */,
-				4CD14B4628181E2400BA53EB /* LaunchScreen.storyboard */,
 				4CD14B4928181E2400BA53EB /* Info.plist */,
+				3C61146428190C4300EB5E01 /* View */,
+				3C2AE3EA2818E72400F25815 /* controller */,
+				3C2AE3E52818DF9A00F25815 /* Source */,
 			);
 			path = usket.DragAndDrop;
 			sourceTree = "<group>";
@@ -143,6 +172,9 @@
 			dependencies = (
 			);
 			name = usket.DragAndDrop;
+			packageProductDependencies = (
+				3C61146628190D3000EB5E01 /* SnapKit */,
+			);
 			productName = usket.DragAndDrop;
 			productReference = 4CD14B3828181E2100BA53EB /* usket.DragAndDrop.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +247,9 @@
 				Base,
 			);
 			mainGroup = 4CD14B2F28181E2100BA53EB;
+			packageReferences = (
+				3C61146528190D3000EB5E01 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 4CD14B3928181E2100BA53EB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -231,9 +266,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C6114612818F67100EB5E01 /* Main.storyboard in Resources */,
 				4CD14B4828181E2400BA53EB /* LaunchScreen.storyboard in Resources */,
 				4CD14B4528181E2400BA53EB /* Assets.xcassets in Resources */,
-				4CD14B4328181E2100BA53EB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,9 +293,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CD14B4028181E2100BA53EB /* ViewController.swift in Sources */,
+				4CD14B4028181E2100BA53EB /* CanvasViewController.swift in Sources */,
 				4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */,
 				4CD14B3E28181E2100BA53EB /* SceneDelegate.swift in Sources */,
+				3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,14 +333,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4CD14B4128181E2100BA53EB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4CD14B4228181E2100BA53EB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		4CD14B4628181E2400BA53EB /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -439,7 +467,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 46QF7GBZH7;
+				DEVELOPMENT_TEAM = 4B7YLKL5S2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = usket.DragAndDrop/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -467,7 +495,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 46QF7GBZH7;
+				DEVELOPMENT_TEAM = 4B7YLKL5S2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = usket.DragAndDrop/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -624,6 +652,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3C61146528190D3000EB5E01 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3C61146628190D3000EB5E01 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3C61146528190D3000EB5E01 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4CD14B3028181E2100BA53EB /* Project object */;
 }
