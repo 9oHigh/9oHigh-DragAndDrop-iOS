@@ -10,7 +10,7 @@ import SnapKit
 
 final class SideMenu: UIView {
     
-    let module = UIImageView()
+    let module = customImageView(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

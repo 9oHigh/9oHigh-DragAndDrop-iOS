@@ -7,10 +7,8 @@ enum MenuStatus {
 
 final class CanvasViewController: UIViewController {
     
-    //Grid
-    @IBOutlet weak var backgroundGrid: UIImageView!
-    
     //Sidemenu, Menu Status
+    private let backgroundGrid = CanvasView(frame: .zero)
     private let sideMenu = SideMenu()
     private let openButton = UIButton()
     private var status : MenuStatus = .open
@@ -29,10 +27,12 @@ final class CanvasViewController: UIViewController {
         view.addInteraction(UIDragInteraction(delegate: self))
         view.addInteraction(UIDropInteraction(delegate: self))
         
-        backgroundGrid.isUserInteractionEnabled = true
-        
+        view.addSubview(backgroundGrid)
         view.addSubview(sideMenu)
         view.addSubview(openButton)
+        backgroundGrid.isUserInteractionEnabled = true
+        
+        backgroundGrid.frame = CGRect(x: UIScreen.main.bounds.midX - 350, y: UIScreen.main.bounds.midY - 118, width: 700, height: 272)
         
         openButton.setImage(UIImage(systemName: "arrow.right"), for: .normal)
         openButton.addTarget(self, action: #selector(changeImage), for: .touchUpInside)
@@ -43,6 +43,7 @@ final class CanvasViewController: UIViewController {
         openButton.layer.cornerRadius = 10
         openButton.tintColor = .black
         openButton.setTitleColor(.black, for: .normal)
+        print("Background Frame:",backgroundGrid.frame)
     }
     
     @objc
@@ -80,8 +81,7 @@ extension CanvasViewController: UIDragInteractionDelegate {
     
     func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
         print(#function)
-        
-        let location = session.location(in: backgroundGrid)
+        let location = session.location(in: view)
         
         if let customView = self.view.hitTest(location, with: nil) {
             print("아이템 리스트:",itemList,itemList.count)
@@ -174,15 +174,17 @@ extension CanvasViewController: UIDropInteractionDelegate {
                 }
                 DispatchQueue.main.async {
                     
-                    let dragImageView = customImageView(frame: .zero)
-                    dragImageView.image =  dragImage
+                    let dragImageView = Module(frame: .zero)
+                    dragImageView.initailModule(.button(CGRect(x: self!.shadowView.frame.minX, y: self!.shadowView.frame.minY, width: 144, height: 144)),image: UIImage(named: "ButtonModule")!)
+                    // customImageView(frame: .zero)
+                    // dragImageView.image =  dragImage
                     dragImageView.isUserInteractionEnabled = true
+                    self?.backgroundGrid.setLocations(self!.shadowView.frame.minX, self!.shadowView.frame.minY, dragImageView)
                     
-                    self?.backgroundGrid.addSubview(dragImageView)
-                    self?.itemList.append(dragImageView)
+                    //self?.backgroundGrid.addSubview(dragImageView)
                     
-                    dragImageView.frame = CGRect(x: self!.shadowView.frame.minX, y: self!.shadowView.frame.minY, width: dragImage.size.width, height: dragImage.size.width)
-                    dragImageView.changeToModuleView()
+                    //dragImageView.frame = CGRect(x: self!.shadowView.frame.minX, y: self!.shadowView.frame.minY, width: dragImage.size.width, height: dragImage.size.width)
+                    // dragImageView.changeToModuleView()
                 }
             }
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fYn-XC-kTO">
-    <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
+    <device id="retina5_9" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -14,7 +14,7 @@
             <objects>
                 <viewController id="Y6W-OH-hqX" customClass="DraggingViewController" customModule="usket_DragAndDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -29,33 +29,30 @@
             <objects>
                 <viewController id="fYn-XC-kTO" customClass="CanvasViewController" customModule="usket_DragAndDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Lrh-yT-gAK">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GridBackground" translatesAutoresizingMaskIntoConstraints="NO" id="m7o-de-RfT">
-                                <rect key="frame" x="20" y="20" width="984" height="728"/>
-                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW(0)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKI-bP-7hq">
+                                <rect key="frame" x="376" y="20" width="60.333333333333314" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="APx-QJ-Skf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="m7o-de-RfT" firstAttribute="centerY" secondItem="APx-QJ-Skf" secondAttribute="centerY" constant="-10" id="AjH-RC-6ve"/>
-                            <constraint firstItem="m7o-de-RfT" firstAttribute="width" secondItem="Lrh-yT-gAK" secondAttribute="width" multiplier="0.960938" id="MV6-6g-Arr"/>
-                            <constraint firstItem="m7o-de-RfT" firstAttribute="centerX" secondItem="APx-QJ-Skf" secondAttribute="centerX" id="jCb-s8-lSQ"/>
-                            <constraint firstItem="m7o-de-RfT" firstAttribute="height" secondItem="Lrh-yT-gAK" secondAttribute="height" multiplier="0.947917" id="jsq-pq-gjp"/>
+                            <constraint firstItem="EKI-bP-7hq" firstAttribute="centerX" secondItem="APx-QJ-Skf" secondAttribute="centerX" id="Yix-BT-j22"/>
+                            <constraint firstItem="EKI-bP-7hq" firstAttribute="top" secondItem="APx-QJ-Skf" secondAttribute="top" constant="20" id="g47-SU-mU1"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="backgroundGrid" destination="m7o-de-RfT" id="5xc-h5-t4e"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PGr-ke-iD2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-25.78125" y="-653.90625"/>
+            <point key="canvasLocation" x="-25.862068965517242" y="-655.20000000000005"/>
         </scene>
     </scenes>
     <resources>
-        <image name="GridBackground" width="704" height="272"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

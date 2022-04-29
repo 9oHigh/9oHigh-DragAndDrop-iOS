@@ -12,6 +12,8 @@
 		3C611469281A3C2600EB5E01 /* CumstomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C611468281A3C2600EB5E01 /* CumstomImageView.swift */; };
 		3C611474281A72E000EB5E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C611473281A72E000EB5E01 /* Main.storyboard */; };
 		3C635318281A8FE900A3A079 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C635317281A8FE900A3A079 /* MainViewController.swift */; };
+		3CB83B56281B8F8A0027FC6D /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB83B55281B8F8A0027FC6D /* CanvasView.swift */; };
+		3CB83B58281B90C80027FC6D /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB83B57281B90C80027FC6D /* Module.swift */; };
 		4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3B28181E2100BA53EB /* AppDelegate.swift */; };
 		4CD14B3E28181E2100BA53EB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3D28181E2100BA53EB /* SceneDelegate.swift */; };
 		4CD14B4028181E2100BA53EB /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3F28181E2100BA53EB /* CanvasViewController.swift */; };
@@ -44,6 +46,8 @@
 		3C611468281A3C2600EB5E01 /* CumstomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CumstomImageView.swift; sourceTree = "<group>"; };
 		3C611473281A72E000EB5E01 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3C635317281A8FE900A3A079 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		3CB83B55281B8F8A0027FC6D /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		3CB83B57281B90C80027FC6D /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		4CD14B3828181E2100BA53EB /* usket.DragAndDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usket.DragAndDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD14B3B28181E2100BA53EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CD14B3D28181E2100BA53EB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +111,8 @@
 			children = (
 				3C61146228190C3D00EB5E01 /* SideMenu.swift */,
 				3C611468281A3C2600EB5E01 /* CumstomImageView.swift */,
+				3CB83B57281B90C80027FC6D /* Module.swift */,
+				3CB83B55281B8F8A0027FC6D /* CanvasView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -120,12 +126,12 @@
 			path = UIDragDelegate;
 			sourceTree = "<group>";
 		};
-		3C635316281A8FB500A3A079 /* UITableView + UIDragDelegate */ = {
+		3C635316281A8FB500A3A079 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				3C635317281A8FE900A3A079 /* MainViewController.swift */,
 			);
-			path = "UITableView + UIDragDelegate";
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		4CD14B2F28181E2100BA53EB = {
@@ -152,7 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				3C61146B281A70F500EB5E01 /* UIDragDelegate */,
-				3C635316281A8FB500A3A079 /* UITableView + UIDragDelegate */,
+				3C635316281A8FB500A3A079 /* Utils */,
 				3C2AE3E52818DF9A00F25815 /* Source */,
 				4CD14B4928181E2400BA53EB /* Info.plist */,
 				3C611473281A72E000EB5E01 /* Main.storyboard */,
@@ -316,9 +322,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C611469281A3C2600EB5E01 /* CumstomImageView.swift in Sources */,
+				3CB83B56281B8F8A0027FC6D /* CanvasView.swift in Sources */,
 				4CD14B4028181E2100BA53EB /* CanvasViewController.swift in Sources */,
 				4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */,
 				3C635318281A8FE900A3A079 /* MainViewController.swift in Sources */,
+				3CB83B58281B90C80027FC6D /* Module.swift in Sources */,
 				4CD14B3E28181E2100BA53EB /* SceneDelegate.swift in Sources */,
 				3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */,
 			);
@@ -419,7 +427,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -474,7 +482,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
