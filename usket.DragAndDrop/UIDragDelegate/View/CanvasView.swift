@@ -65,5 +65,3 @@ final class CanvasView: UIView {
         }
     }
 }
-
-//쉐도우도 프레임을 따라가야하는!

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C61146228190C3D00EB5E01 /* SideMenu.swift */; };
-		3C61146728190D3000EB5E01 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3C61146628190D3000EB5E01 /* SnapKit */; };
 		3C611469281A3C2600EB5E01 /* CumstomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C611468281A3C2600EB5E01 /* CumstomImageView.swift */; };
 		3C611474281A72E000EB5E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C611473281A72E000EB5E01 /* Main.storyboard */; };
 		3C635318281A8FE900A3A079 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C635317281A8FE900A3A079 /* MainViewController.swift */; };
@@ -67,7 +66,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C61146728190D3000EB5E01 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,7 +199,6 @@
 			);
 			name = usket.DragAndDrop;
 			packageProductDependencies = (
-				3C61146628190D3000EB5E01 /* SnapKit */,
 			);
 			productName = usket.DragAndDrop;
 			productReference = 4CD14B3828181E2100BA53EB /* usket.DragAndDrop.app */;
@@ -276,7 +273,7 @@
 			);
 			mainGroup = 4CD14B2F28181E2100BA53EB;
 			packageReferences = (
-				3C61146528190D3000EB5E01 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				4CD14B6F281EBCC200BA53EB /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 4CD14B3928181E2100BA53EB /* Products */;
 			projectDirPath = "";
@@ -686,7 +683,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3C61146528190D3000EB5E01 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		4CD14B6F281EBCC200BA53EB /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {
@@ -695,14 +692,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		3C61146628190D3000EB5E01 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3C61146528190D3000EB5E01 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4CD14B3028181E2100BA53EB /* Project object */;
 }
