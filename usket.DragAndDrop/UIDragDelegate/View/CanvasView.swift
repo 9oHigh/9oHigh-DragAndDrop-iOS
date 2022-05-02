@@ -9,59 +9,96 @@ import UIKit
 
 final class CanvasView: UIView {
     
-    // (56, 67) -> (700, 272)
-    // 가로 길이: 644, 세로 길이: 205
+    // 가로 길이: 704, 세로 길이: 272
+    // Frame의 시작점을 기준으로 차지하고 있는지!
     static let columns = 30
     static let rows = 12
-    // 칸이 채워져 있는지 아닌지
-    static var included = [[Bool]](repeating: Array(repeating: false, count: 30),count: 12)  // 30 * 12
+    
+    // 해당 칸이 자리를 차지하고 있는지
+    var included = [[Bool]](repeating: Array(repeating: false, count: columns),count: rows)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setCanvas()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setCanvas(){
         
         let gridBackground = UIImageView(image: UIImage(named: "GridBackground.png"))
         gridBackground.contentMode = .scaleAspectFit
         
         addSubview(gridBackground)
+        
         gridBackground.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setLocations(_ xPosition: CGFloat,_ yPosition: CGFloat,_ module: Module){
-        //각 모듈별로
-        let properties = checkLocation(xPosition, yPosition, module)
+    func setLocation(_ startPoint: (Int,Int),_ moduleType: ModuleType) {
         
-        if properties.2 {
-            addSubview(module)
-            module.frame = CGRect(x: properties.0, y: properties.1, width: module.rect!.width, height: module.rect!.height)
-            appendModule(rect: module.rect!)
+        if included[startPoint.1][startPoint.0] {
+            return
         } else {
-            // 제자리로 돌아가는 로직(To TableView)
+            let module = Module(frame: .zero)
+            
+            switch moduleType {
+            case .button:
+                module.initailModule(moduleType, image: UIImage(named: "ButtonModule.png")!)
+            case .dial:
+                module.initailModule(moduleType, image: UIImage(named: "DialModule.png")!)
+            case .send:
+                module.initailModule(moduleType, image: UIImage(named: "SendModule.png")!)
+            case .timer:
+                module.initailModule(moduleType, image: UIImage(named: "TimerModule.png")!)
+            }
+            
+            addSubview(module)
+            module.frame = CGRect(x: Double(startPoint.0 * 24), y: Double(startPoint.1 * 24), width: module.size!.width, height: module.size!.height)
+            //자리 차지
+            for y in startPoint.1...startPoint.1 + Int(module.size!.height / 24) {
+                if y >= 12 { return }
+                for x in startPoint.0 ... startPoint.0 + Int(module.size!.width / 24) {
+                    if x >= 30 {
+                        included[y][x] = true
+                        return
+                    }
+                    included[y][x] = true
+                    print("INCLUDED",y,x,included[y][x])
+                }
+            }
+            
         }
     }
     
-    func checkLocation(_ xPosition: CGFloat,_ yPosition: CGFloat,_ module: Module) -> (CGFloat,CGFloat,Bool){
-        let setX = xPosition - 56
-        let setY = yPosition - 70
-        //일단 트루
-        return (setX,setY,true)
-    }
-    
-    func appendModule(rect: CGRect){
-        print("RECT",rect)
-        let realX: Int = Int(rect.minX / 22)
-        let realY: Int = Int(rect.minY / 17)
+    func checkPosition(_ start: (Int,Int), width: Int, height: Int) -> Bool {
         
-        for xPosition in realX...realX + Int(rect.width) {
-            for yPosition in realY...realY + Int(rect.height) {
-                print(realX,realY)
-                CanvasView.included[xPosition][yPosition] = true
+        for y in start.0...start.0 + Int(height/24){
+            if y >= 12 { return false }
+            for x in start.1...start.1 + Int(width/24){
+                if x >= 30 { return false }
+                print(included[y][x])
+                if included[y][x] {
+                    return true
+                }
             }
         }
+        return false
+    }
+    
+    func findNewPosition(_ start: (Int,Int), width: Int, height: Int)-> CGPoint {
+        for y in start.0...start.0 + Int(height / 24){
+            if y >= 12 { return CGPoint(x: 0, y: 0) }
+            for x in start.1...start.1 + Int(width / 24){
+                if x >= 30 { return CGPoint(x: 0, y: 0) }
+                if included[y][x] {
+                    return CGPoint(x: 0, y: 0)
+                }
+            }
+        }
+        return CGPoint(x: 0, y: 0)
     }
 }

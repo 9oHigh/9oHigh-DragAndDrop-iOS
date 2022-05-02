@@ -15,7 +15,6 @@ final class CanvasViewController: UIViewController {
     
     //Item into Grid
     private let shadowView = UIView()
-    var itemList: [customImageView] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +29,9 @@ final class CanvasViewController: UIViewController {
         view.addSubview(backgroundGrid)
         view.addSubview(sideMenu)
         view.addSubview(openButton)
-        backgroundGrid.isUserInteractionEnabled = true
         
-        backgroundGrid.frame = CGRect(x: UIScreen.main.bounds.midX - 350, y: UIScreen.main.bounds.midY - 118, width: 700, height: 272)
+        backgroundGrid.isUserInteractionEnabled = true
+        backgroundGrid.frame = CGRect(x: UIScreen.main.bounds.midX - 352, y: UIScreen.main.bounds.midY - 118, width: 704, height: 272)
         
         openButton.setImage(UIImage(systemName: "arrow.right"), for: .normal)
         openButton.addTarget(self, action: #selector(changeImage), for: .touchUpInside)
@@ -43,7 +42,6 @@ final class CanvasViewController: UIViewController {
         openButton.layer.cornerRadius = 10
         openButton.tintColor = .black
         openButton.setTitleColor(.black, for: .normal)
-        print("Background Frame:",backgroundGrid.frame)
     }
     
     @objc
@@ -62,7 +60,7 @@ final class CanvasViewController: UIViewController {
                 self.sideMenu.frame = CGRect(x: self.view.frame.maxX, y: 0, width: 0, height: self.view.frame.height)
                 self.openButton.frame = CGRect(x: self.view.frame.maxX - 45, y: 0, width: 55, height: 55)
             }, completion: { completed in
-                print(completed)
+                
             })
         case .closed:
             // 열기
@@ -81,30 +79,29 @@ extension CanvasViewController: UIDragInteractionDelegate {
     
     func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
         print(#function)
+        
         let location = session.location(in: view)
         
-        if let customView = self.view.hitTest(location, with: nil) {
-            print("아이템 리스트:",itemList,itemList.count)
-            let dragImageView = customImageView(frame: CGRect(x: 0, y: 0, width: 140, height: 140))
+        if let draggingView = self.view.hitTest(location, with: nil) {
+            let startView = UIImageView(frame: CGRect(x: 0, y: 0, width: 128, height: 128))
             
-            let dragImage = UIImage(named: "ButtonModule")
-            dragImageView.image = dragImage
+            startView.image = UIImage(named: "ButtonModule.png")
             
-            let itemProvider = NSItemProvider(object: dragImageView.image!)
+            let itemProvider = NSItemProvider(object: startView.image!)
             
-            let dragItem = UIDragItem(itemProvider: itemProvider)
-            dragItem.localObject = customView
-            dragItem.previewProvider = createPreviewProvider
+            let draggingItem = UIDragItem(itemProvider: itemProvider)
+            draggingItem.localObject = draggingView
+            draggingItem.previewProvider = createPreviewProvider
             
-            return [dragItem]
+            return [draggingItem]
         }
         return []
     }
     
     private func createPreviewProvider() -> UIDragPreview {
         print(#function)
-        let draggingView = customImageView(frame: CGRect(x: 0, y: 0, width: 140, height: 140))
-        let dragImage = UIImage(named: "ButtonModule")
+        let draggingView = UIImageView(frame: CGRect(x: 0, y: 0, width: 128, height: 128))
+        let dragImage = UIImage(named: "ButtonModule.png")
         
         draggingView.image = dragImage
         draggingView.isUserInteractionEnabled = true
@@ -125,10 +122,37 @@ extension CanvasViewController: UIDragInteractionDelegate {
         shadowView.backgroundColor = UIColor.black.withAlphaComponent(0.35)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.shadowView.frame = CGRect(x: locationPoint.x , y: locationPoint.y - 70, width: 140, height: 140)
-            self.shadowView.layer.cornerRadius = 10
+            
+            let points = self.setShadow(locationPoint.x, locationPoint.y)
+            var col = Int(points.x / 24)
+            var row = Int(points.y / 24)
+            
+            if row < 0 { row = 0 }
+            else if col < 0 { col = 0 }
+            
+            print(self.backgroundGrid.checkPosition((row,col), width: 128, height: 128))
+            
+            if self.backgroundGrid.checkPosition((row,col), width: 128, height: 128) {
+                // 새로운 위치에 그림자 넣어줘야함
+                
+                // x포지션의 이동으로 가능한경우 함수로 가능한 포인트 찾아서 반환 + setFrame
+                
+                // y포지션의 이동으로 가능한 경우 함수로 가능한 포인트 찾아서 반환 + setFrame
+                
+                // x,y 둘다 변경하면서 찾아야하는 경우 함수로 찾고 반환 + setFrame
+                
+            } else {
+                self.shadowView.frame = CGRect(x: points.x, y: points.y, width: 128, height: 128)
+                self.shadowView.layer.cornerRadius = 10
+            }
         }
-        // print("위치좀 알려주라",session.location(in: backgroundGrid))
+    }
+    
+    func setShadow(_ xPosition: CGFloat,_ yPosition: CGFloat) -> CGPoint {
+        let shadowX = Int(xPosition / 24) * 24
+        let shadowY = Int(yPosition / 24) * 24
+        
+        return CGPoint(x: shadowX, y: shadowY)
     }
 }
 extension CanvasViewController: UIDropInteractionDelegate {
@@ -140,8 +164,19 @@ extension CanvasViewController: UIDropInteractionDelegate {
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         print(#function)
-        // print("그림자 프레임",shadowView.frame)
-        // print("그리드 프레임",backgroundGrid.frame)
+        
+        let locationPoint = session.location(in: backgroundGrid)
+        let points = self.setShadow(locationPoint.x, locationPoint.y)
+        var col = Int(points.x / 24)
+        var row = Int(points.y / 24)
+        
+        if row < 0 { row = 0 }
+        else if col < 0 { col = 0 }
+
+        if self.backgroundGrid.checkPosition((row,col), width: 128, height: 128) {
+            return UIDropProposal(operation: .cancel)
+        }
+        
         if shadowView.frame.minX < 0 || shadowView.frame.maxX > backgroundGrid.frame.width {
             DispatchQueue.main.async {
                 self.shadowView.removeFromSuperview()
@@ -152,7 +187,7 @@ extension CanvasViewController: UIDropInteractionDelegate {
                 self.shadowView.removeFromSuperview()
             }
             return UIDropProposal(operation: .cancel)
-        } else {
+        }  else {
             return UIDropProposal(operation: .move)
         }
     }
@@ -170,21 +205,12 @@ extension CanvasViewController: UIDropInteractionDelegate {
                     print("Failed");
                     return
                 }
-                guard let dragImage = object as? UIImage else { return
-                }
+                
+                let location = session.location(in: self!.backgroundGrid)
+                
                 DispatchQueue.main.async {
-                    
-                    let dragImageView = Module(frame: .zero)
-                    dragImageView.initailModule(.button(CGRect(x: self!.shadowView.frame.minX, y: self!.shadowView.frame.minY, width: 144, height: 144)),image: UIImage(named: "ButtonModule")!)
-                    // customImageView(frame: .zero)
-                    // dragImageView.image =  dragImage
-                    dragImageView.isUserInteractionEnabled = true
-                    self?.backgroundGrid.setLocations(self!.shadowView.frame.minX, self!.shadowView.frame.minY, dragImageView)
-                    
-                    //self?.backgroundGrid.addSubview(dragImageView)
-                    
-                    //dragImageView.frame = CGRect(x: self!.shadowView.frame.minX, y: self!.shadowView.frame.minY, width: dragImage.size.width, height: dragImage.size.width)
-                    // dragImageView.changeToModuleView()
+                    let points = self?.setShadow(location.x, location.y)
+                    self?.backgroundGrid.setLocation((Int(points?.x ?? 24) / 24, Int(points?.y ?? 24) / 24), .button)
                 }
             }
         }

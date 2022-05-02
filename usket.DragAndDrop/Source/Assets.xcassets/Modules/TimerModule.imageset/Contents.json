@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "iosLineSlide.png",
+      "filename" : "group31.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "iosLineSlide@2x.png",
+      "filename" : "group31@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "iosLineSlide@3x.png",
+      "filename" : "group31@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
