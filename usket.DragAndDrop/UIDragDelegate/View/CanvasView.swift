@@ -30,7 +30,7 @@ final class CanvasView: UIView {
         
         let gridBackground = UIImageView(image: UIImage(named: "GridBackground.png"))
         gridBackground.contentMode = .scaleAspectFit
-        
+    
         addSubview(gridBackground)
         
         gridBackground.snp.makeConstraints { make in
@@ -38,7 +38,7 @@ final class CanvasView: UIView {
         }
     }
     
-    func setLocation(_ startPoint: (Int,Int),_ moduleType: ModuleType) {
+    func setLocation(_ startPoint: (Int,Int),_ moduleType: CustomModuleType) {
         
         if included[startPoint.1][startPoint.0] {
             return
@@ -70,7 +70,6 @@ final class CanvasView: UIView {
                     print("INCLUDED",y,x,included[y][x])
                 }
             }
-            
         }
     }
     
@@ -80,7 +79,6 @@ final class CanvasView: UIView {
             if y >= 12 { return false }
             for x in start.1...start.1 + Int(width/24){
                 if x >= 30 { return false }
-                print(included[y][x])
                 if included[y][x] {
                     return true
                 }
@@ -89,16 +87,6 @@ final class CanvasView: UIView {
         return false
     }
     
-    func findNewPosition(_ start: (Int,Int), width: Int, height: Int)-> CGPoint {
-        for y in start.0...start.0 + Int(height / 24){
-            if y >= 12 { return CGPoint(x: 0, y: 0) }
-            for x in start.1...start.1 + Int(width / 24){
-                if x >= 30 { return CGPoint(x: 0, y: 0) }
-                if included[y][x] {
-                    return CGPoint(x: 0, y: 0)
-                }
-            }
-        }
-        return CGPoint(x: 0, y: 0)
-    }
+    //func findNewPosition(_ start: (Int,Int), width: Int, height: Int)-> CGPoint
+    //func modifyLocation(){}
 }

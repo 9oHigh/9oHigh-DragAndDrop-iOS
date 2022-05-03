@@ -9,8 +9,13 @@ import UIKit
 import SnapKit
 
 final class SideMenu: UIView {
-     
-    let module = UIImageView(frame: .zero)
+    
+    static var kindOfModule = ""
+    static var sizeOfItem = ModuleSize(0, 0)
+    var tableView = UITableView()
+    // 임시
+    var moduleList = [CustomModule(type: .button), CustomModule(type: .dial), CustomModule(type: .send), CustomModule(type: .timer)]
+    //var moduleList: [ModuleType] = [.button,.timer,.dial,.send]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,24 +30,103 @@ final class SideMenu: UIView {
     }
     
     private func setUI(){
-       addSubview(module)
+        addSubview(tableView)
     }
     
-    func setConfig(){
-        backgroundColor = .lightGray
-        module.isUserInteractionEnabled = true
-        module.contentMode = .scaleAspectFit
-        module.image = UIImage(named: "ButtonModule")
+    private func setConfig(){
+        
+        backgroundColor = .white
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(SideMenuTableViewCell.self, forCellReuseIdentifier: SideMenuTableViewCell.identifier)
+        
+        //Drag And Drop
+        tableView.dragDelegate = self
+        tableView.dropDelegate = self
+        tableView.dragInteractionEnabled = true
+        
+        tableView.backgroundColor = .lightGray
+        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 300, bottom: 0, right: 0)
     }
     
-    func setConstraints(){
-        module.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.8)
-            make.height.equalToSuperview().multipliedBy(0.15)
-            make.top.equalTo(30)
+    private func setConstraints(){
+        
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
 }
-
-
+extension SideMenu: UITableViewDelegate,UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return moduleList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SideMenuTableViewCell.identifier, for: indexPath) as? SideMenuTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        cell.initialModule(moduleType: moduleList[indexPath.row].type)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+}
+extension SideMenu: UITableViewDragDelegate,UITableViewDropDelegate, UIDragInteractionDelegate {
+    
+    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
+        let dragItem = UIDragItem(itemProvider: NSItemProvider())
+        print(#function)
+        dragItem.previewProvider = {
+            print("야아아아호오오오")
+            let imageView = UIImageView(image: UIImage(named: "\(SideMenu.kindOfModule).png"))
+            return UIDragPreview(view: imageView)
+        }
+        
+        return [dragItem]
+    }
+    
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        print(#function)
+        let module = moduleList[indexPath.row]
+        
+        switch module.type {
+            
+        case .button:
+            SideMenu.kindOfModule = "ButtonModule"
+            SideMenu.sizeOfItem = ModuleSize(128, 128)
+        case .send:
+            SideMenu.kindOfModule = "SendModule"
+            SideMenu.sizeOfItem = ModuleSize(272, 176)
+        case .dial:
+            SideMenu.kindOfModule = "DialModule"
+            SideMenu.sizeOfItem = ModuleSize(128, 128)
+        case .timer:
+            SideMenu.kindOfModule = "TimerModule"
+            SideMenu.sizeOfItem = ModuleSize(128,224)
+        }
+        
+        let provider = NSItemProvider(object: module)
+        
+        return [UIDragItem(itemProvider: provider)]
+    }
+    
+    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
+        print(#function)
+        return session.canLoadObjects(ofClass: CustomModule.self)
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        print(#function)
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        print(#function)
+        return UITableViewDropProposal(operation: .cancel)
+    }
+}

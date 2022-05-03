@@ -12,6 +12,7 @@
 		3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C61146228190C3D00EB5E01 /* SideMenu.swift */; };
 		3C611474281A72E000EB5E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C611473281A72E000EB5E01 /* Main.storyboard */; };
 		3C635318281A8FE900A3A079 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C635317281A8FE900A3A079 /* MainViewController.swift */; };
+		3C9AF408282088D600657D4A /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF407282088D600657D4A /* SideMenuCell.swift */; };
 		3CB83B56281B8F8A0027FC6D /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB83B55281B8F8A0027FC6D /* CanvasView.swift */; };
 		3CB83B58281B90C80027FC6D /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB83B57281B90C80027FC6D /* Module.swift */; };
 		4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3B28181E2100BA53EB /* AppDelegate.swift */; };
@@ -46,6 +47,7 @@
 		3C61146228190C3D00EB5E01 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		3C611473281A72E000EB5E01 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3C635317281A8FE900A3A079 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		3C9AF407282088D600657D4A /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
 		3CB83B55281B8F8A0027FC6D /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		3CB83B57281B90C80027FC6D /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		4CD14B3828181E2100BA53EB /* usket.DragAndDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usket.DragAndDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				3C61146228190C3D00EB5E01 /* SideMenu.swift */,
+				3C9AF407282088D600657D4A /* SideMenuCell.swift */,
 				3C0EFF9D281F6C8200B24A8F /* ModuleSize.swift */,
 				3CB83B57281B90C80027FC6D /* Module.swift */,
 				3CB83B55281B8F8A0027FC6D /* CanvasView.swift */,
@@ -120,6 +123,7 @@
 		3C61146B281A70F500EB5E01 /* UIDragDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				3C9AF40B282095CA00657D4A /* Utils */,
 				3C61146428190C4300EB5E01 /* View */,
 				3C2AE3EA2818E72400F25815 /* controller */,
 			);
@@ -130,6 +134,13 @@
 			isa = PBXGroup;
 			children = (
 				3C635317281A8FE900A3A079 /* MainViewController.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		3C9AF40B282095CA00657D4A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -326,6 +337,7 @@
 				4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */,
 				3C0EFF9E281F6C8200B24A8F /* ModuleSize.swift in Sources */,
 				3C635318281A8FE900A3A079 /* MainViewController.swift in Sources */,
+				3C9AF408282088D600657D4A /* SideMenuCell.swift in Sources */,
 				3CB83B58281B90C80027FC6D /* Module.swift in Sources */,
 				4CD14B3E28181E2100BA53EB /* SceneDelegate.swift in Sources */,
 				3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */,
