@@ -75,6 +75,7 @@ final class CanvasView: UIView {
         for y in start.0...start.0 + Int(height/24){
             for x in start.1...start.1 + Int(width/24){
                 if y >= 12 || x >= 30 { return false }
+                else if y < 0 || x < 0 { return false }
                 if included[y][x] {
                     return true
                 }
