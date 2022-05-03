@@ -43,6 +43,7 @@ final class CanvasView: UIView {
         if included[startPoint.1][startPoint.0] {
             return
         } else {
+            
             let module = Module(frame: .zero)
             
             switch moduleType {
@@ -58,7 +59,8 @@ final class CanvasView: UIView {
             
             addSubview(module)
             module.frame = CGRect(x: Double(startPoint.0 * 24), y: Double(startPoint.1 * 24), width: module.size!.width, height: module.size!.height)
-            //자리 차지
+            
+            // 자리 확보
             for y in startPoint.1...startPoint.1 + Int(module.size!.height / 23.46) {
                 for x in startPoint.0 ... startPoint.0 + Int(module.size!.width / 23.46) {
                     if y >= 12 || x >= 30 {
@@ -77,11 +79,11 @@ final class CanvasView: UIView {
                 if y >= 12 || x >= 30 { return false }
                 else if y < 0 || x < 0 { return false }
                 if included[y][x] {
-                    return true
+                    return false
                 }
             }
         }
-        return false
+        return true
     }
     
     //func findNewPosition(_ start: (Int,Int), width: Int, height: Int)-> CGPoint

@@ -48,6 +48,14 @@ final class CanvasViewController: UIViewController {
         openButton.setTitleColor(.black, for: .normal)
     }
     
+    @IBAction func resetButtonClicked(_ sender: UIButton) {
+
+        for item in self.backgroundGrid.subviews where item is Module {
+            item.removeFromSuperview()
+        }
+        self.backgroundGrid.included = [[Bool]](repeating: Array(repeating: false, count: 30),count: 12)
+    }
+    
     @objc
     private func changeImage(){
         animateView(status: status)
@@ -89,16 +97,16 @@ extension CanvasViewController: UIDragInteractionDelegate {
         // 여기서 확인 + Provider Preview
         
         /* while
-        if let moduleView = view.hitTest(location, with: nil), moduleView is ... {
+         if let moduleView = view.hitTest(location, with: nil), moduleView is ... {
          
-        }
+         }
          */
-
+        
         let dragItem = UIDragItem(itemProvider: NSItemProvider())
-                
+        
         return [dragItem]
     }
-
+    
     func dragInteraction(_ interaction: UIDragInteraction, previewForLifting item: UIDragItem, session: UIDragSession) -> UITargetedDragPreview? {
         print(#function)
         
@@ -134,34 +142,37 @@ extension CanvasViewController: UIDropInteractionDelegate {
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         print(#function)
-        
         let locationPoint = session.location(in: backgroundGrid)
         
         backgroundGrid.addSubview(shadowView)
         
-        DispatchQueue.main.async{
+        DispatchQueue.main.async {
             let points = self.getShadowPosition(locationPoint.x, locationPoint.y)
             var col = Int(points.x / 24)
             var row = Int(points.y / 24)
             
             if row < 0 { row = 0 }
-            else if row > 30 { row = 30 }
+            else if row >= 12 { row = 11 }
             else if col < 0 { col = 0 }
-            else if col > 12 { col = 12 }
+            else if col >= 30 { col = 29 }
             
             self.shadowView.frame = CGRect(x: points.x, y: points.y, width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
             self.shadowView.layer.cornerRadius = 10
             
             if self.backgroundGrid.checkPosition((row,col), width: Int(SideMenu.sizeOfItem.width), height: Int(SideMenu.sizeOfItem.height)) {
-                self.shadowView.backgroundColor = UIColor.red.withAlphaComponent(0.2)
-            } else {
+                
                 self.shadowView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
                 self.shadowView.layer.cornerRadius = 10
+            } else {
+                self.shadowView.backgroundColor = UIColor.red.withAlphaComponent(0.2)
             }
         }
         
         if self.sideMenu.tableView.hasActiveDrag {
-            if shadowView.frame.minX < 0 || shadowView.frame.maxX > backgroundGrid.frame.width || shadowView.frame.minY < 0 || shadowView.frame.maxY > backgroundGrid.frame.height {
+            if shadowView.frame.minX < 0 || shadowView.frame.maxX > backgroundGrid.frame.maxX || shadowView.frame.minY < 0 || shadowView.frame.maxY > backgroundGrid.frame.maxY {
+                print("움직이고있음")
+                print(shadowView.frame)
+                print(backgroundGrid.frame)
                 DispatchQueue.main.async {
                     self.shadowView.removeFromSuperview()
                 }
@@ -169,12 +180,14 @@ extension CanvasViewController: UIDropInteractionDelegate {
             }
             return UIDropProposal(operation: .copy)
         } else {
-             if shadowView.frame.minX < 0 || shadowView.frame.maxX > backgroundGrid.frame.width || shadowView.frame.minY < 0 || shadowView.frame.maxY > backgroundGrid.frame.height{
-                 DispatchQueue.main.async {
-                     self.shadowView.removeFromSuperview()
-                 }
-                 return UIDropProposal(operation: .cancel)
-             }
+            print("움직이고있지않음")
+            if shadowView.frame.minX < 0 || shadowView.frame.maxX > backgroundGrid.frame.maxX || shadowView.frame.minY < 0 || shadowView.frame.maxY > backgroundGrid.frame.maxY {
+                
+                DispatchQueue.main.async {
+                    self.shadowView.removeFromSuperview()
+                }
+                return UIDropProposal(operation: .cancel)
+            }
             return UIDropProposal(operation: .move)
         }
     }
@@ -182,8 +195,12 @@ extension CanvasViewController: UIDropInteractionDelegate {
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         print(#function)
         
-        self.shadowView.removeFromSuperview()
-        
+        if self.shadowView.backgroundColor == UIColor.red.withAlphaComponent(0.2) {
+            self.shadowView.removeFromSuperview()
+            return
+        } else {
+            self.shadowView.removeFromSuperview()
+        }
         session.loadObjects(ofClass: CustomModule.self) { item in
             
             guard let customModule = item.first as? CustomModule else {
