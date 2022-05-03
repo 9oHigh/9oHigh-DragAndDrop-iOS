@@ -59,15 +59,12 @@ final class CanvasView: UIView {
             addSubview(module)
             module.frame = CGRect(x: Double(startPoint.0 * 24), y: Double(startPoint.1 * 24), width: module.size!.width, height: module.size!.height)
             //자리 차지
-            for y in startPoint.1...startPoint.1 + Int(module.size!.height / 24) {
-                if y >= 12 { return }
-                for x in startPoint.0 ... startPoint.0 + Int(module.size!.width / 24) {
-                    if x >= 30 {
-                        included[y][x] = true
+            for y in startPoint.1...startPoint.1 + Int(module.size!.height / 23.46) {
+                for x in startPoint.0 ... startPoint.0 + Int(module.size!.width / 23.46) {
+                    if y >= 12 || x >= 30 {
                         return
                     }
                     included[y][x] = true
-                    print("INCLUDED",y,x,included[y][x])
                 }
             }
         }
@@ -76,9 +73,8 @@ final class CanvasView: UIView {
     func checkPosition(_ start: (Int,Int), width: Int, height: Int) -> Bool {
         
         for y in start.0...start.0 + Int(height/24){
-            if y >= 12 { return false }
             for x in start.1...start.1 + Int(width/24){
-                if x >= 30 { return false }
+                if y >= 12 || x >= 30 { return false }
                 if included[y][x] {
                     return true
                 }

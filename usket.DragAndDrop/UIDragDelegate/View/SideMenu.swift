@@ -15,7 +15,6 @@ final class SideMenu: UIView {
     var tableView = UITableView()
     // 임시
     var moduleList = [CustomModule(type: .button), CustomModule(type: .dial), CustomModule(type: .send), CustomModule(type: .timer)]
-    //var moduleList: [ModuleType] = [.button,.timer,.dial,.send]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -77,19 +76,7 @@ extension SideMenu: UITableViewDelegate,UITableViewDataSource {
         return 60
     }
 }
-extension SideMenu: UITableViewDragDelegate,UITableViewDropDelegate, UIDragInteractionDelegate {
-    
-    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
-        let dragItem = UIDragItem(itemProvider: NSItemProvider())
-        print(#function)
-        dragItem.previewProvider = {
-            print("야아아아호오오오")
-            let imageView = UIImageView(image: UIImage(named: "\(SideMenu.kindOfModule).png"))
-            return UIDragPreview(view: imageView)
-        }
-        
-        return [dragItem]
-    }
+extension SideMenu: UITableViewDragDelegate,UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         print(#function)
@@ -112,8 +99,14 @@ extension SideMenu: UITableViewDragDelegate,UITableViewDropDelegate, UIDragInter
         }
         
         let provider = NSItemProvider(object: module)
+        let dragItem = UIDragItem(itemProvider: provider)
         
-        return [UIDragItem(itemProvider: provider)]
+        dragItem.previewProvider = {
+            let preview = UIImageView(image: UIImage(named: "\(SideMenu.kindOfModule).png"))
+            return UIDragPreview(view: preview)
+        }
+        
+        return [dragItem]
     }
     
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {

@@ -113,8 +113,8 @@
 			children = (
 				3C61146228190C3D00EB5E01 /* SideMenu.swift */,
 				3C9AF407282088D600657D4A /* SideMenuCell.swift */,
-				3C0EFF9D281F6C8200B24A8F /* ModuleSize.swift */,
 				3CB83B57281B90C80027FC6D /* Module.swift */,
+				3C0EFF9D281F6C8200B24A8F /* ModuleSize.swift */,
 				3CB83B55281B8F8A0027FC6D /* CanvasView.swift */,
 			);
 			path = View;
