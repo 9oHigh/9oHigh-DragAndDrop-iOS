@@ -13,6 +13,7 @@ final class SideMenu: UIView {
     static var kindOfModule = ""
     static var sizeOfItem = ModuleSize(0, 0)
     var tableView = UITableView()
+    let viewModel = ViewModel()
     // 임시
     var moduleList = [CustomModule(type: .button), CustomModule(type: .dial), CustomModule(type: .send), CustomModule(type: .timer)]
     
@@ -79,7 +80,10 @@ extension SideMenu: UITableViewDragDelegate,UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         print(#function)
+        
         let module = moduleList[indexPath.row]
+        let index = viewModel.getModuleIndex(module: module)
+        module.setIndex(index: index)
         
         switch module.type {
             

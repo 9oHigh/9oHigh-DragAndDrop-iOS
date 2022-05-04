@@ -10,10 +10,8 @@ import UIKit
 final class CanvasView: UIView {
     
     // 가로 길이: 704, 세로 길이: 272
-    // Frame의 시작점을 기준으로 차지하고 있는지!
     static let columns = 30
     static let rows = 12
-    
     // 해당 칸이 자리를 차지하고 있는지
     var included = [[Bool]](repeating: Array(repeating: false, count: columns),count: rows)
     
@@ -38,23 +36,22 @@ final class CanvasView: UIView {
         }
     }
     
-    func setLocation(_ startPoint: (Int,Int),_ moduleType: CustomModuleType) {
+    func setLocation(_ startPoint: (Int,Int),_ moduleType: CustomModuleType,id: String) {
         
         if included[startPoint.1][startPoint.0] {
             return
         } else {
-            
             let module = Module(frame: .zero)
             
             switch moduleType {
             case .button:
-                module.initailModule(moduleType, image: UIImage(named: "ButtonModule.png")!)
+                module.initailModule(moduleType, id: id, image: UIImage(named: "ButtonModule.png")!)
             case .dial:
-                module.initailModule(moduleType, image: UIImage(named: "DialModule.png")!)
+                module.initailModule(moduleType, id: id, image: UIImage(named: "DialModule.png")!)
             case .send:
-                module.initailModule(moduleType, image: UIImage(named: "SendModule.png")!)
+                module.initailModule(moduleType, id: id, image: UIImage(named: "SendModule.png")!)
             case .timer:
-                module.initailModule(moduleType, image: UIImage(named: "TimerModule.png")!)
+                module.initailModule(moduleType, id: id, image: UIImage(named: "TimerModule.png")!)
             }
             
             addSubview(module)
@@ -73,7 +70,6 @@ final class CanvasView: UIView {
     }
     
     func checkPosition(_ start: (Int,Int), width: Int, height: Int) -> Bool {
-        
         for y in start.0...start.0 + Int(height/24){
             for x in start.1...start.1 + Int(width/24){
                 if y >= 12 || x >= 30 { return false }
@@ -85,7 +81,4 @@ final class CanvasView: UIView {
         }
         return true
     }
-    
-    //func findNewPosition(_ start: (Int,Int), width: Int, height: Int)-> CGPoint
-    //func modifyLocation(){}
 }
