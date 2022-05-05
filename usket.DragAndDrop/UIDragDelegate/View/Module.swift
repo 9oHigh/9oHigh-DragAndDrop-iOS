@@ -17,24 +17,27 @@ enum ModuleType: String {
     case timer
 }
 
-final class Module: UIView {
+final class Module: UIView, Identifiable {
     
     var moduleType = CustomModuleType.button
     // 해당 뷰를 덮을 뷰가 필요, 현재는 이미지뷰
     var moduleImageView = UIImageView()
-    var size : ModuleSize?
+    var size: ModuleSize?
+    var id: String?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = 5
+        addInteraction(UIDragInteraction(delegate: self))
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func initailModule(_ moduleType: CustomModuleType, image: UIImage){
+    func initailModule(_ moduleType: CustomModuleType, id: String,image: UIImage){
         
+        self.id = id
         moduleImageView.image = image
         
         self.moduleType = moduleType
@@ -74,8 +77,8 @@ enum CustomModuleType : String, Codable {
     case timer
     
     enum ErrorType: Error {
-            case encoding
-            case decoding
+        case encoding
+        case decoding
     }
     
     init(from decoder: Decoder) throws {
@@ -109,13 +112,60 @@ enum CustomModuleType : String, Codable {
         }
     }
 }
-
+extension Module: UIDragInteractionDelegate {
+    
+    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
+        
+        let location = session.location(in: self)
+        let touchedView = self.hitTest(location, with: nil)
+        let customModule = getCustomModule(view: touchedView ?? UIView())
+        let dragItem = UIDragItem(itemProvider: NSItemProvider(object: customModule))
+        
+        dragItem.localObject = touchedView
+        
+        return [dragItem]
+    }
+    func getCustomModule(view: UIView) -> CustomModule {
+        
+        if let customView = view as? Module {
+            switch customView.moduleType {
+            case .button:
+                return CustomModule(type: .button, index: Int(customView.id!))
+            case .send:
+                return CustomModule(type: .send, index: Int(customView.id!))
+            case .dial:
+                return CustomModule(type: .dial, index: Int(customView.id!))
+            case .timer:
+                return CustomModule(type: .timer, index: Int(customView.id!))
+            }
+            
+        } else {
+            print(#function,"ERROR")
+            return CustomModule(type: .dial, index: 0)
+        }
+    }
+    //MARK: - REFACTOR
+    func dragInteraction(_ interaction: UIDragInteraction, willAnimateLiftWith animator: UIDragAnimating, session: UIDragSession) {
+        print("Session Items:",session.items)
+        session.items.forEach { dragItem in
+            if let draggedView = dragItem.localObject as? UIView {
+                print("DraggedView : ",draggedView)
+                
+                draggedView.removeFromSuperview()
+                print("제거됌?")
+                print(session.items)
+            }
+        }
+    }
+}
 final class CustomModule : NSObject, NSItemProviderWriting, Codable, NSItemProviderReading {
     
-    let type : CustomModuleType
+    let type: CustomModuleType
+    var index: Int?
     
-    init(type:CustomModuleType) {
+    init(type: CustomModuleType, index: Int? = nil) {
         self.type = type
+        self.index = index
     }
     
     static var writableTypeIdentifiersForItemProvider: [String] {
@@ -145,5 +195,26 @@ final class CustomModule : NSObject, NSItemProviderWriting, Codable, NSItemProvi
         } catch {
             fatalError()
         }
+    }
+    
+    func setIndex(index:Int){
+        self.index = index
+    }
+    
+    func getType() -> CustomModuleType{
+        return self.type
+    }
+    
+    func getIndex() -> Int?{
+        return self.index
+    }
+    
+    func toJSON() -> String{
+        return """
+            {
+                type: \(type),
+                index : \(index)
+            }
+        """
     }
 }

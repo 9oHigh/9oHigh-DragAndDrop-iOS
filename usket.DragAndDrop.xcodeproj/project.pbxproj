@@ -12,6 +12,8 @@
 		3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C61146228190C3D00EB5E01 /* SideMenu.swift */; };
 		3C611474281A72E000EB5E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C611473281A72E000EB5E01 /* Main.storyboard */; };
 		3C9AF408282088D600657D4A /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF407282088D600657D4A /* SideMenuCell.swift */; };
+		3C9AF40E282247CE00657D4A /* UIResponder + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF40D282247CE00657D4A /* UIResponder + Extension.swift */; };
+		3C9AF41228225C3F00657D4A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF41128225C3F00657D4A /* ViewModel.swift */; };
 		3CB83B56281B8F8A0027FC6D /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB83B55281B8F8A0027FC6D /* CanvasView.swift */; };
 		3CB83B58281B90C80027FC6D /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB83B57281B90C80027FC6D /* Module.swift */; };
 		4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3B28181E2100BA53EB /* AppDelegate.swift */; };
@@ -46,6 +48,8 @@
 		3C61146228190C3D00EB5E01 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		3C611473281A72E000EB5E01 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3C9AF407282088D600657D4A /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
+		3C9AF40D282247CE00657D4A /* UIResponder + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder + Extension.swift"; sourceTree = "<group>"; };
+		3C9AF41128225C3F00657D4A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		3CB83B55281B8F8A0027FC6D /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		3CB83B57281B90C80027FC6D /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		4CD14B3828181E2100BA53EB /* usket.DragAndDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usket.DragAndDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,9 +126,27 @@
 			isa = PBXGroup;
 			children = (
 				3C61146428190C4300EB5E01 /* View */,
+				3C9AF41028225C2E00657D4A /* ViewModel */,
 				3C2AE3EA2818E72400F25815 /* controller */,
+				3C9AF40F282247D300657D4A /* Utility */,
 			);
 			path = UIDragDelegate;
+			sourceTree = "<group>";
+		};
+		3C9AF40F282247D300657D4A /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				3C9AF40D282247CE00657D4A /* UIResponder + Extension.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		3C9AF41028225C2E00657D4A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3C9AF41128225C3F00657D4A /* ViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		4CD14B2F28181E2100BA53EB = {
@@ -313,6 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C9AF41228225C3F00657D4A /* ViewModel.swift in Sources */,
 				3CB83B56281B8F8A0027FC6D /* CanvasView.swift in Sources */,
 				4CD14B4028181E2100BA53EB /* CanvasViewController.swift in Sources */,
 				4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */,
@@ -321,6 +344,7 @@
 				3CB83B58281B90C80027FC6D /* Module.swift in Sources */,
 				4CD14B3E28181E2100BA53EB /* SceneDelegate.swift in Sources */,
 				3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */,
+				3C9AF40E282247CE00657D4A /* UIResponder + Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,9 +513,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 46QF7GBZH7;
+				DEVELOPMENT_TEAM = 4B7YLKL5S2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = usket.DragAndDrop/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -506,6 +531,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "usKet.usket-DragAndDrop";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -517,9 +543,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 46QF7GBZH7;
+				DEVELOPMENT_TEAM = 4B7YLKL5S2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = usket.DragAndDrop/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -534,6 +561,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "usKet.usket-DragAndDrop";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
