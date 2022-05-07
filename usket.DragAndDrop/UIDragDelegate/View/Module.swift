@@ -144,16 +144,12 @@ extension Module: UIDragInteractionDelegate {
             return CustomModule(type: .dial, index: 0)
         }
     }
-    //MARK: - REFACTOR
-    func dragInteraction(_ interaction: UIDragInteraction, willAnimateLiftWith animator: UIDragAnimating, session: UIDragSession) {
-        print("Session Items:",session.items)
+    
+    func dragInteraction(_ interaction: UIDragInteraction, session: UIDragSession, willEndWith operation: UIDropOperation) {
+
         session.items.forEach { dragItem in
             if let draggedView = dragItem.localObject as? UIView {
-                print("DraggedView : ",draggedView)
-                
                 draggedView.removeFromSuperview()
-                print("제거됌?")
-                print(session.items)
             }
         }
     }

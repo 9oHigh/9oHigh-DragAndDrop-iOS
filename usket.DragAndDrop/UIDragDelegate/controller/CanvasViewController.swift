@@ -193,10 +193,6 @@ extension CanvasViewController: UIDropInteractionDelegate {
             }
             // Remove 해야함, 조건이 필요
             print("COPY")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.shadowView.removeFromSuperview()
-            }
-            // self.shadowView.removeFromSuperview()
             return UIDropProposal(operation: .copy)
         } else {
             if shadowView.frame.minX < 0 || shadowView.frame.maxX > backgroundGrid.frame.width || shadowView.frame.minY < 0 || shadowView.frame.maxY > backgroundGrid.frame.height || shadowView.backgroundColor == UIColor.red.withAlphaComponent(0.2) {
@@ -207,11 +203,7 @@ extension CanvasViewController: UIDropInteractionDelegate {
                 return UIDropProposal(operation: .cancel)
             } else {
                 // Remove 해야함, 조건이 필요
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.shadowView.removeFromSuperview()
-                }
                 print("MOVE")
-                
                 return UIDropProposal(operation: .move)
             }
         }
