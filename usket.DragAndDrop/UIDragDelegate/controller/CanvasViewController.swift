@@ -26,9 +26,7 @@ final class CanvasViewController: UIViewController {
     
     // delegate + addtarget(openButton)
     private func setUp(){
-        
-        //backgoundGrid에 넣지만
-        //backgroundGrid.addInteraction(UIDragInteraction(delegate: self))
+
         backgroundGrid.addInteraction(UIDropInteraction(delegate: self))
         
         view.addSubview(backgroundGrid)
@@ -121,6 +119,7 @@ extension CanvasViewController: UIDragInteractionDelegate {
             return CustomModule(type: .dial, index: 0)
         }
     }
+    
     func dragInteraction(_ interaction: UIDragInteraction, previewForLifting item: UIDragItem, session: UIDragSession) -> UITargetedDragPreview? {
         print(#function)
         
@@ -205,19 +204,6 @@ extension CanvasViewController: UIDropInteractionDelegate {
                 // Remove 해야함, 조건이 필요
                 print("MOVE")
                 return UIDropProposal(operation: .move)
-            }
-        }
-    }
-    
-    func dragInteraction(_ interaction: UIDragInteraction, willAnimateLiftWith animator: UIDragAnimating, session: UIDragSession) {
-        session.items.forEach { dragItem in
-            if let draggedView = dragItem.localObject as? UIView {
-                if draggedView == backgroundGrid {
-                    
-                } else {
-                    draggedView.removeFromSuperview()
-                    print(draggedView.frame)
-                }
             }
         }
     }

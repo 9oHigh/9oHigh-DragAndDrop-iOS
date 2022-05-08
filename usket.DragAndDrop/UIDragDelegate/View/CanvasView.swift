@@ -19,7 +19,7 @@ final class CanvasView: UIView {
         super.init(frame: frame)
         setCanvas()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -28,7 +28,7 @@ final class CanvasView: UIView {
         
         let gridBackground = UIImageView(image: UIImage(named: "GridBackground.png"))
         gridBackground.contentMode = .scaleAspectFit
-    
+        
         addSubview(gridBackground)
         
         gridBackground.snp.makeConstraints { make in
@@ -38,33 +38,29 @@ final class CanvasView: UIView {
     
     func setLocation(_ startPoint: (Int,Int),_ moduleType: CustomModuleType,id: String) {
         
-        if included[startPoint.1][startPoint.0] {
-            return
-        } else {
-            let module = Module(frame: .zero)
-            
-            switch moduleType {
-            case .button:
-                module.initailModule(moduleType, id: id, image: UIImage(named: "ButtonModule.png")!)
-            case .dial:
-                module.initailModule(moduleType, id: id, image: UIImage(named: "DialModule.png")!)
-            case .send:
-                module.initailModule(moduleType, id: id, image: UIImage(named: "SendModule.png")!)
-            case .timer:
-                module.initailModule(moduleType, id: id, image: UIImage(named: "TimerModule.png")!)
-            }
-            
-            addSubview(module)
-            module.frame = CGRect(x: Double(startPoint.0 * 24), y: Double(startPoint.1 * 24), width: module.size!.width, height: module.size!.height)
-            
-            // 자리 확보
-            for y in startPoint.1...startPoint.1 + Int(module.size!.height / 23.46) {
-                for x in startPoint.0 ... startPoint.0 + Int(module.size!.width / 23.46) {
-                    if y >= 12 || x >= 30 {
-                        return
-                    }
-                    included[y][x] = true
+        let module = Module(frame: .zero)
+        
+        switch moduleType {
+        case .button:
+            module.initailModule(moduleType, id: id, image: UIImage(named: "ButtonModule.png")!)
+        case .dial:
+            module.initailModule(moduleType, id: id, image: UIImage(named: "DialModule.png")!)
+        case .send:
+            module.initailModule(moduleType, id: id, image: UIImage(named: "SendModule.png")!)
+        case .timer:
+            module.initailModule(moduleType, id: id, image: UIImage(named: "TimerModule.png")!)
+        }
+        
+        addSubview(module)
+        module.frame = CGRect(x: Double(startPoint.0 * 24), y: Double(startPoint.1 * 24), width: module.size!.width, height: module.size!.height)
+        
+        // 자리 확보
+        for y in startPoint.1...startPoint.1 + Int(module.size!.height / 23.46) {
+            for x in startPoint.0 ... startPoint.0 + Int(module.size!.width / 23.46) {
+                if y >= 12 || x >= 30 {
+                    return
                 }
+                included[y][x] = true
             }
         }
     }
