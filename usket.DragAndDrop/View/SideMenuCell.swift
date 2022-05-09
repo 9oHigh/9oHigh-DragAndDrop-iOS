@@ -17,15 +17,15 @@ final class SideMenuTableViewCell: UITableViewCell {
         
         selectionStyle = .none
         
-        contentView.addSubview(moduleImageView)
+        addSubview(moduleImageView)
         
         moduleImageView.contentMode = .scaleAspectFill
         
         moduleImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalTo(40)
+            make.top.equalTo(0)
+            make.leading.equalTo(0)
             make.trailing.equalTo(0)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(0)
         }
     }
     

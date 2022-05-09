@@ -27,7 +27,6 @@ final class CanvasViewController: UIViewController {
     private func setUp(){
         
         backgroundGrid.addInteraction(UIDropInteraction(delegate: self))
-        
         view.addSubview(backgroundGrid)
         view.addSubview(sideMenu)
         view.addSubview(openButton)
@@ -170,26 +169,21 @@ extension CanvasViewController: UIDropInteractionDelegate {
         
         DispatchQueue.main.async {
             
-            if self.prevPosi == CGPoint(x: Int(self.shadowView.frame.minX), y: Int(self.shadowView.frame.minY)) {
-                self.shadowView.frame = CGRect(x: points.x, y: points.y, width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
-
-                return
-            } else {
-                
-                self.shadowView.frame = CGRect(x: points.x, y: points.y, width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
-                
-                self.prevPosi = CGPoint(x: Int(self.shadowView.frame.minX), y: Int(self.shadowView.frame.minY))
-                
+            self.shadowView.frame = CGRect(x: points.x, y: points.y, width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
+            
+            self.prevPosi = CGPoint(x: Int(self.shadowView.frame.minX), y: Int(self.shadowView.frame.minY))
+            
+            self.shadowView.layer.cornerRadius = 10
+            
+            if self.backgroundGrid.checkPosition((row,col), width: Int(SideMenu.sizeOfItem.width), height: Int(SideMenu.sizeOfItem.height)) {
+                self.shadowView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
                 self.shadowView.layer.cornerRadius = 10
-                
-                if self.backgroundGrid.checkPosition((row,col), width: Int(SideMenu.sizeOfItem.width), height: Int(SideMenu.sizeOfItem.height)) {
-                    self.shadowView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-                    self.shadowView.layer.cornerRadius = 10
-                } else {
-                    self.shadowView.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-                }
+            } else {
+                self.shadowView.backgroundColor = UIColor.red.withAlphaComponent(0.5)
             }
         }
+        
+        print(session.localDragSession?.location(in: self.view))
         
         if self.shadowView.frame.minY + self.shadowView.frame.height > self.backgroundGrid.frame.height {
             self.shadowView.removeFromSuperview()
@@ -200,10 +194,11 @@ extension CanvasViewController: UIDropInteractionDelegate {
             self.shadowView.removeFromSuperview()
             return UIDropProposal(operation: .cancel)
         }
+        
         // MARK: - Need Refactor
         if self.sideMenu.tableView.hasActiveDrag {
             
-            let shadowPosi = (Int(shadowView.frame.minX / 23.46),Int(shadowView.frame.minY/23.46))
+            let shadowPosi = (Int(shadowView.frame.minX / 23.46),Int(shadowView.frame.minY / 23.46))
             
             if backgroundGrid.checkPosition((shadowPosi.1,shadowPosi.0), width: Int(shadowView.frame.width), height: Int(shadowView.frame.height)) {
                 if self.prevPosi == CGPoint(x: Int(self.shadowView.frame.minX), y: Int(self.shadowView.frame.minY)) {

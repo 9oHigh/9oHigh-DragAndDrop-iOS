@@ -12,6 +12,7 @@ final class SideMenu: UIView {
     
     static var kindOfModule = ""
     static var sizeOfItem = ModuleSize(0, 0)
+    
     var tableView = UITableView()
     let viewModel = ViewModel()
     // 임시
@@ -28,13 +29,11 @@ final class SideMenu: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setUI(){
+    private func setUI() {
         addSubview(tableView)
     }
     
-    private func setConfig(){
-        
-        backgroundColor = .white
+    private func setConfig() {
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -46,12 +45,11 @@ final class SideMenu: UIView {
         tableView.dragInteractionEnabled = true
         
         tableView.backgroundColor = .lightGray
-        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 00, right: 0)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 300, bottom: 0, right: 0)
     }
     
     private func setConstraints(){
-        
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -73,7 +71,7 @@ extension SideMenu: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 100
     }
 }
 extension SideMenu: UITableViewDragDelegate,UITableViewDropDelegate {
