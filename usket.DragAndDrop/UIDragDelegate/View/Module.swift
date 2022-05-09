@@ -115,7 +115,7 @@ enum CustomModuleType : String, Codable {
 extension Module: UIDragInteractionDelegate {
     
     func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
-        
+        print(#function)
         let location = session.location(in: self)
         let touchedView = self.hitTest(location, with: nil)
         let customModule = getCustomModule(view: touchedView ?? UIView())
@@ -123,8 +123,13 @@ extension Module: UIDragInteractionDelegate {
         
         dragItem.localObject = touchedView
         
+        let module = touchedView as? Module
+        SideMenu.sizeOfItem.height = module?.frame.height ?? 0
+        SideMenu.sizeOfItem.width = module?.frame.width ?? 0
+        
         return [dragItem]
     }
+    
     func getCustomModule(view: UIView) -> CustomModule {
         
         if let customView = view as? Module {
@@ -146,6 +151,7 @@ extension Module: UIDragInteractionDelegate {
     }
 
     func dragInteraction(_ interaction: UIDragInteraction, session: UIDragSession, willEndWith operation: UIDropOperation) {
+        print(#function)
         if operation == .cancel {
             return
         } else if operation == .move {
