@@ -18,10 +18,6 @@ final class ViewModel {
         } else {
             currentModuleDict[type] = [module]
         }
-        
-        currentModuleDict[type]?.map{
-            print( $0.toJSON())
-        }
     }
     
     func removeModule(){

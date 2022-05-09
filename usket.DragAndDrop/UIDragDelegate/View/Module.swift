@@ -144,13 +144,16 @@ extension Module: UIDragInteractionDelegate {
             return CustomModule(type: .dial, index: 0)
         }
     }
-    // MARK: - Need Refactoringb
-    // 놓을 수 없는 위치일 경우 해당 함수 바로 리턴해야하고 기존의 자리는 false로 전환
+
     func dragInteraction(_ interaction: UIDragInteraction, session: UIDragSession, willEndWith operation: UIDropOperation) {
-        
-        session.items.forEach { dragItem in
-            if let draggedView = dragItem.localObject as? UIView {
-                draggedView.removeFromSuperview()
+        if operation == .cancel {
+            return
+        } else if operation == .move {
+            session.items.forEach { dragItem in
+                if let draggedView = dragItem.localObject as? UIView {
+                    CanvasView.clearPositon(draggedView.frame)
+                    draggedView.removeFromSuperview()
+                }
             }
         }
     }

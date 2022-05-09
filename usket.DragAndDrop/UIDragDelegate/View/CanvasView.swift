@@ -13,7 +13,7 @@ final class CanvasView: UIView {
     static let columns = 30
     static let rows = 12
     // 해당 칸이 자리를 차지하고 있는지
-    var included = [[Bool]](repeating: Array(repeating: false, count: columns),count: rows)
+    static var included = [[Bool]](repeating: Array(repeating: false, count: columns),count: rows)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -60,7 +60,7 @@ final class CanvasView: UIView {
                 if y >= 12 || x >= 30 {
                     return
                 }
-                included[y][x] = true
+                CanvasView.included[y][x] = true
             }
         }
     }
@@ -70,11 +70,26 @@ final class CanvasView: UIView {
             for x in start.1...start.1 + Int(width/24){
                 if y >= 12 || x >= 30 { return false }
                 else if y < 0 || x < 0 { return false }
-                if included[y][x] {
+                if CanvasView.included[y][x] {
                     return false
                 }
             }
         }
         return true
+    }
+    
+    static func clearPositon(_ module: CGRect){
+        
+        let xPosition = Int(module.origin.x / 23.46)
+        let yPosition = Int(module.origin.y / 23.46)
+        
+        for y in yPosition...yPosition + Int(module.height / 23.46) {
+            for x in xPosition ... xPosition + Int(module.width / 23.46) {
+                if y >= 12 || x >= 30 {
+                    return
+                }
+                CanvasView.included[y][x] = false
+            }
+        }
     }
 }
