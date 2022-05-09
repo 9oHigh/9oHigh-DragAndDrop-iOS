@@ -183,8 +183,6 @@ extension CanvasViewController: UIDropInteractionDelegate {
             }
         }
         
-        print(session.localDragSession?.location(in: self.view))
-        
         if self.shadowView.frame.minY + self.shadowView.frame.height > self.backgroundGrid.frame.height {
             self.shadowView.removeFromSuperview()
             return UIDropProposal(operation: .cancel)
