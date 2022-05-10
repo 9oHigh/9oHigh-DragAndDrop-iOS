@@ -9,12 +9,12 @@ import UIKit
 import SnapKit
 
 final class SideMenu: UIView {
-
-    static var sizeOfItem = ModuleSize(0, 0)
     
+    static var sizeOfItem = ModuleSize(0, 0)
     var tableView = UITableView()
     let viewModel = ViewModel()
     var moduleList = [Module(type: .buttonModule), Module(type: .dialModule), Module(type: .sendModule), Module(type: .timerModule)]
+    // var previewView : [UIImageView] = [UIImageView(),UIImageView(),UIImageView(),UIImageView()]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,6 +51,7 @@ final class SideMenu: UIView {
     }
 }
 extension SideMenu: UITableViewDelegate,UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return moduleList.count
     }
@@ -93,9 +94,20 @@ extension SideMenu: UITableViewDragDelegate,UITableViewDropDelegate {
         case .timerModule:
             SideMenu.sizeOfItem = ModuleSize(128,224)
         }
-    
+        /*
+         기존의 코드는 작동을 안함
+         1. UIImageView를 가진 Module을 만들거나
+         2. UITargetedPreview가 왜 Window에 있는지 조사
+         3. 2번의 경우, 현재 자료 없음
+         
+        self.previewView[indexPath.row] = preview
+        self.tableView.addSubview(previewView[indexPath.row])
+        self.previewView[indexPath.row].image = preview.image
+        self.previewView[indexPath.row].contentMode = .scaleAspectFit
+        self.previewView[indexPath.row].frame = CGRect(x: 0, y: 0, width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
+         */
         dragItem.previewProvider = {
-          return UIDragPreview(view: preview)
+            return UIDragPreview(view: preview)
         }
         
         return [dragItem]
@@ -112,6 +124,6 @@ extension SideMenu: UITableViewDragDelegate,UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         print(#function)
-        return UITableViewDropProposal(operation: .cancel)
+        return UITableViewDropProposal(operation: .forbidden)
     }
 }

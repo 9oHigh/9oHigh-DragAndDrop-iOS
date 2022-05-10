@@ -34,7 +34,6 @@ final class SideMenuTableViewCell: UITableViewCell {
     }
     
     func initialModule(moduleType: ModuleType){
-        
         self.moduleImageView.image = UIImage(named: moduleType.imageName)
     }
 }
