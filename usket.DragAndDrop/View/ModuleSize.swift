@@ -8,6 +8,7 @@
 import UIKit
 
 struct ModuleSize {
+    
     var height: CGFloat
     var width: CGFloat
     

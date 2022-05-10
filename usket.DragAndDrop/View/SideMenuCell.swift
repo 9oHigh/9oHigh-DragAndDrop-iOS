@@ -33,8 +33,8 @@ final class SideMenuTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func initialModule(moduleType: CustomModuleType){
+    func initialModule(moduleType: ModuleType){
         
-        self.moduleImageView.image = UIImage(named: moduleType.rawValue)
+        self.moduleImageView.image = UIImage(named: moduleType.imageName)
     }
 }

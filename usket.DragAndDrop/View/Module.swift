@@ -8,73 +8,12 @@
 import UIKit
 import MobileCoreServices
 
-// MARK: - Module(UIView), ModuleType(Enum:String)
-
-enum ModuleType: String {
-    case button
-    case dial
-    case send
-    case timer
-}
-
-final class Module: UIView, Identifiable {
+enum ModuleType : String, Codable {
     
-    var moduleType = CustomModuleType.button
-    // 해당 뷰를 덮을 뷰가 필요, 현재는 이미지뷰
-    var moduleImageView = UIImageView()
-    var size: ModuleSize?
-    var id: String?
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        layer.cornerRadius = 5
-        addInteraction(UIDragInteraction(delegate: self))
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func initailModule(_ moduleType: CustomModuleType, id: String,image: UIImage){
-        
-        self.id = id
-        moduleImageView.image = image
-        
-        self.moduleType = moduleType
-        setModuleType(self.moduleType)
-        
-        self.addSubview(moduleImageView)
-        
-        self.moduleImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-    
-    private func setModuleType(_ moduleType: CustomModuleType){
-        
-        switch moduleType {
-        case .button:
-            self.size = ModuleSize(128, 128)
-            SideMenu.sizeOfItem = ModuleSize(128, 128)
-        case .dial:
-            self.size = ModuleSize(128, 128)
-            SideMenu.sizeOfItem = ModuleSize(128, 128)
-        case .send:
-            self.size = ModuleSize(272, 176)
-            SideMenu.sizeOfItem = ModuleSize(272, 176)
-        case .timer:
-            self.size = ModuleSize(128,224)
-            SideMenu.sizeOfItem = ModuleSize(128,224)
-        }
-    }
-}
-// MARK: - CustomModuleType(String,Codable), CustomModule(For Drag And Drop Object)
-enum CustomModuleType : String, Codable {
-    
-    case button
-    case send
-    case dial
-    case timer
+    case buttonModule
+    case sendModule
+    case dialModule
+    case timerModule
     
     enum ErrorType: Error {
         case encoding
@@ -84,15 +23,16 @@ enum CustomModuleType : String, Codable {
     init(from decoder: Decoder) throws {
         let value = try decoder.singleValueContainer()
         let decodedValue = try value.decode(String.self)
+        
         switch decodedValue {
-        case ModuleType.send.rawValue:
-            self = .send
-        case ModuleType.button.rawValue:
-            self = .button
-        case ModuleType.timer.rawValue:
-            self = .timer
-        case ModuleType.dial.rawValue:
-            self = .dial
+        case ModuleType.sendModule.rawValue:
+            self = .sendModule
+        case ModuleType.buttonModule.rawValue:
+            self = .buttonModule
+        case ModuleType.timerModule.rawValue:
+            self = .timerModule
+        case ModuleType.dialModule.rawValue:
+            self = .dialModule
         default:
             throw ErrorType.decoding
         }
@@ -101,75 +41,50 @@ enum CustomModuleType : String, Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case .button:
-            try container.encode(ModuleType.button.rawValue)
-        case .send:
-            try container.encode(ModuleType.send.rawValue)
-        case .dial:
-            try container.encode(ModuleType.dial.rawValue)
-        case .timer:
-            try container.encode(ModuleType.timer.rawValue)
+        case .buttonModule:
+            try container.encode(ModuleType.buttonModule.rawValue)
+        case .sendModule:
+            try container.encode(ModuleType.sendModule.rawValue)
+        case .dialModule:
+            try container.encode(ModuleType.dialModule.rawValue)
+        case .timerModule:
+            try container.encode(ModuleType.timerModule.rawValue)
+        }
+    }
+    
+    var imageName: String {
+        switch self {
+        case .buttonModule:
+            return "button"
+        case .sendModule:
+            return "send"
+        case .dialModule:
+            return "dial"
+        case .timerModule:
+            return "timer"
+        }
+    }
+    
+    var size: ModuleSize {
+        switch self {
+        case .buttonModule:
+            return ModuleSize(128, 128)
+        case .sendModule:
+            return ModuleSize(272, 176)
+        case .dialModule:
+            return ModuleSize(128, 128)
+        case .timerModule:
+            return ModuleSize(128,224)
         }
     }
 }
-extension Module: UIDragInteractionDelegate {
-    
-    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
-        print(#function)
-        let location = session.location(in: self)
-        let touchedView = self.hitTest(location, with: nil)
-        let customModule = getCustomModule(view: touchedView ?? UIView())
-        let dragItem = UIDragItem(itemProvider: NSItemProvider(object: customModule))
-        
-        dragItem.localObject = touchedView
-        
-        let module = touchedView as? Module
-        SideMenu.sizeOfItem.height = module?.frame.height ?? 0
-        SideMenu.sizeOfItem.width = module?.frame.width ?? 0
-        
-        return [dragItem]
-    }
-    
-    func getCustomModule(view: UIView) -> CustomModule {
-        
-        if let customView = view as? Module {
-            switch customView.moduleType {
-            case .button:
-                return CustomModule(type: .button, index: Int(customView.id!))
-            case .send:
-                return CustomModule(type: .send, index: Int(customView.id!))
-            case .dial:
-                return CustomModule(type: .dial, index: Int(customView.id!))
-            case .timer:
-                return CustomModule(type: .timer, index: Int(customView.id!))
-            }
-            
-        } else {
-            print(#function,"ERROR")
-            return CustomModule(type: .dial, index: 0)
-        }
-    }
 
-    func dragInteraction(_ interaction: UIDragInteraction, session: UIDragSession, willEndWith operation: UIDropOperation) {
-        print(#function)
-        if operation == .cancel {
-            return
-        } else if operation == .move {
-            session.items.forEach { dragItem in
-                if let draggedView = dragItem.localObject as? UIView {
-                    CanvasView.clearPositon(draggedView.frame)
-                    draggedView.removeFromSuperview()
-                }
-            }
-        }
-    }
-}
-final class CustomModule : NSObject, NSItemProviderWriting, Codable, NSItemProviderReading {
+final class Module : NSObject, NSItemProviderWriting, Codable, NSItemProviderReading {
     
-    let type: CustomModuleType
+    let type: ModuleType
     var index: Int?
     
-    init(type: CustomModuleType, index: Int? = nil) {
+    init(type: ModuleType, index: Int? = nil) {
         self.type = type
         self.index = index
     }
@@ -178,8 +93,23 @@ final class CustomModule : NSObject, NSItemProviderWriting, Codable, NSItemProvi
         return [String(kUTTypeData)]
     }
     
+    static var readableTypeIdentifiersForItemProvider: [String] {
+        return [String(kUTTypeData)]
+    }
+    
+    static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> Module {
+        do {
+            let subject = try JSONDecoder().decode(Module.self, from: data)
+            return subject
+        } catch {
+            fatalError()
+        }
+    }
+    
     func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {
+        
         let progress = Progress(totalUnitCount: 100)
+        
         do {
             let data = try JSONEncoder().encode(self)
             progress.completedUnitCount = 100
@@ -187,31 +117,19 @@ final class CustomModule : NSObject, NSItemProviderWriting, Codable, NSItemProvi
         } catch {
             completionHandler(nil, error)
         }
+        
         return progress
     }
     
-    static var readableTypeIdentifiersForItemProvider: [String] {
-        return [String(kUTTypeData)]
-    }
-    
-    static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> CustomModule {
-        do {
-            let subject = try JSONDecoder().decode(CustomModule.self, from: data)
-            return subject
-        } catch {
-            fatalError()
-        }
-    }
-    
-    func setIndex(index:Int){
+    func setIndex(index: Int){
         self.index = index
     }
     
-    func getType() -> CustomModuleType{
+    func getType() -> ModuleType {
         return self.type
     }
     
-    func getIndex() -> Int?{
+    func getIndex() -> Int? {
         return self.index
     }
     
@@ -219,8 +137,19 @@ final class CustomModule : NSObject, NSItemProviderWriting, Codable, NSItemProvi
         return """
             {
                 type: \(type),
-                index : \(index)
+                index : \(String(describing: index))
             }
         """
+    }
+}
+
+struct ModuleSize {
+    
+    var height: CGFloat
+    var width: CGFloat
+    
+    init(_ height: CGFloat, _ width: CGFloat){
+        self.height = height
+        self.width = width
     }
 }

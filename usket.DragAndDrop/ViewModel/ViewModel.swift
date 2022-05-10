@@ -5,11 +5,15 @@
 //  Created by Luxrobo on 2022/05/04.
 //
 
+// MARK: Need Refactor
+/// 1. CRUD ( 추가, 수정, 제거 ... )
+/// 2. 기존의 저장된 정보를 불러오는 방법론이 필요
+
 final class ViewModel {
     
-    var currentModuleDict: [CustomModuleType : [CustomModule]] = [:]
+    var currentModuleDict: [ModuleType : [Module]] = [:]
     
-    func addModule(module: CustomModule){
+    func addModule(module: Module){
         
         let type = module.getType()
       
@@ -24,7 +28,7 @@ final class ViewModel {
         
     }
     
-    func getModuleIndex(module: CustomModule) -> Int {
+    func getModuleIndex(module: Module) -> Int {
         var index = 1
         let type = module.getType()
 

@@ -8,15 +8,16 @@ enum MenuStatus {
 final class CanvasViewController: UIViewController {
     
     //Sidemenu, Menu Status
-    private let backgroundGrid = CanvasView(frame: .zero)
+    private var status: MenuStatus = .open
     private let sideMenu = SideMenu()
     private let openButton = UIButton()
-    private var status: MenuStatus = .open
-    private var currentType: CustomModuleType = .button
     
     //Item into Grid
+    private let backgroundGrid = CanvasView()
     private let shadowView = UIView()
-    private var prevPosi = CGPoint(x: 0, y: 0)
+    
+    //ViewModel
+    private var viewModel = ViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,31 +27,23 @@ final class CanvasViewController: UIViewController {
     // delegate + addtarget(openButton)
     private func setUp(){
         
-        backgroundGrid.addInteraction(UIDropInteraction(delegate: self))
-        view.addSubview(backgroundGrid)
+        addChildVC(backgroundGrid, container: view)
         view.addSubview(sideMenu)
         view.addSubview(openButton)
         
-        backgroundGrid.isUserInteractionEnabled = true
-        backgroundGrid.frame = CGRect(x: UIScreen.main.bounds.midX - 352, y: UIScreen.main.bounds.midY - 118, width: 704, height: 272)
+        backgroundGrid.view.isUserInteractionEnabled = true
+        backgroundGrid.view.addInteraction(UIDropInteraction(delegate: self))
+        backgroundGrid.view.frame = CGRect(x: UIScreen.main.bounds.midX - 352, y: UIScreen.main.bounds.midY - 118, width: 704, height: 272)
         
         openButton.setImage(UIImage(systemName: "arrow.right"), for: .normal)
         openButton.addTarget(self, action: #selector(changeImage), for: .touchUpInside)
         openButton.frame = CGRect(x: view.frame.maxX - 155, y: 0, width: 55, height: 55)
-        sideMenu.frame = CGRect(x: view.frame.maxX - 100, y: 0, width: 100, height: view.frame.height)
-        
         openButton.backgroundColor = .white
         openButton.layer.cornerRadius = 10
         openButton.tintColor = .black
         openButton.setTitleColor(.black, for: .normal)
-    }
-    
-    @IBAction func resetButtonClicked(_ sender: UIButton) {
         
-        for item in self.backgroundGrid.subviews where item is Module {
-            item.removeFromSuperview()
-        }
-        CanvasView.included = [[Bool]](repeating: Array(repeating: false, count: 30),count: 12)
+        sideMenu.frame = CGRect(x: view.frame.maxX - 100, y: 0, width: 100, height: view.frame.height)
     }
     
     @objc
@@ -83,84 +76,38 @@ final class CanvasViewController: UIViewController {
             })
         }
     }
-}
-extension CanvasViewController: UIDragInteractionDelegate {
     
-    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
-        print(#function)
-        
-        let location = session.location(in: backgroundGrid)
-        let touchedView = self.backgroundGrid.hitTest(location, with: nil)
-        let customModule = getCustomModule(view: touchedView ?? UIView())
-        let dragItem = UIDragItem(itemProvider: NSItemProvider(object: customModule))
-        
-        dragItem.localObject = touchedView
-        
-        return [dragItem]
-    }
-    func getCustomModule(view: UIView) -> CustomModule {
-        
-        if let customView = view as? Module {
-            switch customView.moduleType {
-            case .button:
-                return CustomModule(type: .button, index: Int(customView.id!))
-            case .send:
-                return CustomModule(type: .send, index: Int(customView.id!))
-            case .dial:
-                return CustomModule(type: .dial, index: Int(customView.id!))
-            case .timer:
-                return CustomModule(type: .timer, index: Int(customView.id!))
-            }
-            
-        } else {
-            print(#function,"ERROR")
-            return CustomModule(type: .dial, index: 0)
-        }
-    }
-    
-    func dragInteraction(_ interaction: UIDragInteraction, previewForLifting item: UIDragItem, session: UIDragSession) -> UITargetedDragPreview? {
-        print(#function)
-        
-        let target = UIDragPreviewTarget(container: interaction.view!, center: session.location(in: interaction.view!))
-        
-        return UITargetedDragPreview(view: makePreviewImage() , parameters: UIDragPreviewParameters(), target: target)
-    }
-    
-    func makePreviewImage() -> UIImageView {
-        print(#function)
-        let dragImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height))
-        let dragImage = UIImage(named: "\(SideMenu.kindOfModule).png")
-        dragImageView.image = dragImage
-        return dragImageView
-    }
-    
-    func dragInteraction(_ interaction: UIDragInteraction, sessionDidMove session: UIDragSession) {
-        print(#function)
-    }
-    
-    func getShadowPosition(_ xPosition: CGFloat,_ yPosition: CGFloat) -> CGPoint {
-        let shadowX = Int(xPosition / 24) * 24
-        let shadowY = Int(yPosition / 24) * 24
-        return CGPoint(x: shadowX, y: shadowY)
+    func addChildVC(_ childVC: UIViewController, container: UIView){
+        addChild(childVC)
+        childVC.view.frame = container.bounds
+        container.addSubview(childVC.view)
+        childVC.willMove(toParent: self)
+        childVC.didMove(toParent: self)
     }
 }
 extension CanvasViewController: UIDropInteractionDelegate {
     
+    func getShadowPosition(_ xPosition: CGFloat,_ yPosition: CGFloat) -> CGPoint {
+        let shadowX = Int(xPosition / 24)
+        let shadowY = Int(yPosition / 24)
+        return CGPoint(x: shadowX, y: shadowY)
+    }
+    
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         print(#function)
-        return session.canLoadObjects(ofClass: CustomModule.self)
+        return session.canLoadObjects(ofClass: Module.self)
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         print(#function)
         
-        let locationPoint = session.location(in: backgroundGrid)
+        let locationPoint = session.location(in: backgroundGrid.view)
         
-        backgroundGrid.addSubview(shadowView)
+        backgroundGrid.view.addSubview(shadowView)
         
         let points = self.getShadowPosition(locationPoint.x, locationPoint.y)
-        var col = Int(points.x / 24)
-        var row = Int(points.y / 24)
+        var col = Int(points.x)
+        var row = Int(points.y)
         
         if row < 0 { row = 0 }
         else if row >= 12 { row = 11 }
@@ -168,102 +115,61 @@ extension CanvasViewController: UIDropInteractionDelegate {
         else if col >= 30 { col = 29 }
         
         DispatchQueue.main.async {
-            
-            self.shadowView.frame = CGRect(x: points.x, y: points.y, width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
-            
-            self.prevPosi = CGPoint(x: Int(self.shadowView.frame.minX), y: Int(self.shadowView.frame.minY))
-            
+            self.shadowView.frame = CGRect(x: points.x * 24, y: points.y * 24, width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
             self.shadowView.layer.cornerRadius = 10
             
             if self.backgroundGrid.checkPosition((row,col), width: Int(SideMenu.sizeOfItem.width), height: Int(SideMenu.sizeOfItem.height)) {
-                self.shadowView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-                self.shadowView.layer.cornerRadius = 10
+                self.shadowView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
             } else {
-                self.shadowView.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+                self.shadowView.backgroundColor = UIColor.red.withAlphaComponent(0.4)
             }
         }
         
-        if self.shadowView.frame.minY + self.shadowView.frame.height > self.backgroundGrid.frame.height {
-            self.shadowView.removeFromSuperview()
+        let shadow = shadowView.frame
+        let shadowPosition = (Int(shadow.minX / 23.46),Int(shadow.minY / 23.46))
+        
+        // 하단 초과
+        if shadow.minY + shadow.height > backgroundGrid.view.frame.height {
+            shadowView.removeFromSuperview()
+            return UIDropProposal(operation: .cancel)
+        // 우측 초과
+        } else if shadow.minX + shadow.width > backgroundGrid.view.frame.width {
+            shadowView.removeFromSuperview()
             return UIDropProposal(operation: .cancel)
         }
         
-        if self.shadowView.frame.minX + self.shadowView.frame.width > self.backgroundGrid.frame.width {
-            self.shadowView.removeFromSuperview()
-            return UIDropProposal(operation: .cancel)
-        }
-        
-        // MARK: - Need Refactor
         if self.sideMenu.tableView.hasActiveDrag {
-            
-            let shadowPosi = (Int(shadowView.frame.minX / 23.46),Int(shadowView.frame.minY / 23.46))
-            
-            if backgroundGrid.checkPosition((shadowPosi.1,shadowPosi.0), width: Int(shadowView.frame.width), height: Int(shadowView.frame.height)) {
-                if self.prevPosi == CGPoint(x: Int(self.shadowView.frame.minX), y: Int(self.shadowView.frame.minY)) {
-                    print("COPY1")
+            if backgroundGrid.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
+                    print("COPY")
                     return UIDropProposal(operation: .copy)
-                }
-                print("COPY2")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.shadowView.removeFromSuperview()
-                }
-                return UIDropProposal(operation: .copy)
-            } else {
-                print("CANCEL")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.shadowView.removeFromSuperview()
-                }
-                return UIDropProposal(operation: .cancel)
             }
         } else {
-            
-            let shadowPosi = (Int(shadowView.frame.minX / 23.46),Int(shadowView.frame.minY/23.46))
-            
-            if backgroundGrid.checkPosition((shadowPosi.1,shadowPosi.0), width: Int(shadowView.frame.width), height: Int(shadowView.frame.height)) {
-                if self.prevPosi == CGPoint(x: Int(self.shadowView.frame.minX), y: Int(self.shadowView.frame.minY)) {
+            if backgroundGrid.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
                     print("MOVE")
                     return UIDropProposal(operation: .move)
-                }
-                print("MOVE")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.shadowView.removeFromSuperview()
-                }
-                return UIDropProposal(operation: .move)
-            } else {
-                print("CANCEL")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.shadowView.removeFromSuperview()
-                }
-                return UIDropProposal(operation: .cancel)
             }
         }
+        print("CANCEL")
+        self.shadowView.removeFromSuperview()
+        return UIDropProposal(operation: .cancel)
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         print(#function)
         
-        if self.shadowView.backgroundColor == UIColor.red.withAlphaComponent(0.5) {
+        self.shadowView.removeFromSuperview()
+        
+        session.loadObjects(ofClass: Module.self) { item in
             
-            self.shadowView.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.maxY, width: 0, height: 0)
-            self.shadowView.removeFromSuperview()
-            return
+            guard let customModule = item.first as? Module else {
+                return
+            }
             
-        } else {
-            
-            self.shadowView.removeFromSuperview()
-            
-            session.loadObjects(ofClass: CustomModule.self) { item in
-                
-                guard let customModule = item.first as? CustomModule else {
-                    return
-                }
-                
-                DispatchQueue.main.async {
-                    let id = String(customModule.getIndex()!)
-                    let points = self.getShadowPosition(self.shadowView.frame.minX, self.shadowView.frame.minY)
-                    self.backgroundGrid.setLocation((Int(points.x) / 24, Int(points.y) / 24), customModule.type, id: id)
-                    self.shadowView.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.maxY, width: 0, height: 0)
-                }
+            DispatchQueue.main.async {
+                let points = self.getShadowPosition(self.shadowView.frame.minX, self.shadowView.frame.minY)
+                self.backgroundGrid.setLocation((Int(points.x), Int(points.y)), customModule)
+                // 기존위치에서 시작하기 때문에 위치 초기화
+                self.shadowView.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.maxY, width: 0, height: 0)
             }
         }
     }

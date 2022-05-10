@@ -7,21 +7,16 @@
 
 import UIKit
 
-final class CanvasView: UIView {
+final class CanvasView: UIViewController {
     
     // 가로 길이: 704, 세로 길이: 272
     static let columns = 30
     static let rows = 12
-    // 해당 칸이 자리를 차지하고 있는지
     static var included = [[Bool]](repeating: Array(repeating: false, count: columns),count: rows)
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
         setCanvas()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     private func setCanvas(){
@@ -29,34 +24,44 @@ final class CanvasView: UIView {
         let gridBackground = UIImageView(image: UIImage(named: "GridBackground.png"))
         gridBackground.contentMode = .scaleAspectFit
         
-        addSubview(gridBackground)
+        view.addSubview(gridBackground)
         
         gridBackground.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
-    func setLocation(_ startPoint: (Int,Int),_ moduleType: CustomModuleType,id: String) {
+    func addChildVC(_ childVC : UIViewController,container: UIView) {
+        addChild(childVC)
+        childVC.view.frame = container.bounds
+        container.addSubview(childVC.view)
+        childVC.willMove(toParent: self)
+        childVC.didMove(toParent: self)
+    }
+    
+    func setLocation(_ startPoint: (Int,Int),_ module: Module) {
         
-        let module = Module(frame: .zero)
+        var moduleVC = ModuleViewController(module: module, size: module.type.size)
         
-        switch moduleType {
-        case .button:
-            module.initailModule(moduleType, id: id, image: UIImage(named: "ButtonModule.png")!)
-        case .dial:
-            module.initailModule(moduleType, id: id, image: UIImage(named: "DialModule.png")!)
-        case .send:
-            module.initailModule(moduleType, id: id, image: UIImage(named: "SendModule.png")!)
-        case .timer:
-            module.initailModule(moduleType, id: id, image: UIImage(named: "TimerModule.png")!)
+        switch module.type {
+            
+        case .buttonModule:
+            moduleVC = ButtonModuleViewContoller(module: module, size: module.type.size)
+        case .sendModule:
+            moduleVC = SendModuleViewContoller(module: module, size: module.type.size)
+        case .dialModule:
+            moduleVC = DialModuleViewContoller(module: module, size: module.type.size)
+        case .timerModule:
+            moduleVC = TimerModuleViewContoller(module: module, size: module.type.size)
         }
         
-        addSubview(module)
-        module.frame = CGRect(x: Double(startPoint.0 * 24), y: Double(startPoint.1 * 24), width: module.size!.width, height: module.size!.height)
+        addChildVC(moduleVC, container: view)
+        
+        moduleVC.view.frame = CGRect(x: Double(startPoint.0 * 24), y: Double(startPoint.1 * 24), width: module.type.size.width, height: module.type.size.height)
         
         // 자리 확보
-        for y in startPoint.1...startPoint.1 + Int(module.size!.height / 23.46) {
-            for x in startPoint.0 ... startPoint.0 + Int(module.size!.width / 23.46) {
+        for y in startPoint.1...startPoint.1 + Int(module.type.size.height / 23.46) {
+            for x in startPoint.0 ... startPoint.0 + Int(module.type.size.width / 23.46) {
                 if y >= 12 || x >= 30 {
                     return
                 }
@@ -78,13 +83,13 @@ final class CanvasView: UIView {
         return true
     }
     
-    static func clearPositon(_ module: CGRect){
+    static func clearPositon(_ rect: CGRect){
         
-        let xPosition = Int(module.origin.x / 23.46)
-        let yPosition = Int(module.origin.y / 23.46)
+        let xPosition = Int(rect.origin.x / 23.46)
+        let yPosition = Int(rect.origin.y / 23.46)
         
-        for y in yPosition...yPosition + Int(module.height / 23.46) {
-            for x in xPosition ... xPosition + Int(module.width / 23.46) {
+        for y in yPosition...yPosition + Int(rect.height / 23.46) {
+            for x in xPosition ... xPosition + Int(rect.width / 23.46) {
                 if y >= 12 || x >= 30 {
                     return
                 }

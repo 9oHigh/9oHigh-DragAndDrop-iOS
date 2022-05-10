@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		3C0EFF9C281F62ED00B24A8F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3C0EFF9B281F62ED00B24A8F /* SnapKit */; };
-		3C0EFF9E281F6C8200B24A8F /* ModuleSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EFF9D281F6C8200B24A8F /* ModuleSize.swift */; };
 		3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C61146228190C3D00EB5E01 /* SideMenu.swift */; };
 		3C611474281A72E000EB5E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C611473281A72E000EB5E01 /* Main.storyboard */; };
 		3C9AF408282088D600657D4A /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF407282088D600657D4A /* SideMenuCell.swift */; };
 		3C9AF40E282247CE00657D4A /* UIResponder + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF40D282247CE00657D4A /* UIResponder + Extension.swift */; };
 		3C9AF41228225C3F00657D4A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF41128225C3F00657D4A /* ViewModel.swift */; };
+		3C9AF4142829F75400657D4A /* ModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF4132829F75400657D4A /* ModuleViewController.swift */; };
+		3C9AF417282A011700657D4A /* ButtonModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF416282A011700657D4A /* ButtonModuleViewController.swift */; };
+		3C9AF419282A012600657D4A /* DialModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF418282A012600657D4A /* DialModuleViewController.swift */; };
+		3C9AF41B282A013800657D4A /* TimerModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF41A282A013800657D4A /* TimerModuleViewController.swift */; };
+		3C9AF41D282A015000657D4A /* SendModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF41C282A015000657D4A /* SendModuleViewController.swift */; };
 		3CB83B56281B8F8A0027FC6D /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB83B55281B8F8A0027FC6D /* CanvasView.swift */; };
 		3CB83B58281B90C80027FC6D /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB83B57281B90C80027FC6D /* Module.swift */; };
 		4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD14B3B28181E2100BA53EB /* AppDelegate.swift */; };
@@ -44,12 +48,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3C0EFF9D281F6C8200B24A8F /* ModuleSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleSize.swift; sourceTree = "<group>"; };
 		3C61146228190C3D00EB5E01 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		3C611473281A72E000EB5E01 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3C9AF407282088D600657D4A /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
 		3C9AF40D282247CE00657D4A /* UIResponder + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder + Extension.swift"; sourceTree = "<group>"; };
 		3C9AF41128225C3F00657D4A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		3C9AF4132829F75400657D4A /* ModuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleViewController.swift; sourceTree = "<group>"; };
+		3C9AF416282A011700657D4A /* ButtonModuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModuleViewController.swift; sourceTree = "<group>"; };
+		3C9AF418282A012600657D4A /* DialModuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialModuleViewController.swift; sourceTree = "<group>"; };
+		3C9AF41A282A013800657D4A /* TimerModuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModuleViewController.swift; sourceTree = "<group>"; };
+		3C9AF41C282A015000657D4A /* SendModuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendModuleViewController.swift; sourceTree = "<group>"; };
 		3CB83B55281B8F8A0027FC6D /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		3CB83B57281B90C80027FC6D /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		4CD14B3828181E2100BA53EB /* usket.DragAndDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usket.DragAndDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				4CD14B3F28181E2100BA53EB /* CanvasViewController.swift */,
+				3C9AF415282A00FA00657D4A /* ModuleControllers */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -116,7 +125,6 @@
 				3C61146228190C3D00EB5E01 /* SideMenu.swift */,
 				3C9AF407282088D600657D4A /* SideMenuCell.swift */,
 				3CB83B57281B90C80027FC6D /* Module.swift */,
-				3C0EFF9D281F6C8200B24A8F /* ModuleSize.swift */,
 				3CB83B55281B8F8A0027FC6D /* CanvasView.swift */,
 			);
 			path = View;
@@ -136,6 +144,18 @@
 				3C9AF41128225C3F00657D4A /* ViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3C9AF415282A00FA00657D4A /* ModuleControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3C9AF4132829F75400657D4A /* ModuleViewController.swift */,
+				3C9AF416282A011700657D4A /* ButtonModuleViewController.swift */,
+				3C9AF418282A012600657D4A /* DialModuleViewController.swift */,
+				3C9AF41A282A013800657D4A /* TimerModuleViewController.swift */,
+				3C9AF41C282A015000657D4A /* SendModuleViewController.swift */,
+			);
+			path = ModuleControllers;
 			sourceTree = "<group>";
 		};
 		4CD14B2F28181E2100BA53EB = {
@@ -327,15 +347,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C9AF4142829F75400657D4A /* ModuleViewController.swift in Sources */,
 				3C9AF41228225C3F00657D4A /* ViewModel.swift in Sources */,
+				3C9AF417282A011700657D4A /* ButtonModuleViewController.swift in Sources */,
 				3CB83B56281B8F8A0027FC6D /* CanvasView.swift in Sources */,
+				3C9AF41D282A015000657D4A /* SendModuleViewController.swift in Sources */,
 				4CD14B4028181E2100BA53EB /* CanvasViewController.swift in Sources */,
 				4CD14B3C28181E2100BA53EB /* AppDelegate.swift in Sources */,
-				3C0EFF9E281F6C8200B24A8F /* ModuleSize.swift in Sources */,
 				3C9AF408282088D600657D4A /* SideMenuCell.swift in Sources */,
 				3CB83B58281B90C80027FC6D /* Module.swift in Sources */,
+				3C9AF419282A012600657D4A /* DialModuleViewController.swift in Sources */,
 				4CD14B3E28181E2100BA53EB /* SceneDelegate.swift in Sources */,
 				3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */,
+				3C9AF41B282A013800657D4A /* TimerModuleViewController.swift in Sources */,
 				3C9AF40E282247CE00657D4A /* UIResponder + Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
