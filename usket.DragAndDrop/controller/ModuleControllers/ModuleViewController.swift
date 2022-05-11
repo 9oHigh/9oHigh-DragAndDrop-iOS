@@ -50,6 +50,16 @@ extension ModuleViewController: UIDragInteractionDelegate {
         
         return [dragItem]
     }
+    
+    func dragInteraction(_ interaction: UIDragInteraction, previewForLifting item: UIDragItem, session: UIDragSession) -> UITargetedDragPreview? {
+        print(#function)
+        let target = UIDragPreviewTarget(container: interaction.view!, center: session.location(in: interaction.view!))
+        
+        let preview = UIImageView(image: UIImage(named: module.type.rawValue))
+        
+        return UITargetedDragPreview(view: preview, parameters:  UIDragPreviewParameters(),target: target)
+    }
+    
     // PerformDrop Success And Fail
     func dragInteraction(_ interaction: UIDragInteraction, session: UIDragSession, willEndWith operation: UIDropOperation) {
         print(#function)
@@ -65,5 +75,5 @@ extension ModuleViewController: UIDragInteractionDelegate {
             }
         }
     }
+        
 }
-
