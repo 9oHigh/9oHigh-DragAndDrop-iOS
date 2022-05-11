@@ -14,6 +14,7 @@ final class SideMenu: UIView {
     var tableView = UITableView()
     let viewModel = ViewModel()
     var moduleList = [Module(type: .buttonModule), Module(type: .dialModule), Module(type: .sendModule), Module(type: .timerModule)]
+    // var previewView : [UIImageView] = [UIImageView(),UIImageView(),UIImageView(),UIImageView()]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,6 +47,7 @@ final class SideMenu: UIView {
     }
 }
 extension SideMenu: UITableViewDelegate,UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return moduleList.count
     }

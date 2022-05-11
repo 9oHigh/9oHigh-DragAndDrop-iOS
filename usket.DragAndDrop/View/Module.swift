@@ -7,6 +7,7 @@
 
 import UIKit
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 enum ModuleType : String, Codable {
     
@@ -81,6 +82,7 @@ enum ModuleType : String, Codable {
 
 final class Module : NSObject, NSItemProviderWriting, Codable, NSItemProviderReading {
     
+    static var imageView = UIImageView()
     let type: ModuleType
     var index: Int?
     
@@ -88,13 +90,21 @@ final class Module : NSObject, NSItemProviderWriting, Codable, NSItemProviderRea
         self.type = type
         self.index = index
     }
-    
+   
     static var writableTypeIdentifiersForItemProvider: [String] {
-        return [String(kUTTypeData)]
+        if #available(iOS 15, *){
+            return [UTType.data.identifier]
+        } else {
+            return [String(kUTTypeData)]
+        }
     }
     
     static var readableTypeIdentifiersForItemProvider: [String] {
-        return [String(kUTTypeData)]
+        if #available(iOS 15, *){
+            return [UTType.data.identifier]
+        } else {
+            return [String(kUTTypeData)]
+        }
     }
     
     static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> Module {
