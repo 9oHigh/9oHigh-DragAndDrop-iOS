@@ -146,7 +146,7 @@ extension CanvasViewController: UIDropInteractionDelegate {
         }
         
         if backgroundGrid.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
-            return UIDropProposal(operation: .move)
+            return UIDropProposal(operation: .copy)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.25){
             self.shadowView.removeFromSuperview()
