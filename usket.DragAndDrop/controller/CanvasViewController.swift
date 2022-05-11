@@ -145,20 +145,13 @@ extension CanvasViewController: UIDropInteractionDelegate {
             return UIDropProposal(operation: .cancel)
         }
         
-        if self.sideMenu.tableView.hasActiveDrag {
-            if backgroundGrid.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
-                    print("COPY")
-                    return UIDropProposal(operation: .copy)
-            }
-        } else {
-            if backgroundGrid.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
-                    print("MOVE")
-                    return UIDropProposal(operation: .move)
-            }
+        if backgroundGrid.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
+            return UIDropProposal(operation: .move)
         }
-        print("CANCEL")
-        self.shadowView.removeFromSuperview()
-        return UIDropProposal(operation: .cancel)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.25){
+            self.shadowView.removeFromSuperview()
+        }
+        return UIDropProposal(operation: .forbidden)
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {

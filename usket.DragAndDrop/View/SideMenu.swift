@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class SideMenu: UIView {
-    
+
     static var sizeOfItem = ModuleSize(0, 0)
     var tableView = UITableView()
     let viewModel = ViewModel()
@@ -35,13 +35,9 @@ final class SideMenu: UIView {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(SideMenuTableViewCell.self, forCellReuseIdentifier: SideMenuTableViewCell.identifier)
-        
-        tableView.dragDelegate = self
-        // Drop: Module -> TableView -> Delete Module
         tableView.dropDelegate = self
-        tableView.dragInteractionEnabled = true
         tableView.separatorStyle = .none
+        tableView.register(SideMenuTableViewCell.self, forCellReuseIdentifier: SideMenuTableViewCell.identifier)
     }
     
     private func setConstraints(){
@@ -62,7 +58,13 @@ extension SideMenu: UITableViewDelegate,UITableViewDataSource {
             return UITableViewCell()
         }
         
+        let module = moduleList[indexPath.row]
+        let index = viewModel.getModuleIndex(module: module)
+        module.setIndex(index: index)
+        
         cell.initialModule(moduleType: moduleList[indexPath.row].type)
+        cell.addInteraction(UIDragInteraction(delegate: cell))
+        cell.module = module
         
         return cell
     }
@@ -71,59 +73,17 @@ extension SideMenu: UITableViewDelegate,UITableViewDataSource {
         return 100
     }
 }
-extension SideMenu: UITableViewDragDelegate,UITableViewDropDelegate {
-    
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        print(#function)
-        
-        let module = moduleList[indexPath.row]
-        let index = viewModel.getModuleIndex(module: module)
-        module.setIndex(index: index)
-        
-        let provider = NSItemProvider(object: module)
-        let dragItem = UIDragItem(itemProvider: provider)
-        let preview = UIImageView(image: UIImage(named: module.type.rawValue))
-        
-        switch module.type {
-        case .buttonModule:
-            SideMenu.sizeOfItem = ModuleSize(128, 128)
-        case .sendModule:
-            SideMenu.sizeOfItem = ModuleSize(272, 176)
-        case .dialModule:
-            SideMenu.sizeOfItem = ModuleSize(128, 128)
-        case .timerModule:
-            SideMenu.sizeOfItem = ModuleSize(128,224)
-        }
-        /*
-         기존의 코드는 작동을 안함
-         1. UIImageView를 가진 Module을 만들거나
-         2. UITargetedPreview가 왜 Window에 있는지 조사
-         3. 2번의 경우, 현재 자료 없음
-         
-        self.previewView[indexPath.row] = preview
-        self.tableView.addSubview(previewView[indexPath.row])
-        self.previewView[indexPath.row].image = preview.image
-        self.previewView[indexPath.row].contentMode = .scaleAspectFit
-        self.previewView[indexPath.row].frame = CGRect(x: 0, y: 0, width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
-         */
-        dragItem.previewProvider = {
-            return UIDragPreview(view: preview)
-        }
-        
-        return [dragItem]
-    }
+extension SideMenu: UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
         print(#function)
         return session.canLoadObjects(ofClass: Module.self)
     }
     
-    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        print(#function)
-    }
-    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
+  
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        print(#function)
+        // print(#function)
         return UITableViewDropProposal(operation: .forbidden)
     }
 }

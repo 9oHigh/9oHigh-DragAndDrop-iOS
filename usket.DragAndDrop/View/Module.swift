@@ -152,6 +152,16 @@ final class Module : NSObject, NSItemProviderWriting, Codable, NSItemProviderRea
         """
     }
 }
+extension Module {
+    
+    var dragItem: UIDragItem {
+        
+        let dragItem = UIDragItem(itemProvider: NSItemProvider(object: self))
+        dragItem.localObject = self
+        
+        return dragItem
+    }
+}
 
 struct ModuleSize {
     
