@@ -82,15 +82,15 @@ enum ModuleType : String, Codable {
 
 final class Module : NSObject, NSItemProviderWriting, Codable, NSItemProviderReading {
     
-    static var imageView = UIImageView()
     let type: ModuleType
+    var startPoint: CGPoint?
     var index: Int?
     
     init(type: ModuleType, index: Int? = nil) {
         self.type = type
         self.index = index
     }
-   
+    
     static var writableTypeIdentifiersForItemProvider: [String] {
         if #available(iOS 15, *){
             return [UTType.data.identifier]

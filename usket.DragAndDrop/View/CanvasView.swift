@@ -13,7 +13,7 @@ final class CanvasView: UIViewController {
     static let columns = 30
     static let rows = 12
     static var included = [[Bool]](repeating: Array(repeating: false, count: columns),count: rows)
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setCanvas()
@@ -59,15 +59,7 @@ final class CanvasView: UIViewController {
         
         moduleVC.view.frame = CGRect(x: Double(startPoint.0 * 24), y: Double(startPoint.1 * 24), width: module.type.size.width, height: module.type.size.height)
         
-        // 자리 확보
-        for y in startPoint.1...startPoint.1 + Int(module.type.size.height / 23.46) {
-            for x in startPoint.0 ... startPoint.0 + Int(module.type.size.width / 23.46) {
-                if y >= 12 || x >= 30 {
-                    return
-                }
-                CanvasView.included[y][x] = true
-            }
-        }
+        CanvasView.setPosition(startPoint, module)
     }
     
     func checkPosition(_ start: (Int,Int), width: Int, height: Int) -> Bool {
@@ -83,13 +75,22 @@ final class CanvasView: UIViewController {
         return true
     }
     
-    static func clearPositon(_ rect: CGRect){
+    static func setPosition(_ startPoint: (Int,Int),_ module: Module){
+        // 자리 확보
+        for y in startPoint.1...startPoint.1 + Int(module.type.size.height / 23.46) {
+            for x in startPoint.0 ... startPoint.0 + Int(module.type.size.width / 23.46) {
+                if y >= 12 || x >= 30 {
+                    return
+                }
+                CanvasView.included[y][x] = true
+            }
+        }
+    }
+    
+    static func clearPositon(_ startPoint: (Int,Int),_ module: Module){
         
-        let xPosition = Int(rect.origin.x / 23.46)
-        let yPosition = Int(rect.origin.y / 23.46)
-        
-        for y in yPosition...yPosition + Int(rect.height / 23.46) {
-            for x in xPosition ... xPosition + Int(rect.width / 23.46) {
+        for y in startPoint.1...startPoint.1 + Int(module.type.size.height / 23.46) {
+            for x in startPoint.0 ... startPoint.0 + Int(module.type.size.width / 23.46) {
                 if y >= 12 || x >= 30 {
                     return
                 }

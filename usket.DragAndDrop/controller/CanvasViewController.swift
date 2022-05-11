@@ -15,7 +15,7 @@ enum MenuStatus {
 final class CanvasViewController: UIViewController {
     
     //Sidemenu, Menu Status
-    private var status: MenuStatus = .open
+    static var status: MenuStatus = .open
     private let sideMenu = SideMenu()
     private let openButton = UIButton()
     
@@ -55,8 +55,8 @@ final class CanvasViewController: UIViewController {
     
     @objc
     private func changeImage(){
-        animateView(status: status)
-        status = status == .open ? .closed : .open
+        animateView(status: CanvasViewController.status)
+        CanvasViewController.status = CanvasViewController.status == .open ? .closed : .open
     }
     
     private func animateView(status: MenuStatus) {
@@ -139,8 +139,8 @@ extension CanvasViewController: UIDropInteractionDelegate {
         if shadow.minY + shadow.height > backgroundGrid.view.frame.height {
             shadowView.removeFromSuperview()
             return UIDropProposal(operation: .cancel)
-        // 우측 초과
-        } else if shadow.minX + shadow.width > backgroundGrid.view.frame.width {
+            // 우측 초과
+        } else if shadow.maxX > backgroundGrid.view.frame.width {
             shadowView.removeFromSuperview()
             return UIDropProposal(operation: .cancel)
         }
@@ -148,16 +148,12 @@ extension CanvasViewController: UIDropInteractionDelegate {
         if backgroundGrid.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
             return UIDropProposal(operation: .copy)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.25){
-            self.shadowView.removeFromSuperview()
-        }
+        
         return UIDropProposal(operation: .forbidden)
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         print(#function)
-        
-        self.shadowView.removeFromSuperview()
         
         session.loadObjects(ofClass: Module.self) { item in
             
@@ -168,9 +164,17 @@ extension CanvasViewController: UIDropInteractionDelegate {
             DispatchQueue.main.async {
                 let points = self.getShadowPosition(self.shadowView.frame.minX, self.shadowView.frame.minY)
                 self.backgroundGrid.setLocation((Int(points.x), Int(points.y)), customModule)
+                customModule.startPoint = CGPoint(x: points.x, y: points.y)
                 // 기존위치에서 시작하기 때문에 위치 초기화
                 self.shadowView.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.maxY, width: 0, height: 0)
             }
         }
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnd session: UIDropSession) {
+        print(#function)
+        // 기존위치에서 시작하기 때문에 위치 초기화
+        self.shadowView.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.maxY, width: 0, height: 0)
+        self.shadowView.removeFromSuperview()
     }
 }

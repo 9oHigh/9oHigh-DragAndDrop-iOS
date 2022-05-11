@@ -32,6 +32,10 @@ extension ModuleViewController: UIDragInteractionDelegate {
     
     func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
         print(#function)
+        // 닫혀있으면 컨트롤 불가능
+        if CanvasViewController.status == .closed {
+            return []
+        }
         
         let dragItem = UIDragItem(itemProvider: NSItemProvider(object: module))
         
@@ -45,7 +49,6 @@ extension ModuleViewController: UIDragInteractionDelegate {
         case .timerModule:
             SideMenu.sizeOfItem = ModuleSize(128,224)
         }
-        
         dragItem.localObject = self
         
         return [dragItem]
@@ -60,20 +63,32 @@ extension ModuleViewController: UIDragInteractionDelegate {
         return UITargetedDragPreview(view: preview, parameters:  UIDragPreviewParameters(),target: target)
     }
     
-    // PerformDrop Success And Fail
     func dragInteraction(_ interaction: UIDragInteraction, session: UIDragSession, willEndWith operation: UIDropOperation) {
         print(#function)
         
         if operation == .cancel {
+            session.items.forEach { dragItem in
+                if let draggedVC = dragItem.localObject as? ModuleViewController {
+                    let point = draggedVC.view.frame
+                    CanvasView.setPosition((Int(point.minX / 24),Int(point.minY / 24)), draggedVC.module)
+                }
+            }
             return
         }
         session.items.forEach { dragItem in
             if let draggedVC = dragItem.localObject as? ModuleViewController {
-                CanvasView.clearPositon(draggedVC.view.frame)
+                let point = draggedVC.view.frame
+                CanvasView.clearPositon((Int(point.minX),Int(point.minY)), draggedVC.module)
                 draggedVC.view.removeFromSuperview()
-                draggedVC.removeFromParent()
             }
         }
     }
-        
+    
+    func dragInteraction(_ interaction: UIDragInteraction, sessionWillBegin session: UIDragSession) {
+        print(#function)
+        guard let stPoint = module.startPoint else {
+            return
+        }
+        CanvasView.clearPositon((Int(stPoint.x),Int(stPoint.y)), module)
+    }
 }
