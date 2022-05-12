@@ -8,7 +8,7 @@
 import UIKit
 
 final class CanvasView: UIViewController {
-    
+     
     // 가로 길이: 704, 세로 길이: 272
     static let columns = 30
     static let rows = 12
