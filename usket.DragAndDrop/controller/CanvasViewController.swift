@@ -148,7 +148,6 @@ extension CanvasViewController: UIDropInteractionDelegate {
         if backgroundGrid.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
             return UIDropProposal(operation: .copy)
         }
-        
         return UIDropProposal(operation: .forbidden)
     }
     
