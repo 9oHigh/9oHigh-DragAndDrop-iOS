@@ -69,7 +69,9 @@ enum ModuleType : String, Codable {
     var size: ModuleSize {
         switch self {
         case .buttonModule:
-            return ModuleSize(128, 128)
+            var size = ModuleSize(0, 0)
+            size.setGridSize(col: 6, row: 6)
+            return size
         case .sendModule:
             return ModuleSize(272, 176)
         case .dialModule:
@@ -168,8 +170,18 @@ struct ModuleSize {
     var height: CGFloat
     var width: CGFloat
     
+    var col: Int
+    var row: Int
+    
     init(_ height: CGFloat, _ width: CGFloat){
         self.height = height
         self.width = width
+        self.col = 0
+        self.row = 0
+    }
+    
+    mutating func setGridSize(col: Int,row: Int){
+        self.col = col
+        self.row = row
     }
 }
