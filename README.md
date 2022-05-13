@@ -25,5 +25,8 @@
     - [x] 프리뷰 단계까지만 진입시 제거 불가능 이슈 
         - ModuleViewController의 sessionWillBegin을 활용해 적용
   - [x] 상단 및 좌측으로 드래그시에 쉐도우 지우기 : 드래그 불가능, 드롭으로 해결
+  - [x] 트러블 슈팅
+     - 기존의 테이블뷰의 Drag delegate가 아닌 Cell에 Drag delegate 적용함으로써 해당 오류 제거 가능
+     - 링크 : [CLIENT APP ERROR - Neither the view or container of the UITargetedPreview is currently in a window](https://stackoverflow.com/questions/61829440/client-app-error-neither-the-view-or-container-of-the-uitargetedpreview-is-cur)
   * 2차 개발
   - [ ] 쉐도우 자연스럽게 만들어보기
