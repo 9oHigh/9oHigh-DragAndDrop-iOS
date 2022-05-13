@@ -1,4 +1,6 @@
-# Drag And Drop
+# Drag And Drop 구현 및 테스트
+
+## Draft - Fixed
 
 ### 체크리스트
 
@@ -30,3 +32,8 @@
      - 링크 : [CLIENT APP ERROR - Neither the view or container of the UITargetedPreview is currently in a window](https://stackoverflow.com/questions/61829440/client-app-error-neither-the-view-or-container-of-the-uitargetedpreview-is-cur)
   * 2차 개발
   - [ ] 쉐도우 자연스럽게 만들어보기
+
+
+## Draft - Flexible ( CollectionView )
+
+### 체크리스트
