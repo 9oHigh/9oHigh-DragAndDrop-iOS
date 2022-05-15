@@ -14,8 +14,6 @@ final class GridLayoutViewController: UIViewController{
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
     
-    var colors: [UIColor] = [.blue,.red,.label,.brown,.cyan]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,7 +43,7 @@ extension GridLayoutViewController: UICollectionViewDelegate,UICollectionViewDat
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GridCollectionViewCell.identifier, for: indexPath) as? GridCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.backgroundColor = colors.randomElement()
+        
         return cell
     }
 }
