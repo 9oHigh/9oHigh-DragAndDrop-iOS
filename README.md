@@ -1,6 +1,6 @@
 # Drag And Drop 구현 및 테스트
 
-## Draft - Fixed
+## Draft - Fixed ( Frame )
 
 ### 체크리스트
 
@@ -33,6 +33,7 @@
   * 2차 개발
   - [ ] 쉐도우 자연스럽게 만들어보기
 
+<br></br>
 
 ## Draft - Flexible ( CollectionView )
 
