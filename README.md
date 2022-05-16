@@ -15,7 +15,6 @@
 - 메뉴바
   - [x] 펼쳐져있을 때, ON ( 드래그 가능 )
   - [x] 접혀있을 때, OFF ( 드래그 불가능 )
-  * 2차 개발
   - [ ] 캔버스에 추가 가능 여부 확인 및 알림 
 
 - 드래그 앤 드랍
@@ -30,7 +29,6 @@
   - [x] 트러블 슈팅
      - 기존의 테이블뷰의 Drag delegate가 아닌 Cell에 Drag delegate 적용함으로써 해당 오류 제거 가능
      - 링크 : [CLIENT APP ERROR - Neither the view or container of the UITargetedPreview is currently in a window](https://stackoverflow.com/questions/61829440/client-app-error-neither-the-view-or-container-of-the-uitargetedpreview-is-cur)
-  * 2차 개발
   - [ ] 쉐도우 자연스럽게 만들어보기
 
 <br></br>
