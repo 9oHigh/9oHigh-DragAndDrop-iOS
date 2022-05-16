@@ -10,14 +10,97 @@ import UIKit
 final class GridCollectionViewCell: UICollectionViewCell{
     
     static let identifier = "GridCollectionViewCell"
-    let point = CGPoint()
-    var isFull: Bool = false
+    var point = CGPoint()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addInteraction(UIDropInteraction(delegate: self))
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setPoint(_ point: CGPoint){
+        self.point = point
+    }
+    
+    func setShadow(_ color: UIColor){
+        self.backgroundColor = color
+    }
+    
+    func setShadow(width: Int, height: Int){
+        
+        let pointX = Int(self.point.x)
+        let pointY = Int(self.point.y)
+        
+        for h in pointY...pointY + height - 2 {
+            for w in pointX...pointX + width - 2 {
+                if h > 10 || w > 28 {
+                    continue
+                }
+                if h < 0 || w < 0 {
+                    continue
+                }
+                Helper.gridArray[w][h] = true
+            }
+        }
+    }
+    
+    func resetShadow(){
+        self.backgroundColor = UIColor.clear
+    }
+
+    func droppedModule(width: Int, height: Int){
+        
+        let pointX = Int(self.point.x)
+        let pointY = Int(self.point.y)
+        
+        for h in pointY...pointY + height - 1 {
+            for w in pointX...pointX + width - 1 {
+                if h > 10 || w > 28 {
+                    continue
+                }
+                if h < 0 || w < 0 {
+                    continue
+                }
+                Helper.droppedArray[w][h] = true
+            }
+        }
+    }
+}
+extension GridCollectionViewCell: UIDropInteractionDelegate {
+    
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        print(#function)
+        return session.canLoadObjects(ofClass: Module.self)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+            
+        let size = SideMenuTableViewCell.currentModuleType.size
+        setShadow(width: size.col,height: size.row)
+        Helper.reloadData()
+        
+        return UIDropProposal(operation: .copy)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        print(#function)
+        session.loadObjects(ofClass: Module.self) { item in
+            
+            guard let customModule = item.first as? Module else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.droppedModule(width: customModule.type.size.col , height: customModule.type.size.row)
+            }
+        }
+        Helper.reloadData()
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnd session: UIDropSession) {
+        print(#function)
     }
 }
