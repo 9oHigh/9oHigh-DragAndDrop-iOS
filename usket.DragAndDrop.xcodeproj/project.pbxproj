@@ -11,7 +11,6 @@
 		3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C61146228190C3D00EB5E01 /* SideMenu.swift */; };
 		3C611474281A72E000EB5E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C611473281A72E000EB5E01 /* Main.storyboard */; };
 		3C9AF408282088D600657D4A /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF407282088D600657D4A /* SideMenuCell.swift */; };
-		3C9AF40E282247CE00657D4A /* UIResponder + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF40D282247CE00657D4A /* UIResponder + Extension.swift */; };
 		3C9AF41228225C3F00657D4A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF41128225C3F00657D4A /* ViewModel.swift */; };
 		3C9AF4142829F75400657D4A /* ModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF4132829F75400657D4A /* ModuleViewController.swift */; };
 		3C9AF417282A011700657D4A /* ButtonModuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AF416282A011700657D4A /* ButtonModuleViewController.swift */; };
@@ -55,7 +54,6 @@
 		3C61146228190C3D00EB5E01 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		3C611473281A72E000EB5E01 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3C9AF407282088D600657D4A /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
-		3C9AF40D282247CE00657D4A /* UIResponder + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder + Extension.swift"; sourceTree = "<group>"; };
 		3C9AF41128225C3F00657D4A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		3C9AF4132829F75400657D4A /* ModuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleViewController.swift; sourceTree = "<group>"; };
 		3C9AF416282A011700657D4A /* ButtonModuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModuleViewController.swift; sourceTree = "<group>"; };
@@ -135,14 +133,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		3C9AF40F282247D300657D4A /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				3C9AF40D282247CE00657D4A /* UIResponder + Extension.swift */,
-			);
-			path = Utility;
-			sourceTree = "<group>";
-		};
 		3C9AF41028225C2E00657D4A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,7 +159,6 @@
 				3C61146428190C4300EB5E01 /* View */,
 				3C9AF41028225C2E00657D4A /* ViewModel */,
 				3C2AE3EA2818E72400F25815 /* controller */,
-				3C9AF40F282247D300657D4A /* Utility */,
 			);
 			path = "Draft-Fixed";
 			sourceTree = "<group>";
@@ -416,7 +405,6 @@
 				3C61146328190C3D00EB5E01 /* SideMenu.swift in Sources */,
 				3C9AF42D282DFC4500657D4A /* GridCollectionViewCell.swift in Sources */,
 				3C9AF41B282A013800657D4A /* TimerModuleViewController.swift in Sources */,
-				3C9AF40E282247CE00657D4A /* UIResponder + Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

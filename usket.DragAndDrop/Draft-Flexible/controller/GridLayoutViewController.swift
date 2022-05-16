@@ -14,9 +14,8 @@ final class GridLayoutViewController: UIViewController {
     private let openButton = UIButton()
     
     var canvasView = UIView()
-    
     let collectionView: UICollectionView = Helper.collectionView
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionView()
@@ -98,6 +97,10 @@ final class GridLayoutViewController: UIViewController {
                 print(completed)
             })
         }
+    }
+    
+    @IBAction func backToInitial(_ sender: UIButton) {
+        self.dismiss(animated: true)
     }
 }
 extension GridLayoutViewController: UICollectionViewDelegate,UICollectionViewDataSource{
