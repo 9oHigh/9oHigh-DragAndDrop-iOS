@@ -31,6 +31,10 @@ final class GridLayoutViewController: UIViewController{
         }
         collectionView.backgroundColor = .blue
     }
+    
+    @IBAction func backToInitial(_ sender: UIButton) {
+        self.dismiss(animated: true)
+    }
 }
 extension GridLayoutViewController: UICollectionViewDelegate,UICollectionViewDataSource{
     

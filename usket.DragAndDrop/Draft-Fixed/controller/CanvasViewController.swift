@@ -53,6 +53,12 @@ final class CanvasViewController: UIViewController {
         sideMenu.frame = CGRect(x: view.frame.maxX - 100, y: 0, width: 100, height: view.frame.height)
     }
     
+    @IBAction func pushGridLayout(_ sender: UIButton) {
+        let viewController = GridLayoutViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        self.present(viewController, animated: true)
+    }
+    
     @objc
     private func changeImage(){
         animateView(status: CanvasViewController.status)
