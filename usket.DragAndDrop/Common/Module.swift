@@ -69,15 +69,21 @@ enum ModuleType : String, Codable {
     var size: ModuleSize {
         switch self {
         case .buttonModule:
-            var size = ModuleSize(0, 0)
+            var size = ModuleSize(128, 128)
             size.setGridSize(col: 6, row: 6)
             return size
-        case .sendModule:
-            return ModuleSize(272, 176)
         case .dialModule:
-            return ModuleSize(128, 128)
+            var size = ModuleSize(128, 128)
+            size.setGridSize(col: 6, row: 6)
+            return size
         case .timerModule:
-            return ModuleSize(128,224)
+            var size = ModuleSize(128,224)
+            size.setGridSize(col: 10, row: 6)
+            return size
+        case .sendModule:
+            var size = ModuleSize(272, 176)
+            size.setGridSize(col: 8, row: 12)
+            return size
         }
     }
 }

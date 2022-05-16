@@ -10,6 +10,7 @@ import UIKit
 final class SideMenuTableViewCell: UITableViewCell {
     
     static let identifier = "SideMenuTableViewCell"
+    static var currentModuleType : ModuleType = .buttonModule
     let moduleImageView = UIImageView()
     var module: Module?
     
@@ -43,6 +44,12 @@ extension SideMenuTableViewCell: UIDragInteractionDelegate {
     func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
         print(#function)
         if let dragItem = module?.dragItem {
+            guard let module = module else {
+                return []
+            }
+            // 현재 드래깅중인 모듈 타입
+            SideMenuTableViewCell.currentModuleType = module.type
+            
             return [dragItem]
         }
         return []

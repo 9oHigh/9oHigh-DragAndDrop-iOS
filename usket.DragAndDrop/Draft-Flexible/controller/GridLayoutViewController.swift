@@ -7,23 +7,23 @@
 
 import UIKit
 
-final class GridLayoutViewController: UIViewController{
+final class GridLayoutViewController: UIViewController {
     
     static var status: MenuStatus = .open
     private let sideMenu = SideMenu()
     private let openButton = UIButton()
-    private var xCounter: Int = 0
-    private var yCounter: Int = 0
     
-    let collectionView: UICollectionView = {
-       let layout = GridCollectionViewFlowLayout()
-        return UICollectionView(frame: .zero, collectionViewLayout: layout)
-    }()
+    var canvasView = UIView()
+    
+    let collectionView: UICollectionView = Helper.collectionView
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionView()
         setConfig()
+        view.addSubview(canvasView)
+        canvasView.frame = collectionView.bounds
+        canvasView.backgroundColor = .clear
     }
     
     func addChildVC(_ childVC: UIViewController, container: UIView){
@@ -43,8 +43,9 @@ final class GridLayoutViewController: UIViewController{
 
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.equalToSuperview().inset(50)
+            make.centerY.equalToSuperview().multipliedBy(1.1)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().inset(75)
             make.height.equalTo(collectionView.snp.width).multipliedBy(0.4)
         }
         let imageView = UIImageView(image: UIImage(named: "GridBackground.png"))
@@ -102,7 +103,7 @@ final class GridLayoutViewController: UIViewController{
 extension GridLayoutViewController: UICollectionViewDelegate,UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 360
+        return 319
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -111,11 +112,22 @@ extension GridLayoutViewController: UICollectionViewDelegate,UICollectionViewDat
             return UICollectionViewCell()
         }
         
-        cell.setPoint(CGPoint(x: xCounter, y: yCounter))
-        xCounter += 1
-        if xCounter % 30 == 0 {
-            yCounter += 1
-            xCounter = 0
+        cell.setPoint(CGPoint(x: Helper.xCounter, y:  Helper.yCounter))
+        Helper.xCounter += 1
+        
+        if Helper.xCounter % 29 == 0 {
+            Helper.yCounter += 1
+            Helper.xCounter = 0
+        }
+        // For Shadow
+        if Helper.yCounter < 11 && Helper.gridArray[Helper.xCounter][Helper.yCounter] {
+            if Helper.droppedArray[Helper.xCounter][Helper.yCounter]{
+                cell.setShadow(UIColor.red.withAlphaComponent(0.35))
+            } else {
+                cell.setShadow(UIColor.black.withAlphaComponent(0.35))
+            }
+        } else {
+            cell.resetShadow()
         }
         return cell
     }

@@ -9,12 +9,11 @@ import UIKit
 
 final class GridCollectionViewFlowLayout: UICollectionViewFlowLayout{
     
-    var columns: Int = 30
-    let row: Int = 12
+    var columns: Int = 29
+    let row: Int = 11
 
     init(minimumInteritemSpacing: CGFloat = 0, minimumLineSpacing: CGFloat = 0) {
         super.init()
-
         self.minimumInteritemSpacing = minimumInteritemSpacing
         self.minimumLineSpacing = minimumLineSpacing
     }
@@ -34,5 +33,3 @@ final class GridCollectionViewFlowLayout: UICollectionViewFlowLayout{
         itemSize = CGSize(width: itemWidth, height: itemHeight)
     }
 }
-
-
