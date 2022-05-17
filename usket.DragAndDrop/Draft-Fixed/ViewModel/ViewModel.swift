@@ -16,38 +16,30 @@ final class ViewModel {
     func addModule(module: Module){
         
         let type = module.getType()
-      
         if currentModuleDict[type] != nil {
             currentModuleDict[type]!.append(module)
         } else {
             currentModuleDict[type] = [module]
         }
+        module.setIndex(index: currentModuleDict[module.type]!.count)
     }
     
-    func removeModule(){
-        
+    func removeModule(module: Module, index: Int){
+        currentModuleDict[module.type]?.remove(at: index - 1)
+        // MARK: - Need Refactor
+        // 삭제시 인덱스 고정
+        // 맥스번호를 알아야함
+        for item in 0 ... currentModuleDict[module.type]!.count - 1{
+            if currentModuleDict[module.type]?[item] == nil {
+                print(item)
+                currentModuleDict[module.type]![item] .index = currentModuleDict[module.type]![item + 1].index
+            }
+            print(currentModuleDict[module.type]?[item], currentModuleDict[module.type]?[item].index)
+        }
     }
     
     func getModuleIndex(module: Module) -> Int {
-        var index = 1
-        let type = module.getType()
-
-        guard var sameModules = currentModuleDict[type] else {
-            return index
-        }
-        
-        sameModules.sort {
-            $0.getIndex()! < $1.getIndex()!
-        }
-        for i in 1 ..< sameModules.count + 2 {
-            let foundModule = sameModules.first { $0.getIndex() == i
-            }
-            if foundModule == nil {
-                index = i
-                break
-            }
-        }
-        return index
+        return module.index ?? 0
     }
 }
 

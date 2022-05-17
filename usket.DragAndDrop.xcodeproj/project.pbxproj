@@ -146,7 +146,6 @@
 		3C9AF415282A00FA00657D4A /* ModuleControllers */ = {
 			isa = PBXGroup;
 			children = (
-				3C9AF4132829F75400657D4A /* ModuleViewController.swift */,
 				3C9AF416282A011700657D4A /* ButtonModuleViewController.swift */,
 				3C9AF418282A012600657D4A /* DialModuleViewController.swift */,
 				3C9AF41A282A013800657D4A /* TimerModuleViewController.swift */,
@@ -189,6 +188,7 @@
 				3C61146228190C3D00EB5E01 /* SideMenu.swift */,
 				3C9AF407282088D600657D4A /* SideMenuCell.swift */,
 				3CB83B57281B90C80027FC6D /* Module.swift */,
+				3C9AF4132829F75400657D4A /* ModuleViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";

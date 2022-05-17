@@ -35,6 +35,7 @@ final class SideMenu: UIView {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.dropDelegate = self
+        
         tableView.separatorStyle = .none
         tableView.register(SideMenuTableViewCell.self, forCellReuseIdentifier: SideMenuTableViewCell.identifier)
     }
@@ -58,8 +59,6 @@ extension SideMenu: UITableViewDelegate,UITableViewDataSource {
         }
         
         let module = moduleList[indexPath.row]
-        let index = viewModel.getModuleIndex(module: module)
-        module.setIndex(index: index)
         
         cell.initialModule(moduleType: moduleList[indexPath.row].type)
         cell.addInteraction(UIDragInteraction(delegate: cell))
@@ -82,7 +81,8 @@ extension SideMenu: UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        // print(#function)
-        return UITableViewDropProposal(operation: .forbidden)
+         print(#function)
+
+        return UITableViewDropProposal(operation: .move)
     }
 }

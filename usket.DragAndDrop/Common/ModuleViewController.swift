@@ -36,7 +36,7 @@ extension ModuleViewController: UIDragInteractionDelegate {
         if GridLayoutViewController.status == .closed {
             return []
         }
-        
+
         let dragItem = UIDragItem(itemProvider: NSItemProvider(object: module))
         
         switch module.type {
@@ -66,21 +66,42 @@ extension ModuleViewController: UIDragInteractionDelegate {
     func dragInteraction(_ interaction: UIDragInteraction, session: UIDragSession, willEndWith operation: UIDropOperation) {
         print(#function)
         
-        if operation == .cancel {
+        switch operation {
+        case .cancel:
+            print(session.items.count)
+            print("Cancel")
             session.items.forEach { dragItem in
                 if let draggedVC = dragItem.localObject as? ModuleViewController {
                     let point = draggedVC.view.frame
                     CanvasView.setPosition((Int(point.minX / 24),Int(point.minY / 24)), draggedVC.module)
                 }
             }
-            return
-        }
-        session.items.forEach { dragItem in
-            if let draggedVC = dragItem.localObject as? ModuleViewController {
-                let point = draggedVC.view.frame
-                CanvasView.clearPositon((Int(point.minX),Int(point.minY)), draggedVC.module)
-                draggedVC.view.removeFromSuperview()
+        case .forbidden:
+            print("Forbidden")
+        case .copy:
+            print("Copy")
+            session.items.forEach { dragItem in
+                if let draggedVC = dragItem.localObject as? ModuleViewController {
+                    let point = draggedVC.view.frame
+                    CanvasView.clearPositon((Int(point.minX),Int(point.minY)), draggedVC.module)
+                    draggedVC.view.removeFromSuperview()
+                }
             }
+        case .move:
+            print("move")
+            session.items.forEach { dragItem in
+                if let draggedVC = dragItem.localObject as? ModuleViewController {
+                    let point = draggedVC.view.frame
+                    CanvasView.clearPositon((Int(point.minX),Int(point.minY)), draggedVC.module)
+                    if let superVC = draggedVC.view.superview?.superview?.findViewController() as? CanvasViewController{
+                        superVC.viewModel.removeModule(module: draggedVC.module, index: draggedVC.module.index!)
+                    }
+                    draggedVC.view.removeFromSuperview()
+                }
+            }
+            
+        @unknown default:
+            fatalError()
         }
     }
     

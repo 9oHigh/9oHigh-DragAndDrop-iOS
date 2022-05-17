@@ -24,7 +24,7 @@ final class CanvasViewController: UIViewController {
     private let shadowView = UIView()
     
     //ViewModel
-    private var viewModel = ViewModel()
+    var viewModel = ViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,6 +154,7 @@ extension CanvasViewController: UIDropInteractionDelegate {
         if backgroundGrid.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
             return UIDropProposal(operation: .copy)
         }
+        print("isForbidden")
         return UIDropProposal(operation: .forbidden)
     }
     
@@ -165,11 +166,18 @@ extension CanvasViewController: UIDropInteractionDelegate {
             guard let customModule = item.first as? Module else {
                 return
             }
-            
+        
             DispatchQueue.main.async {
                 let points = self.getShadowPosition(self.shadowView.frame.minX, self.shadowView.frame.minY)
                 self.backgroundGrid.setLocation((Int(points.x), Int(points.y)), customModule)
                 customModule.startPoint = CGPoint(x: points.x, y: points.y)
+                
+                // Index : For CRUD
+                if customModule.index == nil {
+                    self.viewModel.addModule(module: customModule)
+                }
+                print(self.viewModel.currentModuleDict[customModule.type]?.count)
+                print(customModule.index)
                 // 기존위치에서 시작하기 때문에 위치 초기화
                 self.shadowView.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.maxY, width: 0, height: 0)
             }
@@ -178,6 +186,7 @@ extension CanvasViewController: UIDropInteractionDelegate {
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnd session: UIDropSession) {
         print(#function)
+        
         // 기존위치에서 시작하기 때문에 위치 초기화
         self.shadowView.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.maxY, width: 0, height: 0)
         self.shadowView.removeFromSuperview()
