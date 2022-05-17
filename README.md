@@ -52,7 +52,7 @@
 
 <br></br>
 
-## 3. Dynamic Size ( Frame ) - 2차 개발 최종 TEST
+## 3. 오토레이아웃 적용 ( Frame ) - 2차 개발 최종 TEST
 
 ### 체크리스트
 
