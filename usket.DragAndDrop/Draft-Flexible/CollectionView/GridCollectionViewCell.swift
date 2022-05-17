@@ -34,13 +34,13 @@ final class GridCollectionViewCell: UICollectionViewCell{
         let pointX = Int(self.point.x)
         let pointY = Int(self.point.y)
         
-        for h in pointY...pointY + height - 2 {
-            for w in pointX...pointX + width - 2 {
+        for h in pointY...pointY + height - 1 {
+            for w in pointX...pointX + width - 1 {
                 if h > 10 || w > 28 {
-                    continue
+                    return
                 }
                 if h < 0 || w < 0 {
-                    continue
+                    return
                 }
                 Helper.gridArray[w][h] = true
             }
@@ -59,10 +59,10 @@ final class GridCollectionViewCell: UICollectionViewCell{
         for h in pointY...pointY + height - 1 {
             for w in pointX...pointX + width - 1 {
                 if h > 10 || w > 28 {
-                    continue
+                    return
                 }
                 if h < 0 || w < 0 {
-                    continue
+                    return
                 }
                 Helper.droppedArray[w][h] = true
             }
@@ -95,9 +95,23 @@ extension GridCollectionViewCell: UIDropInteractionDelegate {
             
             DispatchQueue.main.async {
                 self.droppedModule(width: customModule.type.size.col , height: customModule.type.size.row)
+                /*
+                 let moduleVC = ModuleViewController(module: customModule, size: customModule.type.size)
+                 
+                 moduleVC.view = UIImageView(image: UIImage(named: customModule.type.rawValue))
+                 
+                 if let myViews = self.superview {
+                     if let vc = myViews.findViewController() as? GridLayoutViewController {
+
+                         vc.addChildVC(moduleVC, container: vc.collectionView)
+                         
+                         moduleVC.view.frame = CGRect(x: Double(self.point.x) * Double(self.frame.width), y: Double(self.point.y) * Double(self.frame.height) , width: Double(self.frame.width) * Double(customModule.type.size.col), height: Double(self.frame.height) * Double(customModule.type.size.row))
+                     }
+                 }
+                 */
+                Helper.reloadData()
             }
         }
-        Helper.reloadData()
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnd session: UIDropSession) {

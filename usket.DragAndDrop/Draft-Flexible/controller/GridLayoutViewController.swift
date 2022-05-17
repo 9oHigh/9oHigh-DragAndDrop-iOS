@@ -12,20 +12,16 @@ final class GridLayoutViewController: UIViewController {
     static var status: MenuStatus = .open
     private let sideMenu = SideMenu()
     private let openButton = UIButton()
-    
-    var canvasView = UIView()
     let collectionView: UICollectionView = Helper.collectionView
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionView()
         setConfig()
-        view.addSubview(canvasView)
-        canvasView.frame = collectionView.bounds
-        canvasView.backgroundColor = .clear
+        view.backgroundColor = .white
     }
     
-    func addChildVC(_ childVC: UIViewController, container: UIView){
+    func addChildVC(_ childVC : UIViewController,container: UIView) {
         addChild(childVC)
         childVC.view.frame = container.bounds
         container.addSubview(childVC.view)
@@ -37,16 +33,17 @@ final class GridLayoutViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(GridCollectionViewCell.self, forCellWithReuseIdentifier: GridCollectionViewCell.identifier)
 
         view.addSubview(collectionView)
+        
         collectionView.snp.makeConstraints { make in
             make.centerY.equalToSuperview().multipliedBy(1.1)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().inset(75)
             make.height.equalTo(collectionView.snp.width).multipliedBy(0.4)
         }
+        
         let imageView = UIImageView(image: UIImage(named: "GridBackground.png"))
         imageView.contentMode = .scaleAspectFit
         collectionView.backgroundView = imageView
@@ -106,7 +103,7 @@ final class GridLayoutViewController: UIViewController {
 extension GridLayoutViewController: UICollectionViewDelegate,UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 319
+        return 319 // 29 * 11 [칸 수]
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -116,16 +113,19 @@ extension GridLayoutViewController: UICollectionViewDelegate,UICollectionViewDat
         }
         
         cell.setPoint(CGPoint(x: Helper.xCounter, y:  Helper.yCounter))
-        Helper.xCounter += 1
         
+        // 29 * 11로 만들기 위해
+        Helper.xCounter += 1
         if Helper.xCounter % 29 == 0 {
             Helper.yCounter += 1
             Helper.xCounter = 0
         }
+        
         // For Shadow
         if Helper.yCounter < 11 && Helper.gridArray[Helper.xCounter][Helper.yCounter] {
             if Helper.droppedArray[Helper.xCounter][Helper.yCounter]{
-                cell.setShadow(UIColor.red.withAlphaComponent(0.35))
+                cell.setShadow(UIColor.black.withAlphaComponent(0.35))
+                // cell.setShadow(UIColor.red.withAlphaComponent(0.35))
             } else {
                 cell.setShadow(UIColor.black.withAlphaComponent(0.35))
             }

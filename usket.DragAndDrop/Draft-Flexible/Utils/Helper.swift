@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - Need Removing Static ( Refactor )
 final class Helper {
     
     static var gridArray: [[Bool]] = [[Bool]](repeating: Array(repeating: false, count: 11),count: 29)
@@ -14,7 +15,7 @@ final class Helper {
     static var droppedArray: [[Bool]] = [[Bool]](repeating: Array(repeating: false, count: 11),count: 29)
     
     static let collectionView: UICollectionView = {
-       let layout = GridCollectionViewFlowLayout()
+        let layout = GridCollectionViewFlowLayout()
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
     
@@ -22,10 +23,12 @@ final class Helper {
     static var yCounter: Int = 0
     
     static func reloadData(collectionView: UICollectionView = collectionView){
+        print(#function)
         xCounter = 0
         yCounter = 0
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        
+        //MARK: - Reload Issue ( can not ensure x,y point )
+        DispatchQueue.main.async {
             gridArray = [[Bool]](repeating: Array(repeating: false, count: 11),count: 29)
         }
         collectionView.reloadData()
