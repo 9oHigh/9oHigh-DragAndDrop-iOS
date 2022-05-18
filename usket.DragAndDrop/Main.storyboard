@@ -31,11 +31,11 @@
                                     <constraint firstAttribute="height" constant="40" id="FAg-aD-0if"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="다음">
+                                <buttonConfiguration key="configuration" style="plain" title="RESET">
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="pushGridLayout:" destination="fYn-XC-kTO" eventType="touchUpInside" id="xgx-rt-ZYD"/>
+                                    <action selector="removeAll:" destination="fYn-XC-kTO" eventType="touchUpInside" id="tAp-Ij-UDv"/>
                                 </connections>
                             </button>
                         </subviews>

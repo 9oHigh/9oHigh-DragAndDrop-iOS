@@ -117,10 +117,8 @@ extension ModuleViewController: UIDragInteractionDelegate {
                     if let superVC = draggedVC.view.superview?.superview?.findViewController() as? CanvasViewController{
                         superVC.viewModel.removeModule(module: draggedVC.module, index: draggedVC.module.index!)
                     }
-                    //draggedVC.view.removeFromSuperview()
                 }
             }
-            
         @unknown default:
             fatalError()
         }

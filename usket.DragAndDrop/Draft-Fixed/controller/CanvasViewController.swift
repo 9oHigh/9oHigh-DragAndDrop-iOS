@@ -53,10 +53,23 @@ final class CanvasViewController: UIViewController {
         sideMenu.frame = CGRect(x: view.frame.maxX - 100, y: 0, width: 100, height: view.frame.height)
     }
     
-    @IBAction func pushGridLayout(_ sender: UIButton) {
-        let viewController = GridLayoutViewController()
-        viewController.modalPresentationStyle = .fullScreen
-        self.present(viewController, animated: true)
+    @IBAction func removeAll(_ sender: UIButton) {
+        /*
+         let viewController = GridLayoutViewController()
+         viewController.modalPresentationStyle = .fullScreen
+         self.present(viewController, animated: true)
+         */
+        print(#function)
+        for item in backgroundGrid.view.subviews {
+            print(item)
+            if let tem = item.findViewController() as? ModuleViewController {
+                tem.view.removeFromSuperview()
+                viewModel.removeModule(module: tem.module, index: tem.module.index!)
+                tem.removeFromParent()
+                
+            }
+        }
+        CanvasView.included = [[Bool]](repeating: Array(repeating: false, count: 30),count: 12)
     }
     
     @objc
