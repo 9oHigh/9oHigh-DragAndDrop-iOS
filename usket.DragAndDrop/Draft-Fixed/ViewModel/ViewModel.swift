@@ -13,28 +13,39 @@ final class ViewModel {
     
     var currentModuleDict: [ModuleType : [Module]] = [:]
     
-    func addModule(module: Module){
+    func addModule(module: Module) -> Bool{
         
-        let type = module.getType()
-        if currentModuleDict[type] != nil {
-            currentModuleDict[type]!.append(module)
+        if currentModuleDict[module.type] == nil {
+            currentModuleDict[module.type] = [module]
+            module.index = 1
+            return true
         } else {
-            currentModuleDict[type] = [module]
+            if module.type.max <= currentModuleDict[module.type]!.count {
+                if module.index != nil {
+                    return true
+                }
+                return false
+            }
+            currentModuleDict[module.type]!.append(module)
+            for index in 0...currentModuleDict[module.type]!.count - 1 {
+                if currentModuleDict[module.type]?[index].index == nil {
+                    currentModuleDict[module.type]![index].index = index + 1
+                    module.index = index + 1
+                    return true
+                }
+            }
+            return false
         }
-        module.setIndex(index: currentModuleDict[module.type]!.count)
     }
     
     func removeModule(module: Module, index: Int){
-        currentModuleDict[module.type]?.remove(at: index - 1)
-        // MARK: - Need Refactor
-        // 삭제시 인덱스 고정
-        // 맥스번호를 알아야함
-        for item in 0 ... currentModuleDict[module.type]!.count - 1{
-            if currentModuleDict[module.type]?[item] == nil {
-                print(item)
-                currentModuleDict[module.type]![item] .index = currentModuleDict[module.type]![item + 1].index
+        
+        var posi : Int = 0
+        for item in currentModuleDict[module.type]! {
+            if item.index == index {
+                currentModuleDict[module.type]?.remove(at: posi)
             }
-            print(currentModuleDict[module.type]?[item], currentModuleDict[module.type]?[item].index)
+            posi += 1
         }
     }
     

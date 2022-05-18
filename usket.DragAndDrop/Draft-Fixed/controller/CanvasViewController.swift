@@ -112,7 +112,7 @@ extension CanvasViewController: UIDropInteractionDelegate {
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-        print(#function)
+        //print(#function)
         
         let locationPoint = session.location(in: backgroundGrid.view)
         
@@ -169,15 +169,18 @@ extension CanvasViewController: UIDropInteractionDelegate {
         
             DispatchQueue.main.async {
                 let points = self.getShadowPosition(self.shadowView.frame.minX, self.shadowView.frame.minY)
-                self.backgroundGrid.setLocation((Int(points.x), Int(points.y)), customModule)
-                customModule.startPoint = CGPoint(x: points.x, y: points.y)
-                
                 // Index : For CRUD
                 if customModule.index == nil {
-                    self.viewModel.addModule(module: customModule)
+                    if self.viewModel.addModule(module: customModule) {
+                        self.backgroundGrid.setLocation((Int(points.x), Int(points.y)), customModule)
+                        customModule.startPoint = CGPoint(x: points.x, y: points.y)
+                    } else {
+                        self.alert(message: "최대 개수를 초과했습니다.", title: "모듈 초과")
+                    }
+                } else {
+                    self.backgroundGrid.setLocation((Int(points.x), Int(points.y)), customModule)
+                    customModule.startPoint = CGPoint(x: points.x, y: points.y)
                 }
-                print(self.viewModel.currentModuleDict[customModule.type]?.count)
-                print(customModule.index)
                 // 기존위치에서 시작하기 때문에 위치 초기화
                 self.shadowView.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.maxY, width: 0, height: 0)
             }

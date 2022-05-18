@@ -86,6 +86,19 @@ enum ModuleType : String, Codable {
             return size
         }
     }
+    
+    var max: Int {
+        switch self {
+        case .buttonModule:
+            return 10
+        case .sendModule:
+            return 1
+        case .dialModule:
+            return 10
+        case .timerModule:
+            return 2
+        }
+    }
 }
 
 final class Module : NSObject, NSItemProviderWriting, Codable, NSItemProviderReading {

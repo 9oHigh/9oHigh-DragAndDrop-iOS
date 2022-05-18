@@ -68,7 +68,6 @@ extension ModuleViewController: UIDragInteractionDelegate {
         
         switch operation {
         case .cancel:
-            print(session.items.count)
             print("Cancel")
             session.items.forEach { dragItem in
                 if let draggedVC = dragItem.localObject as? ModuleViewController {
