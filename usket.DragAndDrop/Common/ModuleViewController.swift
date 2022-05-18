@@ -92,10 +92,21 @@ extension ModuleViewController: UIDragInteractionDelegate {
                 if let draggedVC = dragItem.localObject as? ModuleViewController {
                     let point = draggedVC.view.frame
                     CanvasView.clearPositon((Int(point.minX),Int(point.minY)), draggedVC.module)
+                    
+                    let location = session.location(in: draggedVC.view.superview ?? UIView())
+                    
+                    UIView.animate(withDuration: 0.35, delay: 0.0, options: .curveEaseOut) {
+                        
+                        draggedVC.view.frame = CGRect(x: location.x , y: location.y, width: 100, height: 100)
+                        draggedVC.view.layer.opacity = 0.0
+                    } completion: { comp in
+                        draggedVC.view.removeFromSuperview()
+                    }
+
                     if let superVC = draggedVC.view.superview?.superview?.findViewController() as? CanvasViewController{
                         superVC.viewModel.removeModule(module: draggedVC.module, index: draggedVC.module.index!)
                     }
-                    draggedVC.view.removeFromSuperview()
+                    //draggedVC.view.removeFromSuperview()
                 }
             }
             

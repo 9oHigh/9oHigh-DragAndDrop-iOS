@@ -82,7 +82,12 @@ extension SideMenu: UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
          print(#function)
-
         return UITableViewDropProposal(operation: .move)
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, dropSessionDidEnd session: UIDropSession) {
+        print(#function)
     }
 }
