@@ -17,7 +17,7 @@ final class ViewModel {
         
         if currentModuleDict[module.type] == nil {
             currentModuleDict[module.type] = [module]
-            module.index = 1
+            module.index = 0
             return true
         } else {
             if module.type.max <= currentModuleDict[module.type]!.count {
@@ -27,17 +27,25 @@ final class ViewModel {
                 return false
             }
             currentModuleDict[module.type]!.append(module)
-            for index in 0...currentModuleDict[module.type]!.count - 1 {
-                if currentModuleDict[module.type]?[index].index == nil {
-                    currentModuleDict[module.type]![index].index = index + 1
-                    module.index = index + 1
-                    return true
-                }
-            }
-            return false
+            module.index = findIndex(module: module)
+            return true
         }
     }
-    
+    func findIndex(module: Module) -> Int {
+        var flag : Int = 0
+        for i in 0 ... module.type.max - 1 {
+            flag = 0
+            for item in currentModuleDict[module.type]! {
+                if i == item.index {
+                    flag += 1
+                }
+            }
+            if flag == 0 {
+                return i
+            }
+        }
+        return 0
+    }
     func removeModule(module: Module, index: Int){
         
         var posi : Int = 0
@@ -47,10 +55,6 @@ final class ViewModel {
             }
             posi += 1
         }
-    }
-    
-    func getModuleIndex(module: Module) -> Int {
-        return module.index ?? 0
     }
 }
 

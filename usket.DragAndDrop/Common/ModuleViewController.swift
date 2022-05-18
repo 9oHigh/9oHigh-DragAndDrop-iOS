@@ -12,6 +12,7 @@ class ModuleViewController: UIViewController {
     
     var module : Module
     var size: ModuleSize
+    var label = UILabel()
     
     init(module: Module, size: ModuleSize) {
         self.module = module
@@ -26,6 +27,16 @@ class ModuleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addInteraction(UIDragInteraction(delegate: self))
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        label.layer.zPosition = 10
+        if module.index != nil {
+            label.text = "\(String(describing: module.index! + 1))번"
+            label.textColor = .red
+            label.font = .boldSystemFont(ofSize: 20)
+        }
     }
 }
 extension ModuleViewController: UIDragInteractionDelegate {
