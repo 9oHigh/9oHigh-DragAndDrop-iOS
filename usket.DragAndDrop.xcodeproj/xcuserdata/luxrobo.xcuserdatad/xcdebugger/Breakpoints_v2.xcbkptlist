@@ -14,9 +14,9 @@
             filePath = "usket.DragAndDrop/Draft-Fixed/controller/CanvasViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "setUp()"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "setUp(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

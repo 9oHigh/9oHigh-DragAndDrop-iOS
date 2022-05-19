@@ -25,8 +25,14 @@ final class SendModuleViewContoller: ModuleViewController {
         view.addSubview(button)
         button.imageView?.contentMode = .scaleAspectFit
         button.setImage(UIImage(named: module.type.rawValue), for: .normal)
+        button.imageView?.snp.makeConstraints({ make in
+            make.width.equalTo(size.width)
+            make.height.equalTo(size.height)
+        })
         button.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.center.equalToSuperview()
+            make.width.equalTo(size.width)
+            make.height.equalTo(size.height)
         }
     }
 }

@@ -44,7 +44,7 @@ extension ModuleViewController: UIDragInteractionDelegate {
     func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
         print(#function)
         // 닫혀있으면 컨트롤 불가능
-        if GridLayoutViewController.status == .closed {
+        if CanvasViewController.status == .closed {
             return []
         }
 
@@ -52,13 +52,27 @@ extension ModuleViewController: UIDragInteractionDelegate {
         
         switch module.type {
         case .buttonModule:
-            SideMenu.sizeOfItem = ModuleSize(128, 128)
+            let width = UIScreen.main.bounds.width * 0.9
+            let sizeCol = CGFloat(Int(128 * width / 704))
+            let size = ModuleSize(sizeCol, sizeCol)
+            SideMenu.sizeOfItem = size
         case .sendModule:
-            SideMenu.sizeOfItem = ModuleSize(272, 176)
+            let width = UIScreen.main.bounds.width * 0.9
+            let sizeRow = CGFloat(Int(272 * width / 704))
+            let sizeCol = CGFloat(Int(176 * width / 704))
+            let size = ModuleSize(sizeRow, sizeCol)
+            SideMenu.sizeOfItem = size
         case .dialModule:
-            SideMenu.sizeOfItem = ModuleSize(128, 128)
+            let width = UIScreen.main.bounds.width * 0.9
+            let sizeCol = CGFloat(Int(128 * width / 704))
+            let size = ModuleSize(sizeCol, sizeCol)
+            SideMenu.sizeOfItem = size
         case .timerModule:
-            SideMenu.sizeOfItem = ModuleSize(128,224)
+            let width = UIScreen.main.bounds.width * 0.9
+            let sizeCol = CGFloat(Int(224 * width / 704))
+            let sizeRow = CGFloat(Int(128 * width / 704))
+            let size = ModuleSize(sizeRow,sizeCol)
+            SideMenu.sizeOfItem = size
         }
         dragItem.localObject = self
         
@@ -83,7 +97,7 @@ extension ModuleViewController: UIDragInteractionDelegate {
             session.items.forEach { dragItem in
                 if let draggedVC = dragItem.localObject as? ModuleViewController {
                     let point = draggedVC.view.frame
-                    CanvasView.setPosition((Int(point.minX / 24),Int(point.minY / 24)), draggedVC.module)
+                    CanvasView.setPosition((Int(point.minX / CanvasViewController.rate),Int(point.minY / CanvasViewController.rate)), draggedVC.module)
                 }
             }
         case .forbidden:

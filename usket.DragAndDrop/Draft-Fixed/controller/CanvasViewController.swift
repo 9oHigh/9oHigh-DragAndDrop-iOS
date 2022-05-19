@@ -1,5 +1,5 @@
 //
-//  CanvasView.swift
+//  CanvasViewController.swift
 //  usket.DragAndDrop
 //
 //  Created by Luxrobo on 2022/04/29.
@@ -16,11 +16,12 @@ final class CanvasViewController: UIViewController {
     
     //Sidemenu, Menu Status
     static var status: MenuStatus = .open
+    static var rate: CGFloat = 0
     private let sideMenu = SideMenu()
     private let openButton = UIButton()
     
     //Item into Grid
-    private let backgroundGrid = CanvasView()
+    private let canvasView = CanvasView()
     private let shadowView = UIView()
     
     //ViewModel
@@ -28,25 +29,32 @@ final class CanvasViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUp()
+        setSizeRate()
+    }
+    
+    func setSizeRate(){
+        let width: CGFloat = UIScreen.main.bounds.size.width * 0.9
+        lazy var height: CGFloat = 272 * width / 704
+        setUp(width, height)
+        CanvasViewController.rate = width / 29.3333
+        print("RATE:",width,CanvasViewController.rate)
     }
     
     // delegate + addtarget(openButton)
-    private func setUp(){
+    private func setUp(_ width: CGFloat,_ height: CGFloat){
         
-        addChildVC(backgroundGrid, container: view)
+        addChildVC(canvasView, container: view)
         view.addSubview(sideMenu)
         view.addSubview(openButton)
         
-        backgroundGrid.view.isUserInteractionEnabled = true
-        backgroundGrid.view.addInteraction(UIDropInteraction(delegate: self))
-        backgroundGrid.view.frame = CGRect(x: UIScreen.main.bounds.midX - 352, y: UIScreen.main.bounds.midY - 118, width: 704, height: 272)
+        canvasView.view.isUserInteractionEnabled = true
+        canvasView.view.addInteraction(UIDropInteraction(delegate: self))
+        canvasView.view.frame = CGRect(x: UIScreen.main.bounds.midX - width / 2, y: UIScreen.main.bounds.midY - height / 2.25, width: width, height: height)
         
         openButton.setImage(UIImage(systemName: "arrow.right"), for: .normal)
         openButton.addTarget(self, action: #selector(changeImage), for: .touchUpInside)
         openButton.frame = CGRect(x: view.frame.maxX - 155, y: 0, width: 55, height: 55)
         openButton.backgroundColor = .white
-        openButton.layer.cornerRadius = 10
         openButton.tintColor = .black
         openButton.setTitleColor(.black, for: .normal)
         
@@ -55,18 +63,18 @@ final class CanvasViewController: UIViewController {
     
     @IBAction func removeAll(_ sender: UIButton) {
         /*
+         - CollectionView
          let viewController = GridLayoutViewController()
          viewController.modalPresentationStyle = .fullScreen
          self.present(viewController, animated: true)
          */
         print(#function)
-        for item in backgroundGrid.view.subviews {
+        for item in canvasView.view.subviews {
             print(item)
             if let tem = item.findViewController() as? ModuleViewController {
                 tem.view.removeFromSuperview()
                 viewModel.removeModule(module: tem.module, index: tem.module.index!)
                 tem.removeFromParent()
-                
             }
         }
         CanvasView.included = [[Bool]](repeating: Array(repeating: false, count: 30),count: 12)
@@ -114,8 +122,9 @@ final class CanvasViewController: UIViewController {
 extension CanvasViewController: UIDropInteractionDelegate {
     
     func getShadowPosition(_ xPosition: CGFloat,_ yPosition: CGFloat) -> CGPoint {
-        let shadowX = Int(xPosition / 24)
-        let shadowY = Int(yPosition / 24)
+        let shadowX = Int(xPosition / CGFloat(CanvasViewController.rate))
+        let shadowY = Int(yPosition / CGFloat(CanvasViewController.rate))
+
         return CGPoint(x: shadowX, y: shadowY)
     }
     
@@ -127,9 +136,9 @@ extension CanvasViewController: UIDropInteractionDelegate {
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         //print(#function)
         
-        let locationPoint = session.location(in: backgroundGrid.view)
+        let locationPoint = session.location(in: canvasView.view)
         
-        backgroundGrid.view.addSubview(shadowView)
+        canvasView.view.addSubview(shadowView)
         
         let points = self.getShadowPosition(locationPoint.x, locationPoint.y)
         var col = Int(points.x)
@@ -139,12 +148,12 @@ extension CanvasViewController: UIDropInteractionDelegate {
         else if row >= 12 { row = 11 }
         else if col < 0 { col = 0 }
         else if col >= 30 { col = 29 }
-        
+        print("COL AND ROW : ",col,row)
         DispatchQueue.main.async {
-            self.shadowView.frame = CGRect(x: points.x * 24, y: points.y * 24, width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
+            self.shadowView.frame = CGRect(x: points.x * CGFloat(CanvasViewController.rate), y: points.y * CGFloat(CanvasViewController.rate), width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
             self.shadowView.layer.cornerRadius = 10
             
-            if self.backgroundGrid.checkPosition((row,col), width: Int(SideMenu.sizeOfItem.width), height: Int(SideMenu.sizeOfItem.height)) {
+            if self.canvasView.checkPosition((row,col), width: Int(SideMenu.sizeOfItem.width), height: Int(SideMenu.sizeOfItem.height)) {
                 self.shadowView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
             } else {
                 self.shadowView.backgroundColor = UIColor.red.withAlphaComponent(0.4)
@@ -152,19 +161,21 @@ extension CanvasViewController: UIDropInteractionDelegate {
         }
         
         let shadow = shadowView.frame
-        let shadowPosition = (Int(shadow.minX / 23.46),Int(shadow.minY / 23.46))
-        
+        let shadowPosition = (Int(shadow.minX / CGFloat(CanvasViewController.rate)),Int(shadow.minY / CGFloat(CanvasViewController.rate)))
+        print("Shadow Position:",shadowPosition)
         // 하단 초과
-        if shadow.minY + shadow.height > backgroundGrid.view.frame.height {
+        if shadow.minY + shadow.height > canvasView.view.frame.height {
             shadowView.removeFromSuperview()
             return UIDropProposal(operation: .cancel)
             // 우측 초과
-        } else if shadow.maxX > backgroundGrid.view.frame.width {
+        } else if shadow.maxX > canvasView.view.frame.width {
             shadowView.removeFromSuperview()
             return UIDropProposal(operation: .cancel)
         }
+        print("CHECK: ",canvasView.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)))
         
-        if backgroundGrid.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
+        if canvasView.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
+            print("Copy OK")
             return UIDropProposal(operation: .copy)
         }
         print("isForbidden")
@@ -185,13 +196,13 @@ extension CanvasViewController: UIDropInteractionDelegate {
                 // Index : For CRUD
                 if customModule.index == nil {
                     if self.viewModel.addModule(module: customModule) {
-                        self.backgroundGrid.setLocation((Int(points.x), Int(points.y)), customModule)
+                        self.canvasView.setLocation((Int(points.x), Int(points.y)), customModule)
                         customModule.startPoint = CGPoint(x: points.x, y: points.y)
                     } else {
-                        self.alert(message: "최대 개수를 초과했습니다.", title: "모듈 초과")
+                        self.alert(message: "중복 불가능한 모듈입니다.", title: "중복 불가")
                     }
                 } else {
-                    self.backgroundGrid.setLocation((Int(points.x), Int(points.y)), customModule)
+                    self.canvasView.setLocation((Int(points.x), Int(points.y)), customModule)
                     customModule.startPoint = CGPoint(x: points.x, y: points.y)
                 }
                 // 기존위치에서 시작하기 때문에 위치 초기화

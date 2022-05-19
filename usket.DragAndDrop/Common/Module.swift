@@ -69,19 +69,29 @@ enum ModuleType : String, Codable {
     var size: ModuleSize {
         switch self {
         case .buttonModule:
-            var size = ModuleSize(128, 128)
+            let width = UIScreen.main.bounds.width * 0.9
+            let sizeCol = CGFloat(Int(128 * width / 704))
+            var size = ModuleSize(sizeCol, sizeCol)
             size.setGridSize(col: 6, row: 6)
             return size
         case .dialModule:
-            var size = ModuleSize(128, 128)
+            let width = UIScreen.main.bounds.width * 0.9
+            let sizeCol = CGFloat(Int(128 * width / 704))
+            var size = ModuleSize(sizeCol, sizeCol)
             size.setGridSize(col: 6, row: 6)
             return size
         case .timerModule:
-            var size = ModuleSize(128,224)
+            let width = UIScreen.main.bounds.width * 0.9
+            let sizeCol = CGFloat(Int(224 * width / 704))
+            let sizeRow = CGFloat(Int(128 * width / 704))
+            var size = ModuleSize(sizeRow,sizeCol)
             size.setGridSize(col: 10, row: 6)
             return size
         case .sendModule:
-            var size = ModuleSize(272, 176)
+            let width = UIScreen.main.bounds.width * 0.9
+            let sizeRow = CGFloat(Int(272 * width / 704))
+            let sizeCol = CGFloat(Int(176 * width / 704))
+            var size = ModuleSize(sizeRow, sizeCol)
             size.setGridSize(col: 8, row: 12)
             return size
         }
@@ -90,11 +100,11 @@ enum ModuleType : String, Codable {
     var max: Int {
         switch self {
         case .buttonModule:
-            return 10
+            return 5
         case .sendModule:
             return 1
         case .dialModule:
-            return 10
+            return 5
         case .timerModule:
             return 2
         }
@@ -155,23 +165,6 @@ final class Module : NSObject, NSItemProviderWriting, Codable, NSItemProviderRea
     func setIndex(index: Int){
         self.index = index
     }
-    
-    func getType() -> ModuleType {
-        return self.type
-    }
-    
-    func getIndex() -> Int? {
-        return self.index
-    }
-    
-    func toJSON() -> String{
-        return """
-            {
-                type: \(type),
-                index : \(String(describing: index))
-            }
-        """
-    }
 }
 extension Module {
     
@@ -192,13 +185,14 @@ struct ModuleSize {
     var col: Int
     var row: Int
     
+    // Frame
     init(_ height: CGFloat, _ width: CGFloat){
         self.height = height
         self.width = width
         self.col = 0
         self.row = 0
     }
-    
+    // CollectionView Cell
     mutating func setGridSize(col: Int,row: Int){
         self.col = col
         self.row = row
