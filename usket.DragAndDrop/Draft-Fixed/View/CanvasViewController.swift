@@ -124,7 +124,7 @@ extension CanvasViewController: UIDropInteractionDelegate {
     func getShadowPosition(_ xPosition: CGFloat,_ yPosition: CGFloat) -> CGPoint {
         let shadowX = Int(xPosition / CGFloat(CanvasViewController.rate))
         let shadowY = Int(yPosition / CGFloat(CanvasViewController.rate))
-
+        
         return CGPoint(x: shadowX, y: shadowY)
     }
     
@@ -200,7 +200,7 @@ extension CanvasViewController: UIDropInteractionDelegate {
             guard let customModule = item.first as? Module else {
                 return
             }
-        
+            
             DispatchQueue.main.async {
                 let points = (col,row)
                 // Index : For CRUD

@@ -47,7 +47,7 @@ extension ModuleViewController: UIDragInteractionDelegate {
         if CanvasViewController.status == .closed {
             return []
         }
-
+        
         let dragItem = UIDragItem(itemProvider: NSItemProvider(object: module))
         
         switch module.type {
@@ -127,7 +127,7 @@ extension ModuleViewController: UIDragInteractionDelegate {
                     } completion: { comp in
                         draggedVC.view.removeFromSuperview()
                     }
-
+                    
                     if let superVC = draggedVC.view.superview?.superview?.findViewController() as? CanvasViewController{
                         superVC.viewModel.removeModule(module: draggedVC.module, index: draggedVC.module.index!)
                     }
