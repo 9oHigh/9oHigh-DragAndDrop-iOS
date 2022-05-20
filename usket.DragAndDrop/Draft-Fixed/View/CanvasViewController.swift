@@ -36,7 +36,7 @@ final class CanvasViewController: UIViewController {
         let width: CGFloat = UIScreen.main.bounds.size.width * 0.9
         lazy var height: CGFloat = 272 * width / 704
         setUp(width, height)
-        CanvasViewController.rate = width / 29.3333
+        CanvasViewController.rate = width / 29.36255375
         print("RATE:",width,CanvasViewController.rate)
     }
     
@@ -161,8 +161,9 @@ extension CanvasViewController: UIDropInteractionDelegate {
         }
         
         let shadow = shadowView.frame
-        let shadowPosition = (Int(shadow.minX / CGFloat(CanvasViewController.rate)),Int(shadow.minY / CGFloat(CanvasViewController.rate)))
-        print("Shadow Position:",shadowPosition)
+        let shadowPosition = (col,row)
+        //(Int(shadow.minX / CGFloat(CanvasViewController.rate)),Int(shadow.minY / CGFloat(CanvasViewController.rate)))
+        print("ShadowPosition:",shadowPosition.0,shadowPosition.1)
         // 하단 초과
         if shadow.minY + shadow.height > canvasView.view.frame.height {
             shadowView.removeFromSuperview()
@@ -184,6 +185,15 @@ extension CanvasViewController: UIDropInteractionDelegate {
     
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         print(#function)
+        let locationPoint = session.location(in: canvasView.view)
+        let points = self.getShadowPosition(locationPoint.x, locationPoint.y)
+        var col = Int(points.x)
+        var row = Int(points.y)
+        
+        if row < 0 { row = 0 }
+        else if row >= 12 { row = 11 }
+        else if col < 0 { col = 0 }
+        else if col >= 30 { col = 29 }
         
         session.loadObjects(ofClass: Module.self) { item in
             
@@ -192,18 +202,18 @@ extension CanvasViewController: UIDropInteractionDelegate {
             }
         
             DispatchQueue.main.async {
-                let points = self.getShadowPosition(self.shadowView.frame.minX, self.shadowView.frame.minY)
+                let points = (col,row)
                 // Index : For CRUD
                 if customModule.index == nil {
                     if self.viewModel.addModule(module: customModule) {
-                        self.canvasView.setLocation((Int(points.x), Int(points.y)), customModule)
-                        customModule.startPoint = CGPoint(x: points.x, y: points.y)
+                        self.canvasView.setLocation((points.0, points.1), customModule)
+                        customModule.startPoint = CGPoint(x: points.0, y: points.1)
                     } else {
                         self.alert(message: "중복 불가능한 모듈입니다.", title: "중복 불가")
                     }
                 } else {
-                    self.canvasView.setLocation((Int(points.x), Int(points.y)), customModule)
-                    customModule.startPoint = CGPoint(x: points.x, y: points.y)
+                    self.canvasView.setLocation((points.0, points.1), customModule)
+                    customModule.startPoint = CGPoint(x: points.0, y: points.1)
                 }
                 // 기존위치에서 시작하기 때문에 위치 초기화
                 self.shadowView.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.maxY, width: 0, height: 0)

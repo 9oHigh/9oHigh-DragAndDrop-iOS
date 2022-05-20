@@ -31,6 +31,7 @@ final class SendModuleViewContoller: ModuleViewController {
         })
         button.snp.makeConstraints { make in
             make.center.equalToSuperview()
+            
             make.width.equalTo(size.width)
             make.height.equalTo(size.height)
         }
