@@ -44,9 +44,9 @@ extension ModuleViewController: UIDragInteractionDelegate {
     func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
         print(#function)
         // 닫혀있으면 컨트롤 불가능
-//        if CanvasViewController.status == .closed {
-//            return []
-//        }
+        if CanvasViewController.status == .closed {
+            return []
+        }
 
         let dragItem = UIDragItem(itemProvider: NSItemProvider(object: module))
         
