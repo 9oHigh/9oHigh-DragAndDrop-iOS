@@ -67,8 +67,8 @@ final class GridLayoutViewController: UIViewController {
     
     @objc
     private func changeImage(){
-        animateView(status: CanvasViewController.status)
-        CanvasViewController.status = CanvasViewController.status == .open ? .closed : .open
+        animateView(status: CanvasViewModel.status)
+        CanvasViewModel.status = CanvasViewModel.status == .open ? .closed : .open
     }
     
     private func animateView(status: MenuStatus) {

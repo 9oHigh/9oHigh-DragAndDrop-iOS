@@ -57,17 +57,14 @@ final class CanvasView: UIViewController {
         
         addChildVC(moduleVC, container: view)
         
-        moduleVC.view.frame = CGRect(x: CGFloat(startPoint.0) * CanvasViewController.rate, y: CGFloat(startPoint.1) * CanvasViewController.rate, width: module.type.size.width, height: module.type.size.height)
-        print("RATE:",CanvasViewController.rate)
-        print("SuperView:",moduleVC.view.superview?.findViewController()?.view.frame)
-        print("Module:",moduleVC.view.frame)
+        moduleVC.view.frame = CGRect(x: CGFloat(startPoint.0) * CanvasViewModel.rate, y: CGFloat(startPoint.1) * CanvasViewModel.rate, width: module.type.size.width, height: module.type.size.height)
+        
         CanvasView.setPosition(startPoint, module)
     }
     
     func checkPosition(_ start: (Int,Int), width: Int, height: Int) -> Bool {
-        for y in start.0...start.0 + Int(CGFloat(height)/CanvasViewController.rate){
-            for x in start.1...start.1 + Int(CGFloat(width)/CanvasViewController.rate){
-                //print("checkPosi:",y,x)
+        for y in start.0...start.0 + Int(CGFloat(height)/CanvasViewModel.rate){
+            for x in start.1...start.1 + Int(CGFloat(width)/CanvasViewModel.rate){
                 if y >= 12 || x >= 30 { return false }
                 else if y < 0 || x < 0 { return false }
                 if CanvasView.included[y][x] {
@@ -75,14 +72,13 @@ final class CanvasView: UIViewController {
                 }
             }
         }
-        print("check OK")
         return true
     }
     
     static func setPosition(_ startPoint: (Int,Int),_ module: Module){
         // 자리 확보
-        for y in startPoint.1...startPoint.1 + Int(module.type.size.height / CGFloat(CanvasViewController.rate)) {
-            for x in startPoint.0 ... startPoint.0 + Int((module.type.size.width / CGFloat(CanvasViewController.rate)).rounded()) {
+        for y in startPoint.1...startPoint.1 + Int(module.type.size.height / CGFloat(CanvasViewModel.rate)) {
+            for x in startPoint.0 ... startPoint.0 + Int((module.type.size.width / CGFloat(CanvasViewModel.rate)).rounded()) {
                 if y >= 12 || x >= 30 {
                     return
                 }
@@ -94,8 +90,8 @@ final class CanvasView: UIViewController {
     
     static func clearPositon(_ startPoint: (Int,Int),_ module: Module){
         
-        for y in startPoint.1...startPoint.1 + Int(module.type.size.height / CanvasViewController.rate) {
-            for x in startPoint.0 ... startPoint.0 + Int(module.type.size.width / CanvasViewController.rate) {
+        for y in startPoint.1...startPoint.1 + Int(module.type.size.height / CanvasViewModel.rate) {
+            for x in startPoint.0 ... startPoint.0 + Int(module.type.size.width / CanvasViewModel.rate) {
                 if y >= 12 || x >= 30 {
                     return
                 }

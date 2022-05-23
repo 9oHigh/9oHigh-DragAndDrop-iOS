@@ -24,15 +24,15 @@ final class TimerModuleViewContoller: ModuleViewController {
         
         view.addSubview(button)
         button.imageView?.contentMode = .scaleAspectFit
-        button.setImage(UIImage(named: module.type.rawValue), for: .normal)
+        button.setImage(UIImage(named: viewModel.module.type.rawValue), for: .normal)
         button.imageView?.snp.makeConstraints({ make in
-            make.width.equalTo(size.width)
-            make.height.equalTo(size.height)
+            make.width.equalTo(viewModel.size.width)
+            make.height.equalTo(viewModel.size.height)
         })
         button.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.equalTo(size.width)
-            make.height.equalTo(size.height)
+            make.width.equalTo(viewModel.size.width)
+            make.height.equalTo(viewModel.size.height)
         }
     }
 }

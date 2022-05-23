@@ -5,8 +5,17 @@
 //  Created by Luxrobo on 2022/05/04.
 //
 
-final class ViewModel {
+import UIKit
+
+enum MenuStatus {
+    case open
+    case closed
+}
+
+final class CanvasViewModel {
     
+    static var status: MenuStatus = .open
+    static var rate: CGFloat = 0
     var currentModuleDict: [ModuleType : [Module]] = [:]
     
     func addModule(module: Module) -> Bool{

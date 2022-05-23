@@ -7,25 +7,20 @@
 
 import UIKit
 
-enum MenuStatus {
-    case open
-    case closed
-}
-
 final class CanvasViewController: UIViewController {
     
     //Sidemenu, Menu Status
-    static var status: MenuStatus = .open
-    static var rate: CGFloat = 0
-    private let sideMenu = SideMenu()
-    private let openButton = UIButton()
+//    static var status: MenuStatus = .open
+//    static var rate: CGFloat = 0
+    let sideMenu = SideMenu()
+    let openButton = UIButton()
     
     //Item into Grid
-    private let canvasView = CanvasView()
-    private let shadowView = UIView()
+    let canvasView = CanvasView()
+    let shadowView = UIView()
     
     //ViewModel
-    var viewModel = ViewModel()
+    var viewModel = CanvasViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +31,7 @@ final class CanvasViewController: UIViewController {
         let width: CGFloat = UIScreen.main.bounds.size.width * 0.9
         lazy var height: CGFloat = 272 * width / 704
         setUp(width, height)
-        CanvasViewController.rate = width / 29.36255375
-        print("RATE:",width,CanvasViewController.rate)
+        CanvasViewModel.rate = width / 29.3333
     }
     
     // delegate + addtarget(openButton)
@@ -70,10 +64,9 @@ final class CanvasViewController: UIViewController {
          */
         print(#function)
         for item in canvasView.view.subviews {
-            print(item)
             if let tem = item.findViewController() as? ModuleViewController {
                 tem.view.removeFromSuperview()
-                viewModel.removeModule(module: tem.module, index: tem.module.index!)
+                viewModel.removeModule(module: tem.viewModel.module, index: tem.viewModel.module.index!)
                 tem.removeFromParent()
             }
         }
@@ -82,8 +75,8 @@ final class CanvasViewController: UIViewController {
     
     @objc
     private func changeImage(){
-        animateView(status: CanvasViewController.status)
-        CanvasViewController.status = CanvasViewController.status == .open ? .closed : .open
+        animateView(status: CanvasViewModel.status)
+        CanvasViewModel.status = CanvasViewModel.status == .open ? .closed : .open
     }
     
     private func animateView(status: MenuStatus) {
@@ -122,8 +115,8 @@ final class CanvasViewController: UIViewController {
 extension CanvasViewController: UIDropInteractionDelegate {
     
     func getShadowPosition(_ xPosition: CGFloat,_ yPosition: CGFloat) -> CGPoint {
-        let shadowX = Int(xPosition / CGFloat(CanvasViewController.rate))
-        let shadowY = Int(yPosition / CGFloat(CanvasViewController.rate))
+        let shadowX = Int(xPosition / CGFloat(CanvasViewModel.rate))
+        let shadowY = Int(yPosition / CGFloat(CanvasViewModel.rate))
         
         return CGPoint(x: shadowX, y: shadowY)
     }
@@ -148,9 +141,9 @@ extension CanvasViewController: UIDropInteractionDelegate {
         else if row >= 12 { row = 11 }
         else if col < 0 { col = 0 }
         else if col >= 30 { col = 29 }
-        print("COL AND ROW : ",col,row)
+        
         DispatchQueue.main.async {
-            self.shadowView.frame = CGRect(x: points.x * CGFloat(CanvasViewController.rate), y: points.y * CGFloat(CanvasViewController.rate), width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
+            self.shadowView.frame = CGRect(x: points.x * CGFloat(CanvasViewModel.rate), y: points.y * CGFloat(CanvasViewModel.rate), width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
             self.shadowView.layer.cornerRadius = 10
             
             if self.canvasView.checkPosition((row,col), width: Int(SideMenu.sizeOfItem.width), height: Int(SideMenu.sizeOfItem.height)) {
@@ -162,8 +155,7 @@ extension CanvasViewController: UIDropInteractionDelegate {
         
         let shadow = shadowView.frame
         let shadowPosition = (col,row)
-        //(Int(shadow.minX / CGFloat(CanvasViewController.rate)),Int(shadow.minY / CGFloat(CanvasViewController.rate)))
-        print("ShadowPosition:",shadowPosition.0,shadowPosition.1)
+
         // 하단 초과
         if shadow.minY + shadow.height > canvasView.view.frame.height {
             shadowView.removeFromSuperview()
@@ -173,10 +165,9 @@ extension CanvasViewController: UIDropInteractionDelegate {
             shadowView.removeFromSuperview()
             return UIDropProposal(operation: .cancel)
         }
-        print("CHECK: ",canvasView.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)))
         
         if canvasView.checkPosition((shadowPosition.1,shadowPosition.0), width: Int(shadow.width), height: Int(shadow.height)) {
-            print("Copy OK")
+            print("Copy")
             return UIDropProposal(operation: .copy)
         }
         print("isForbidden")

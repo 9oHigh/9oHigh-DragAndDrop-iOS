@@ -12,7 +12,6 @@ final class SideMenu: UIView {
     
     static var sizeOfItem = ModuleSize(0, 0)
     var tableView = UITableView()
-    let viewModel = ViewModel()
     var moduleList = [Module(type: .buttonModule), Module(type: .dialModule), Module(type: .sendModule), Module(type: .timerModule)]
     
     override init(frame: CGRect) {
