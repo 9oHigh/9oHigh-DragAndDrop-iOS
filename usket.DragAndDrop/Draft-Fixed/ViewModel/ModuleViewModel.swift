@@ -67,7 +67,7 @@ final class ModuleViewModel {
             session.items.forEach { dragItem in
                 if let draggedVC = dragItem.localObject as? ModuleViewController {
                     let point = draggedVC.view.frame
-                    CanvasView.setPosition((Int(point.minX / CanvasViewModel.rate),Int(point.minY / CanvasViewModel.rate)), draggedVC.viewModel.module)
+                    CanvasViewModel.setPosition((Int(point.minX / CanvasViewModel.rate),Int(point.minY / CanvasViewModel.rate)), draggedVC.viewModel.module)
                 }
             }
         case .forbidden:
@@ -77,7 +77,7 @@ final class ModuleViewModel {
             session.items.forEach { dragItem in
                 if let draggedVC = dragItem.localObject as? ModuleViewController {
                     let point = draggedVC.view.frame
-                    CanvasView.clearPositon((Int(point.minX),Int(point.minY)), draggedVC.viewModel.module)
+                    CanvasViewModel.clearPositon((Int(point.minX),Int(point.minY)), draggedVC.viewModel.module)
                     draggedVC.view.removeFromSuperview()
                 }
             }
@@ -86,7 +86,7 @@ final class ModuleViewModel {
             session.items.forEach { dragItem in
                 if let draggedVC = dragItem.localObject as? ModuleViewController {
                     let point = draggedVC.view.frame
-                    CanvasView.clearPositon((Int(point.minX),Int(point.minY)), draggedVC.viewModel.module)
+                    CanvasViewModel.clearPositon((Int(point.minX),Int(point.minY)), draggedVC.viewModel.module)
                     
                     let location = session.location(in: draggedVC.view.superview ?? UIView())
                     
@@ -98,7 +98,7 @@ final class ModuleViewModel {
                         draggedVC.view.removeFromSuperview()
                     }
                     
-                    if let superVC = draggedVC.view.superview?.superview?.findViewController() as? CanvasViewController{
+                    if let superVC = draggedVC.view.superview?.superview?.findViewController() as? MainViewController{
                         superVC.viewModel.removeModule(module: draggedVC.viewModel.module, index: draggedVC.viewModel.module.index!)
                     }
                 }
@@ -112,7 +112,7 @@ final class ModuleViewModel {
         guard let stPoint = module.startPoint else {
             return
         }
-        CanvasView.clearPositon((Int(stPoint.x), Int(stPoint.y)),module)
+        CanvasViewModel.clearPositon((Int(stPoint.x), Int(stPoint.y)),module)
     }
 }
     

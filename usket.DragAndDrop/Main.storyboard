@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Canvas View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="nDd-gv-p1q">
             <objects>
-                <viewController id="fYn-XC-kTO" customClass="CanvasViewController" customModule="usket_DragAndDrop" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="fYn-XC-kTO" customClass="MainViewController" customModule="usket_DragAndDrop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Lrh-yT-gAK">
                         <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -35,7 +35,7 @@
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="removeAll:" destination="fYn-XC-kTO" eventType="touchUpInside" id="tAp-Ij-UDv"/>
+                                    <action selector="removeAll:" destination="fYn-XC-kTO" eventType="touchUpInside" id="h9X-nF-pXd"/>
                                 </connections>
                             </button>
                         </subviews>
