@@ -9,16 +9,13 @@ import UIKit
 
 final class MainViewController: UIViewController {
     
-    //Sidemenu, Menu Status
-    let sideMenu = SideMenu()
-    let openButton = UIButton()
+    private let sideMenu = SideMenu()
+    private let openButton = UIButton()
     
-    //Item into Grid
     let canvasView = CanvasView()
-    var shadowView = UIView()
+    private var shadowView = UIView()
     
-    //ViewModel
-    var viewModel = CanvasViewModel()
+    let viewModel = CanvasViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +23,10 @@ final class MainViewController: UIViewController {
     }
     
     func setSizeRate(){
-        let width: CGFloat = UIScreen.main.bounds.size.width * 0.9
-        lazy var height: CGFloat = 272 * width / 704
+        let width: CGFloat = canvasView.canvasWidth
+        lazy var height: CGFloat = canvasView.oldHeight * width / canvasView.oldWidth
         setUp(width, height)
-        CanvasViewModel.rate = width / 29.3333
+        CanvasViewModel.rate = width / canvasView.ratio
     }
     
     // delegate + addtarget(openButton)

@@ -28,3 +28,20 @@ final class CanvasView: UIViewController {
         }
     }
 }
+extension CanvasView {
+    var canvasWidth: CGFloat {
+        return UIScreen.main.bounds.width * 0.9
+    }
+    
+    var oldHeight: CGFloat {
+        return 272
+    }
+    
+    var oldWidth: CGFloat {
+        return 704
+    }
+    
+    var ratio: CGFloat {
+        return 29.3333
+    }
+}

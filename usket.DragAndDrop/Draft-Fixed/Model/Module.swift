@@ -52,7 +52,8 @@ enum ModuleType : String, Codable {
             try container.encode(ModuleType.timerModule.rawValue)
         }
     }
-    
+}
+extension ModuleType {
     var imageName: String {
         switch self {
         case .buttonModule:
@@ -69,31 +70,25 @@ enum ModuleType : String, Codable {
     var size: ModuleSize {
         switch self {
         case .buttonModule:
-            let width = UIScreen.main.bounds.width * 0.9
-            let sizeCol = CGFloat(Int(128 * width / 704))
-            var size = ModuleSize(sizeCol, sizeCol)
-            size.setGridSize(col: 6, row: 6)
-            return size
+            let canvasWidth = canvasWidth
+            let height = CGFloat(Int(self.height * canvasWidth / canvasHeight))
+            let width = CGFloat(Int(self.width * canvasWidth / canvasHeight))
+            return ModuleSize(height, width)
         case .dialModule:
-            let width = UIScreen.main.bounds.width * 0.9
-            let sizeCol = CGFloat(Int(128 * width / 704))
-            var size = ModuleSize(sizeCol, sizeCol)
-            size.setGridSize(col: 6, row: 6)
-            return size
+            let canvasWidth = canvasWidth
+            let height = CGFloat(Int(self.height * canvasWidth / canvasHeight))
+            let width = CGFloat(Int(self.width * canvasWidth / canvasHeight))
+            return ModuleSize(height, width)
         case .timerModule:
-            let width = UIScreen.main.bounds.width * 0.9
-            let sizeCol = CGFloat(Int(224 * width / 704))
-            let sizeRow = CGFloat(Int(128 * width / 704))
-            var size = ModuleSize(sizeRow,sizeCol)
-            size.setGridSize(col: 10, row: 6)
-            return size
+            let canvasWidth = canvasWidth
+            let height = CGFloat(Int(self.height * canvasWidth / canvasHeight))
+            let width = CGFloat(Int(self.width * canvasWidth / canvasHeight))
+            return ModuleSize(height, width)
         case .sendModule:
-            let width = UIScreen.main.bounds.width * 0.9
-            let sizeRow = CGFloat(Int(272 * width / 704))
-            let sizeCol = CGFloat(Int(176 * width / 704))
-            var size = ModuleSize(sizeRow, sizeCol)
-            size.setGridSize(col: 8, row: 12)
-            return size
+            let canvasWidth = canvasWidth
+            let height = CGFloat(Int(self.height * canvasWidth / canvasHeight))
+            let width = CGFloat(Int(self.width * canvasWidth / canvasHeight))
+            return ModuleSize(height, width)
         }
     }
     
@@ -108,6 +103,62 @@ enum ModuleType : String, Codable {
         case .timerModule:
             return 2
         }
+    }
+    
+    var canvasWidth: CGFloat {
+        return UIScreen.main.bounds.width * 0.9
+    }
+    
+    var canvasHeight: CGFloat {
+        return 704
+    }
+    
+    var width: CGFloat {
+        switch self {
+        case .buttonModule:
+            return 128
+        case .sendModule:
+            return 176
+        case .dialModule:
+            return 128
+        case .timerModule:
+            return 224
+        }
+    }
+    
+    var height: CGFloat {
+        switch self {
+        case .buttonModule:
+            return 128
+        case .sendModule:
+            return 272
+        case .dialModule:
+            return 128
+        case .timerModule:
+            return 128
+        }
+    }
+}
+
+struct ModuleSize {
+    
+    var height: CGFloat
+    var width: CGFloat
+    
+    var col: Int
+    var row: Int
+    
+    // Frame
+    init(_ height: CGFloat, _ width: CGFloat){
+        self.height = height
+        self.width = width
+        self.col = 0
+        self.row = 0
+    }
+    // CollectionView Cell
+    mutating func setGridSize(col: Int,row: Int){
+        self.col = col
+        self.row = row
     }
 }
 
@@ -166,6 +217,7 @@ final class Module : NSObject, NSItemProviderWriting, Codable, NSItemProviderRea
         self.index = index
     }
 }
+
 extension Module {
     
     var dragItem: UIDragItem {
@@ -174,27 +226,5 @@ extension Module {
         dragItem.localObject = self
         
         return dragItem
-    }
-}
-
-struct ModuleSize {
-    
-    var height: CGFloat
-    var width: CGFloat
-    
-    var col: Int
-    var row: Int
-    
-    // Frame
-    init(_ height: CGFloat, _ width: CGFloat){
-        self.height = height
-        self.width = width
-        self.col = 0
-        self.row = 0
-    }
-    // CollectionView Cell
-    mutating func setGridSize(col: Int,row: Int){
-        self.col = col
-        self.row = row
     }
 }
