@@ -10,12 +10,9 @@ import UIKit
 final class ModuleViewModel {
     
     var module: Module
-    var size: ModuleSize
-    var label = UILabel()
     
-    init(module: Module, size: ModuleSize){
+    init(module: Module){
         self.module = module
-        self.size = size
     }
     
     func itemsForBeginning() -> [UIDragItem]{
@@ -24,30 +21,8 @@ final class ModuleViewModel {
         }
         let dragItem = UIDragItem(itemProvider: NSItemProvider(object: module))
         
-        switch module.type {
-        case .buttonModule:
-            let width = UIScreen.main.bounds.width * 0.9
-            let sizeCol = CGFloat(Int(128 * width / 704))
-            let size = ModuleSize(sizeCol, sizeCol)
-            SideMenu.sizeOfItem = size
-        case .sendModule:
-            let width = UIScreen.main.bounds.width * 0.9
-            let sizeRow = CGFloat(Int(272 * width / 704))
-            let sizeCol = CGFloat(Int(176 * width / 704))
-            let size = ModuleSize(sizeRow, sizeCol)
-            SideMenu.sizeOfItem = size
-        case .dialModule:
-            let width = UIScreen.main.bounds.width * 0.9
-            let sizeCol = CGFloat(Int(128 * width / 704))
-            let size = ModuleSize(sizeCol, sizeCol)
-            SideMenu.sizeOfItem = size
-        case .timerModule:
-            let width = UIScreen.main.bounds.width * 0.9
-            let sizeCol = CGFloat(Int(224 * width / 704))
-            let sizeRow = CGFloat(Int(128 * width / 704))
-            let size = ModuleSize(sizeRow,sizeCol)
-            SideMenu.sizeOfItem = size
-        }
+        Module.current = module.type.size
+        
         return [dragItem]
     }
     
@@ -61,13 +36,16 @@ final class ModuleViewModel {
     }
     
     func setActionByOperation(session: UIDragSession,operation: UIDropOperation){
+        
         switch operation {
         case .cancel:
             print("Cancel")
             session.items.forEach { dragItem in
                 if let draggedVC = dragItem.localObject as? ModuleViewController {
-                    let point = draggedVC.view.frame
-                    CanvasViewModel.setPosition((Int(point.minX / CanvasViewModel.rate),Int(point.minY / CanvasViewModel.rate)), draggedVC.viewModel.module)
+                    let frame = draggedVC.view.frame
+                    let xPosition = Int(frame.minX / CanvasViewModel.rate)
+                    let yPosition = Int(frame.minY / CanvasViewModel.rate)
+                    self.setPosition((xPosition,yPosition), draggedVC.viewModel.module)
                 }
             }
         case .forbidden:
@@ -76,17 +54,21 @@ final class ModuleViewModel {
             print("Copy")
             session.items.forEach { dragItem in
                 if let draggedVC = dragItem.localObject as? ModuleViewController {
-                    let point = draggedVC.view.frame
-                    CanvasViewModel.clearPositon((Int(point.minX),Int(point.minY)), draggedVC.viewModel.module)
+                    let frame = draggedVC.view.frame
+                    let xPosition = Int(frame.minX)
+                    let yPosition = Int(frame.minY)
+                    self.setPosition(isClear: true,(xPosition,yPosition), draggedVC.viewModel.module)
                     draggedVC.view.removeFromSuperview()
                 }
             }
         case .move:
-            print("move")
+            print("Move")
             session.items.forEach { dragItem in
                 if let draggedVC = dragItem.localObject as? ModuleViewController {
-                    let point = draggedVC.view.frame
-                    CanvasViewModel.clearPositon((Int(point.minX),Int(point.minY)), draggedVC.viewModel.module)
+                    let frame = draggedVC.view.frame
+                    let xPosition = Int(frame.minX)
+                    let yPosition = Int(frame.minY)
+                    self.setPosition(isClear: true,(xPosition,yPosition), draggedVC.viewModel.module)
                     
                     let location = session.location(in: draggedVC.view.superview ?? UIView())
                     
@@ -112,7 +94,27 @@ final class ModuleViewModel {
         guard let stPoint = module.startPoint else {
             return
         }
-        CanvasViewModel.clearPositon((Int(stPoint.x), Int(stPoint.y)),module)
+        let xPoint = Int(stPoint.x)
+        let yPoint = Int(stPoint.y)
+        self.setPosition(isClear: true,(xPoint,yPoint), module)
+    }
+    
+    func setPosition(isClear: Bool = false,_ startPoint: (Int,Int),_ module: Module){
+        
+        let xPoint = startPoint.0
+        let yPoint = startPoint.1
+        
+        let xEndPoint = Int(module.type.size.width / CanvasViewModel.rate)
+        let yEndPoint = Int(module.type.size.height / CanvasViewModel.rate)
+        
+        for y in yPoint...yPoint + yEndPoint {
+            for x in xPoint...xPoint + xEndPoint {
+                if y >= 12 || x >= 30 {
+                    return
+                }
+                CanvasViewModel.included[y][x] = !isClear
+            }
+        }
     }
 }
     

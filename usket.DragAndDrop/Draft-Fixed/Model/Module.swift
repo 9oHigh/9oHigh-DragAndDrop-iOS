@@ -54,6 +54,7 @@ enum ModuleType : String, Codable {
     }
 }
 extension ModuleType {
+    
     var imageName: String {
         switch self {
         case .buttonModule:
@@ -95,13 +96,13 @@ extension ModuleType {
     var max: Int {
         switch self {
         case .buttonModule:
-            return 5
+            return 3
         case .sendModule:
             return 1
         case .dialModule:
-            return 5
+            return 3
         case .timerModule:
-            return 2
+            return 1
         }
     }
     
@@ -164,6 +165,7 @@ struct ModuleSize {
 
 final class Module : NSObject, NSItemProviderWriting, Codable, NSItemProviderReading {
     
+    static var current = ModuleSize(0, 0)
     let type: ModuleType
     var startPoint: CGPoint?
     var index: Int?

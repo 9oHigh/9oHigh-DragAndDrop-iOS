@@ -77,10 +77,12 @@ extension GridCollectionViewCell: UIDropInteractionDelegate {
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-            
-        let size = SideMenuTableViewCell.currentModuleType.size
-        setShadow(width: size.col,height: size.row)
-        Helper.reloadData()
+        
+        /*
+         let size = SideMenuTableViewCell.currentModuleType.size
+         setShadow(width: size.col,height: size.row)
+         Helper.reloadData()
+         */
         
         return UIDropProposal(operation: .copy)
     }

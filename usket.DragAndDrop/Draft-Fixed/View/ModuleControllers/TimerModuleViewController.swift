@@ -11,8 +11,8 @@ final class TimerModuleViewContoller: ModuleViewController {
     
     let button = UIButton()
     
-    override init(module: Module, size: ModuleSize) {
-        super.init(module: module, size: size)
+    override init(module: Module) {
+        super.init(module: module)
     }
     
     required init?(coder: NSCoder) {
@@ -26,13 +26,13 @@ final class TimerModuleViewContoller: ModuleViewController {
         button.imageView?.contentMode = .scaleAspectFit
         button.setImage(UIImage(named: viewModel.module.type.rawValue), for: .normal)
         button.imageView?.snp.makeConstraints({ make in
-            make.width.equalTo(viewModel.size.width)
-            make.height.equalTo(viewModel.size.height)
+            make.width.equalTo(viewModel.module.type.size.width)
+            make.height.equalTo(viewModel.module.type.size.height)
         })
         button.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.equalTo(viewModel.size.width)
-            make.height.equalTo(viewModel.size.height)
+            make.width.equalTo(viewModel.module.type.size.width)
+            make.height.equalTo(viewModel.module.type.size.height)
         }
     }
 }

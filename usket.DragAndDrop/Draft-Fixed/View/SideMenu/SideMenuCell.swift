@@ -10,7 +10,6 @@ import UIKit
 final class SideMenuTableViewCell: UITableViewCell {
     
     static let identifier = "SideMenuTableViewCell"
-    static var currentModuleType : ModuleType = .buttonModule
     let moduleImageView = UIImageView()
     var module: Module?
     
@@ -19,7 +18,9 @@ final class SideMenuTableViewCell: UITableViewCell {
         
         selectionStyle = .none
         
-        addSubview(moduleImageView)
+        contentView.addSubview(moduleImageView)
+        
+        separatorInset = UIEdgeInsets(top: 0, left: 500, bottom: 0, right: 0)
         
         moduleImageView.contentMode = .scaleAspectFit
         
@@ -34,29 +35,27 @@ final class SideMenuTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0))
+    }
     
-    func initialModule(moduleType: ModuleType){
+    func setModule(moduleType: ModuleType){
         self.moduleImageView.image = UIImage(named: moduleType.imageName)
     }
 }
 extension SideMenuTableViewCell: UIDragInteractionDelegate {
     
     func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
-        print(#function)
+
         if let dragItem = module?.dragItem {
-            guard let module = module else {
-                return []
-            }
-            // 현재 드래깅중인 모듈 타입
-            SideMenuTableViewCell.currentModuleType = module.type
-            
             return [dragItem]
         }
         return []
     }
     
     func dragInteraction(_ interaction: UIDragInteraction, previewForLifting item: UIDragItem, session: UIDragSession) -> UITargetedDragPreview? {
-        print(#function)
         
         guard let module = module else { return nil }
         
@@ -64,13 +63,12 @@ extension SideMenuTableViewCell: UIDragInteractionDelegate {
         let imageView = UIImageView(image: frontImage)
         imageView.contentMode = .scaleAspectFit
         
-        //For shadow
-        SideMenu.sizeOfItem = module.type.size
-        
         let target = UIPreviewTarget(container: self , center: session.location(in: self))
         let parameters = UIPreviewParameters()
-        let preview = UITargetedDragPreview(view: imageView, parameters: parameters, target: target)
         
-        return preview
+        //Shadow Size of current Module
+        Module.current = module.type.size
+
+        return  UITargetedDragPreview(view: imageView, parameters: parameters, target: target)
     }
 }

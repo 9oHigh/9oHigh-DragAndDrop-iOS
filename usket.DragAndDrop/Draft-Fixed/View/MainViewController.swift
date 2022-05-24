@@ -19,47 +19,41 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setSizeRate()
+        setSizeByRatio()
     }
     
-    func setSizeRate(){
+    func setSizeByRatio(){
         let width: CGFloat = canvasView.canvasWidth
-        lazy var height: CGFloat = canvasView.oldHeight * width / canvasView.oldWidth
-        setUp(width, height)
+        let height: CGFloat = canvasView.oldHeight * width / canvasView.oldWidth
+        
         CanvasViewModel.rate = width / canvasView.ratio
+        setUp(width, height)
     }
-    
-    // delegate + addtarget(openButton)
+
     private func setUp(_ width: CGFloat,_ height: CGFloat){
         
         viewModel.addChildVC(self, canvasView, container: view)
         view.addSubview(sideMenu)
         view.addSubview(openButton)
         
-        canvasView.view.isUserInteractionEnabled = true
         canvasView.view.addInteraction(UIDropInteraction(delegate: self))
         canvasView.view.frame = CGRect(x: UIScreen.main.bounds.midX - width / 2, y: UIScreen.main.bounds.midY - height / 2.25, width: width, height: height)
         
-        openButton.setImage(UIImage(systemName: "arrow.right"), for: .normal)
-        openButton.addTarget(self, action: #selector(changeImage), for: .touchUpInside)
-        openButton.frame = CGRect(x: view.frame.maxX - 155, y: 0, width: 55, height: 55)
-        openButton.backgroundColor = .white
-        openButton.tintColor = .black
-        openButton.setTitleColor(.black, for: .normal)
-        
-        sideMenu.frame = CGRect(x: view.frame.maxX - 100, y: 0, width: 100, height: view.frame.height)
+        setSideMenu()
     }
     
-    @IBAction func removeAll(_ sender: UIButton) {
-        print(#function)
-        for item in canvasView.view.subviews {
-            if let tem = item.findViewController() as? ModuleViewController {
-                tem.view.removeFromSuperview()
-                viewModel.removeModule(module: tem.viewModel.module, index: tem.viewModel.module.index!)
-                tem.removeFromParent()
-            }
-        }
-        CanvasViewModel.included = [[Bool]](repeating: Array(repeating: false, count: 30),count: 12)
+    // Snapkit 사용하기
+    private func setSideMenu(){
+        
+        openButton.setImage(UIImage(named: "Arrow.right"), for: .normal)
+        openButton.frame = CGRect(x: view.frame.maxX - 145, y: 30, width: 50, height: 70)
+        openButton.backgroundColor = .white
+        openButton.tintColor = .black
+        openButton.layer.cornerRadius = 5
+        openButton.setShadow()
+        openButton.addTarget(self, action: #selector(changeImage), for: .touchUpInside)
+        
+        sideMenu.frame = CGRect(x: view.frame.maxX - 100, y: 0, width: 100, height: view.frame.height)
     }
     
     @objc
@@ -70,25 +64,29 @@ final class MainViewController: UIViewController {
     
     private func animateView(status: MenuStatus) {
         switch status {
-        case .open:
             // 닫기
-            UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveEaseInOut, animations: {
-                self.openButton.imageView?.image == UIImage(systemName: "arrow.right") ? self.openButton.setImage(UIImage(systemName: "arrow.left"), for: .normal) : self.openButton.setImage(UIImage(systemName: "arrow.right"), for: .normal)
+        case .open:
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
+                self.openButton.imageView?.image == UIImage(named: "Arrow.right") ? self.openButton.setImage(UIImage(named: "Arrow.left"), for: .normal) : self.openButton.setImage(UIImage(named: "Arrow.right"), for: .normal)
                 
-                self.sideMenu.frame = CGRect(x: self.view.frame.maxX, y: 0, width: 0, height: self.view.frame.height)
-                self.openButton.frame = CGRect(x: self.view.frame.maxX - 55, y: 0, width: 55, height: 55)
+                self.sideMenu.frame = CGRect(x: self.view.frame.maxX, y: 0, width: 100, height: self.view.frame.height)
+                self.openButton.frame = CGRect(x: self.view.frame.maxX - 45, y: 30, width: 50, height: 70)
+                
             }, completion: { completed in
-                
+                self.sideMenu.unsetShadow()
             })
-        case .closed:
             // 열기
-            UIView.animate(withDuration: 0.5    , delay: 0.1, options: .curveEaseInOut, animations: {
-                self.openButton.imageView?.image == UIImage(systemName: "arrow.right") ? self.openButton.setImage(UIImage(systemName: "arrow.left"), for: .normal) : self.openButton.setImage(UIImage(systemName: "arrow.right"), for: .normal)
+        case .closed:
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
+                self.openButton.imageView?.image == UIImage(named: "Arrow.right") ? self.openButton.setImage(UIImage(named: "Arrow.left"), for: .normal) : self.openButton.setImage(UIImage(named: "Arrow.right"), for: .normal)
+                
+                self.sideMenu.setShadow()
                 
                 self.sideMenu.frame = CGRect(x: self.view.frame.maxX - 100, y: 0, width: 100, height: self.view.frame.height)
-                self.openButton.frame = CGRect(x: self.view.frame.maxX - 155, y: 0, width: 55, height: 55)
+                
+                self.openButton.frame = CGRect(x: self.view.frame.maxX - 145, y: 30, width: 50, height: 70)
             }, completion: { completed in
-                print(completed)
+                
             })
         }
     }
@@ -96,37 +94,35 @@ final class MainViewController: UIViewController {
 extension MainViewController: UIDropInteractionDelegate {
     
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
-        print(#function)
+        
         return session.canLoadObjects(ofClass: Module.self)
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-        //print(#function)
-        
-        let locationPoint = session.location(in: canvasView.view)
-        
+
         canvasView.view.addSubview(shadowView)
 
         DispatchQueue.main.async { [self] in
-            self.shadowView.frame = self.viewModel.setShadow(locationPoint: locationPoint)
-            self.shadowView.backgroundColor = viewModel.setShadowColor()
+            
+            let location = session.location(in: canvasView.view)
+            self.shadowView.frame = self.viewModel.setShadow(location: location)
             
             self.shadowView.layer.cornerRadius = 10
+            self.shadowView.backgroundColor = viewModel.setShadowColor()
         }
-        
-        let shadow = shadowView.frame
-
+        // 쉐도우 프레임
+        let frame = shadowView.frame
         // 하단 초과
-        if shadow.minY + shadow.height > canvasView.view.frame.height {
+        if frame.minY + frame.height > canvasView.view.frame.height {
             shadowView.removeFromSuperview()
             return UIDropProposal(operation: .cancel)
-            // 우측 초과
-        } else if shadow.maxX > canvasView.view.frame.width {
+        // 우측 초과
+        } else if frame.maxX > canvasView.view.frame.width {
             shadowView.removeFromSuperview()
             return UIDropProposal(operation: .cancel)
         }
         
-        if self.viewModel.checkPosition((viewModel.row,viewModel.col), width: Int(shadow.width), height: Int(shadow.height)) {
+        if viewModel.checkPosition((viewModel.row,viewModel.col), width: Int(frame.width), height: Int(frame.height)) {
             print("Copy")
             return UIDropProposal(operation: .copy)
         }
@@ -135,9 +131,7 @@ extension MainViewController: UIDropInteractionDelegate {
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        print(#function)
-        let locationPoint = session.location(in: canvasView.view)
-       
+
         session.loadObjects(ofClass: Module.self) { item in
             
             guard let customModule = item.first as? Module else {
@@ -146,8 +140,10 @@ extension MainViewController: UIDropInteractionDelegate {
             
             DispatchQueue.main.async {
                 
-                self.viewModel.dropModule(locationPoint: locationPoint, module: customModule,parentVC: self.canvasView)
-
+                let location = session.location(in: self.canvasView.view)
+                
+                self.viewModel.dropModule(location: location, module: customModule,parentVC: self.canvasView)
+                
                 // 기존위치에서 시작하기 때문에 위치 초기화
                 self.shadowView.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.maxY, width: 0, height: 0)
             }
@@ -155,8 +151,6 @@ extension MainViewController: UIDropInteractionDelegate {
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnd session: UIDropSession) {
-        print(#function)
-        
         // 기존위치에서 시작하기 때문에 위치 초기화
         self.shadowView.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.maxY, width: 0, height: 0)
         self.shadowView.removeFromSuperview()

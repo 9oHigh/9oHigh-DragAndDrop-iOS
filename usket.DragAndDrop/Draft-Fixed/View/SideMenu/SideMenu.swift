@@ -10,15 +10,15 @@ import SnapKit
 
 final class SideMenu: UIView {
     
-    static var sizeOfItem = ModuleSize(0, 0)
     var tableView = UITableView()
     var moduleList = [Module(type: .buttonModule), Module(type: .dialModule), Module(type: .sendModule), Module(type: .timerModule)]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUI()
         setConfig()
+        setUI()
         setConstraints()
+        setShadow()
     }
     
     required init?(coder: NSCoder) {
@@ -30,12 +30,10 @@ final class SideMenu: UIView {
     }
     
     private func setConfig() {
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.dropDelegate = self
         
-        tableView.separatorStyle = .none
         tableView.register(SideMenuTableViewCell.self, forCellReuseIdentifier: SideMenuTableViewCell.identifier)
     }
     
@@ -59,7 +57,7 @@ extension SideMenu: UITableViewDelegate,UITableViewDataSource {
         
         let module = moduleList[indexPath.row]
         
-        cell.initialModule(moduleType: moduleList[indexPath.row].type)
+        cell.setModule(moduleType: moduleList[indexPath.row].type)
         cell.addInteraction(UIDragInteraction(delegate: cell))
         cell.module = module
         
@@ -67,26 +65,26 @@ extension SideMenu: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 75
+        return 100
     }
 }
 extension SideMenu: UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
-        print(#function)
+        
         return session.canLoadObjects(ofClass: Module.self)
     }
     
-    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
-    
-    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-         print(#function)
-        return UITableViewDropProposal(operation: .move)
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+
     }
     
-    
-    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+         
+        return UITableViewDropProposal(operation: .move)
+    }
+
     func tableView(_ tableView: UITableView, dropSessionDidEnd session: UIDropSession) {
-        print(#function)
+        
     }
 }

@@ -8,8 +8,6 @@
 import UIKit
 
 final class CanvasView: UIViewController {
-    
-    let canvasViewModel = CanvasViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,6 +15,8 @@ final class CanvasView: UIViewController {
     }
     
     private func setCanvas(){
+        
+        view.isUserInteractionEnabled = true
         
         let gridBackground = UIImageView(image: UIImage(named: "GridBackground.png"))
         gridBackground.contentMode = .scaleAspectFit
@@ -29,6 +29,7 @@ final class CanvasView: UIViewController {
     }
 }
 extension CanvasView {
+    
     var canvasWidth: CGFloat {
         return UIScreen.main.bounds.width * 0.9
     }

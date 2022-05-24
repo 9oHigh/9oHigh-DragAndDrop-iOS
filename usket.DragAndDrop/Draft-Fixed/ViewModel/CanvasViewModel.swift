@@ -16,29 +16,26 @@ final class CanvasViewModel {
     
     static var status: MenuStatus = .open
     static var rate: CGFloat = 0
-    // 가로 길이: 704, 세로 길이: 272
-    static let columns = 30
-    static let rows = 12
-    static var included = [[Bool]](repeating: Array(repeating: false, count: columns),count: rows)
+    static var included = [[Bool]](repeating: Array(repeating: false, count: 30),count: 12)
+    
+    var storedModules: [ModuleType : [Module]] = [:]
     var col: Int = 0
     var row: Int = 0
-    
-    var currentModuleDict: [ModuleType : [Module]] = [:]
-    
+
     func addModule(module: Module) -> Bool{
         
-        if currentModuleDict[module.type] == nil {
-            currentModuleDict[module.type] = [module]
+        if storedModules[module.type] == nil {
+            storedModules[module.type] = [module]
             module.index = 0
             return true
         } else {
-            if module.type.max <= currentModuleDict[module.type]!.count {
+            if module.type.max <= storedModules[module.type]!.count {
                 if module.index != nil {
                     return true
                 }
                 return false
             }
-            currentModuleDict[module.type]!.append(module)
+            storedModules[module.type]!.append(module)
             module.index = findIndex(module: module)
             return true
         }
@@ -47,7 +44,7 @@ final class CanvasViewModel {
         var flag : Int = 0
         for i in 0 ... module.type.max - 1 {
             flag = 0
-            for item in currentModuleDict[module.type]! {
+            for item in storedModules[module.type]! {
                 if i == item.index {
                     flag += 1
                 }
@@ -62,9 +59,9 @@ final class CanvasViewModel {
     func removeModule(module: Module, index: Int){
         
         var posi : Int = 0
-        for item in currentModuleDict[module.type]! {
+        for item in storedModules[module.type]! {
             if item.index == index {
-                currentModuleDict[module.type]?.remove(at: posi)
+                storedModules[module.type]?.remove(at: posi)
             }
             posi += 1
         }
@@ -72,26 +69,25 @@ final class CanvasViewModel {
     
     func setLocation(_ startPoint: (Int,Int),_ module: Module, parentVC: UIViewController) {
         
-        var moduleVC = ModuleViewController(module: module, size: module.type.size)
+        var moduleVC = ModuleViewController(module: module)
         
         switch module.type {
             
         case .buttonModule:
-            moduleVC = ButtonModuleViewContoller(module: module, size: module.type.size)
+            moduleVC = ButtonModuleViewContoller(module: module)
         case .sendModule:
-            moduleVC = SendModuleViewContoller(module: module, size: module.type.size)
+            moduleVC = SendModuleViewContoller(module: module)
         case .dialModule:
-            moduleVC = DialModuleViewContoller(module: module, size: module.type.size)
+            moduleVC = DialModuleViewContoller(module: module)
         case .timerModule:
-            moduleVC = TimerModuleViewContoller(module: module, size: module.type.size)
+            moduleVC = TimerModuleViewContoller(module: module)
         }
         
         addChildVC(parentVC, moduleVC, container: parentVC.view)
         
         moduleVC.view.frame = CGRect(x: CGFloat(startPoint.0) * CanvasViewModel.rate, y: CGFloat(startPoint.1) * CanvasViewModel.rate, width: module.type.size.width, height: module.type.size.height)
         
-        CanvasViewModel.setPosition(startPoint, module)
-        print("CHILDREN",parentVC.children)
+        self.setPosition(startPoint, module)
     }
     
     func checkPosition(_ start: (Int,Int), width: Int, height: Int) -> Bool {
@@ -107,27 +103,20 @@ final class CanvasViewModel {
         return true
     }
     
-    static func setPosition(_ startPoint: (Int,Int),_ module: Module){
-        // 자리 확보
-        for y in startPoint.1...startPoint.1 + Int(module.type.size.height / CGFloat(CanvasViewModel.rate)) {
-            for x in startPoint.0 ... startPoint.0 + Int((module.type.size.width / CGFloat(CanvasViewModel.rate)).rounded()) {
+    func setPosition(_ startPoint: (Int,Int),_ module: Module){
+        
+        let xPoint = startPoint.0
+        let yPoint = startPoint.1
+        
+        let xEndPoint = Int(module.type.size.width / CGFloat(CanvasViewModel.rate))
+        let yEndPoint = Int(module.type.size.height / CGFloat(CanvasViewModel.rate))
+        
+        for y in yPoint...yPoint + yEndPoint {
+            for x in xPoint ... xPoint + xEndPoint {
                 if y >= 12 || x >= 30 {
                     return
                 }
                 CanvasViewModel.included[y][x] = true
-            }
-        }
-        
-    }
-    
-    static func clearPositon(_ startPoint: (Int,Int),_ module: Module){
-        
-        for y in startPoint.1...startPoint.1 + Int(module.type.size.height / CanvasViewModel.rate) {
-            for x in startPoint.0 ... startPoint.0 + Int(module.type.size.width / CanvasViewModel.rate) {
-                if y >= 12 || x >= 30 {
-                    return
-                }
-                CanvasViewModel.included[y][x] = false
             }
         }
     }
@@ -143,53 +132,48 @@ final class CanvasViewModel {
 // MainViewController
 extension CanvasViewModel {
     
-    func getShadowPosition(_ xPosition: CGFloat,_ yPosition: CGFloat) -> CGPoint {
+    func getGridPoint(_ xPosition: CGFloat,_ yPosition: CGFloat) -> CGPoint {
         let shadowX = Int(xPosition / CGFloat(CanvasViewModel.rate))
         let shadowY = Int(yPosition / CGFloat(CanvasViewModel.rate))
         
         return CGPoint(x: shadowX, y: shadowY)
     }
     
-    func setShadow(locationPoint : CGPoint) -> CGRect{
+    func setShadow(location : CGPoint) -> CGRect{
         
-        let points = self.getShadowPosition(locationPoint.x, locationPoint.y)
-        col = Int(points.x)
-        row = Int(points.y)
+        let point = getGridPoint(location.x, location.y)
+        
+        col = Int(point.x)
+        row = Int(point.y)
         
         if row < 0 { row = 0 }
         else if row >= 12 { row = 11 }
         else if col < 0 { col = 0 }
         else if col >= 30 { col = 29 }
-        
-        if self.checkPosition((row,col), width: Int(SideMenu.sizeOfItem.width), height: Int(SideMenu.sizeOfItem.height)) {
-            
-            return CGRect(x: points.x * CGFloat(CanvasViewModel.rate), y: points.y * CGFloat(CanvasViewModel.rate), width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
-        } else {
-            return CGRect(x: points.x * CGFloat(CanvasViewModel.rate), y: points.y * CGFloat(CanvasViewModel.rate), width: SideMenu.sizeOfItem.width, height: SideMenu.sizeOfItem.height)
-        }
+    
+        return CGRect(x: point.x * CGFloat(CanvasViewModel.rate), y: point.y * CGFloat(CanvasViewModel.rate), width: Module.current.width, height: Module.current.height)
     }
     
     func setShadowColor() -> UIColor{
-        if self.checkPosition((row,col), width: Int(SideMenu.sizeOfItem.width), height: Int(SideMenu.sizeOfItem.height)) {
+        if checkPosition((row,col), width: Int(Module.current.width), height: Int(Module.current.height)) {
             return UIColor.black.withAlphaComponent(0.35)
         } else {
             return UIColor.red.withAlphaComponent(0.35)
         }
     }
     
-    func dropModule(locationPoint : CGPoint, module: Module, parentVC: UIViewController){
-        let points = self.getShadowPosition(locationPoint.x, locationPoint.y)
-        col = Int(points.x)
-        row = Int(points.y)
+    func dropModule(location: CGPoint, module: Module, parentVC: UIViewController){
+        let point = self.getGridPoint(location.x, location.y)
+        col = Int(point.x)
+        row = Int(point.y)
         
         if row < 0 { row = 0 }
         else if row >= 12 { row = 11 }
         else if col < 0 { col = 0 }
         else if col >= 30 { col = 29 }
         
-        // Index : For CRUD
         if module.index == nil {
-            if self.addModule(module: module) {
+            if addModule(module: module) {
                 self.setLocation((col, row), module, parentVC: parentVC)
                 module.startPoint = CGPoint(x: col, y: row)
             } else {
