@@ -30,9 +30,6 @@ final class CanvasViewModel {
             return true
         } else {
             if module.type.max <= storedModules[module.type]!.count {
-                if module.index != nil {
-                    return true
-                }
                 return false
             }
             storedModules[module.type]!.append(module)
@@ -40,17 +37,19 @@ final class CanvasViewModel {
             return true
         }
     }
+    
     func findIndex(module: Module) -> Int {
+        
         var flag : Int = 0
-        for i in 0 ... module.type.max - 1 {
+        for index in 0 ... module.type.max - 1 {
             flag = 0
             for item in storedModules[module.type]! {
-                if i == item.index {
+                if index == item.index {
                     flag += 1
                 }
             }
             if flag == 0 {
-                return i
+                return index
             }
         }
         return 0
@@ -58,12 +57,12 @@ final class CanvasViewModel {
     
     func removeModule(module: Module, index: Int){
         
-        var posi : Int = 0
+        var position : Int = 0
         for item in storedModules[module.type]! {
             if item.index == index {
-                storedModules[module.type]?.remove(at: posi)
+                storedModules[module.type]?.remove(at: position)
             }
-            posi += 1
+            position += 1
         }
     }
     
@@ -72,7 +71,6 @@ final class CanvasViewModel {
         var moduleVC = ModuleViewController(module: module)
         
         switch module.type {
-            
         case .buttonModule:
             moduleVC = ButtonModuleViewContoller(module: module)
         case .sendModule:
@@ -87,12 +85,19 @@ final class CanvasViewModel {
         
         moduleVC.view.frame = CGRect(x: CGFloat(startPoint.0) * CanvasViewModel.rate, y: CGFloat(startPoint.1) * CanvasViewModel.rate, width: module.type.size.width, height: module.type.size.height)
         
-        self.setPosition(startPoint, module)
+        setPosition(startPoint, module)
     }
     
     func checkPosition(_ start: (Int,Int), width: Int, height: Int) -> Bool {
-        for y in start.0...start.0 + Int(CGFloat(height)/CanvasViewModel.rate){
-            for x in start.1...start.1 + Int(CGFloat(width)/CanvasViewModel.rate){
+        
+        let xPoint = start.1
+        let yPoint = start.0
+        
+        let xEndPoint = Int(CGFloat(width)/CanvasViewModel.rate)
+        let yEndPoint = Int(CGFloat(height)/CanvasViewModel.rate)
+
+        for y in yPoint...yPoint + yEndPoint{
+            for x in xPoint...xPoint + xEndPoint{
                 if y >= 12 || x >= 30 { return false }
                 else if y < 0 || x < 0 { return false }
                 if CanvasViewModel.included[y][x] {
@@ -129,29 +134,28 @@ final class CanvasViewModel {
         childVC.didMove(toParent: parentVC)
     }
 }
-// MainViewController
+
+//MARK: - MainViewController
 extension CanvasViewModel {
-    
-    func getGridPoint(_ xPosition: CGFloat,_ yPosition: CGFloat) -> CGPoint {
-        let shadowX = Int(xPosition / CGFloat(CanvasViewModel.rate))
-        let shadowY = Int(yPosition / CGFloat(CanvasViewModel.rate))
+
+    func getGridPoint(_ xPosition: CGFloat,_ yPosition: CGFloat){
+        let shadowX = Int(xPosition / CanvasViewModel.rate)
+        let shadowY = Int(yPosition / CanvasViewModel.rate)
         
-        return CGPoint(x: shadowX, y: shadowY)
-    }
-    
-    func setShadow(location : CGPoint) -> CGRect{
-        
-        let point = getGridPoint(location.x, location.y)
-        
-        col = Int(point.x)
-        row = Int(point.y)
+        col = Int(shadowX)
+        row = Int(shadowY)
         
         if row < 0 { row = 0 }
         else if row >= 12 { row = 11 }
         else if col < 0 { col = 0 }
         else if col >= 30 { col = 29 }
+    }
     
-        return CGRect(x: point.x * CGFloat(CanvasViewModel.rate), y: point.y * CGFloat(CanvasViewModel.rate), width: Module.current.width, height: Module.current.height)
+    func setShadow(location : CGPoint) -> CGRect{
+        
+        getGridPoint(location.x, location.y)
+    
+        return CGRect(x: CGFloat(col) * CanvasViewModel.rate, y: CGFloat(row) * CanvasViewModel.rate, width: Module.current.width, height: Module.current.height)
     }
     
     func setShadowColor() -> UIColor{
@@ -163,21 +167,14 @@ extension CanvasViewModel {
     }
     
     func dropModule(location: CGPoint, module: Module, parentVC: UIViewController){
-        let point = self.getGridPoint(location.x, location.y)
-        col = Int(point.x)
-        row = Int(point.y)
-        
-        if row < 0 { row = 0 }
-        else if row >= 12 { row = 11 }
-        else if col < 0 { col = 0 }
-        else if col >= 30 { col = 29 }
+        getGridPoint(location.x, location.y)
         
         if module.index == nil {
             if addModule(module: module) {
                 self.setLocation((col, row), module, parentVC: parentVC)
                 module.startPoint = CGPoint(x: col, y: row)
             } else {
-                parentVC.alert(message: "중복 불가능한 모듈입니다.", title: "중복 불가")
+                parentVC.view.superview?.findViewController()?.alert(message: "중복 불가능한 모듈입니다.", title: "중복 불가")
             }
         } else {
             self.setLocation((col, row), module, parentVC: parentVC)

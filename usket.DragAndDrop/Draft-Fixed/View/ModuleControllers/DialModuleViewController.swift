@@ -25,10 +25,12 @@ final class DialModuleViewContoller: ModuleViewController {
         view.addSubview(button)
         button.imageView?.contentMode = .scaleAspectFit
         button.setImage(UIImage(named: viewModel.module.type.rawValue), for: .normal)
+        
         button.imageView?.snp.makeConstraints({ make in
             make.width.equalTo(viewModel.module.type.size.width)
             make.height.equalTo(viewModel.module.type.size.height)
         })
+        
         button.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.equalTo(viewModel.module.type.size.width)

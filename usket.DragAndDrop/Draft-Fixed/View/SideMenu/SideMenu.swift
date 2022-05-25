@@ -71,20 +71,16 @@ extension SideMenu: UITableViewDelegate,UITableViewDataSource {
 extension SideMenu: UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
-        
         return session.canLoadObjects(ofClass: Module.self)
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-         
         return UITableViewDropProposal(operation: .move)
     }
 
     func tableView(_ tableView: UITableView, dropSessionDidEnd session: UIDropSession) {
-        
     }
 }
